@@ -533,7 +533,6 @@
             }
         }
     </style>
-</style>
 </head>
 <body>
     <div class="login-container">
@@ -576,6 +575,15 @@
                     <a href="index.html" id="backToHomeBtn" style="display:inline-flex; align-items:center; gap:6px;">
                         <i class="fas fa-arrow-left"></i> Back to home
                     </a>
+                </div>
+                <div class="divider">
+                    <span>Site Links</span>
+                </div>
+                <div class="footer-link" style="display:flex; justify-content:center; gap:15px; flex-wrap:wrap; margin-top:15px;">
+                    <a href="about-us.html">About Us</a>
+                    <a href="FAQs.html">FAQs</a>
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="Terms-of-Service.html">Terms of Service</a>
                 </div>
             </form>
         </div>
@@ -715,13 +723,17 @@ document.addEventListener('DOMContentLoaded', () => {
         registerLink.addEventListener('click', (e) => { e.preventDefault(); window.location.href = 'register.html'; });
     }
     if (backToHomeBtn) {
-        backToHomeBtn.addEventListener('click', () => { e.preventDefault(); window.location.href = 'index.html'; });
+        backToHomeBtn.addEventListener('click', (e) => { e.preventDefault(); window.location.href = 'index.html'; });
     }
 });
 </script>
 
 </body>
 </html>
+
+
+
+
 
 
 
