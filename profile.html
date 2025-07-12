@@ -222,6 +222,8 @@
             overflow: hidden;
             transform: translateX(120%);
             animation: slide-in 0.4s forwards;
+            display: flex;
+            flex-direction: column;
         }
         
         .notification.success {
@@ -230,6 +232,10 @@
         
         .notification.error {
             border-left: 4px solid #F44336;
+        }
+        
+        .notification.profile-update {
+            border-left: 4px solid #4285f4;
         }
         
         .notification-content {
@@ -241,6 +247,13 @@
         .notification-icon {
             margin-right: 15px;
             font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(0,0,0,0.05);
         }
         
         .notification.success .notification-icon {
@@ -251,6 +264,10 @@
             color: #F44336;
         }
         
+        .notification.profile-update .notification-icon {
+            color: #4285f4;
+        }
+        
         .notification-message {
             flex: 1;
         }
@@ -258,6 +275,13 @@
         .notification-title {
             font-weight: bold;
             margin-bottom: 5px;
+            font-size: 15px;
+        }
+        
+        .notification-description {
+            color: #666;
+            font-size: 13px;
+            margin: 0;
         }
         
         .notification-close {
@@ -267,26 +291,37 @@
             cursor: pointer;
             font-size: 16px;
             margin-left: 10px;
+            transition: color 0.2s;
+        }
+        
+        .notification-close:hover {
+            color: #333;
         }
         
         .notification-progress {
             height: 3px;
             background-color: #e0e0e0;
+            margin-top: auto;
         }
         
         .notification-progress-bar {
             height: 100%;
             width: 100%;
             background-color: #4CAF50;
-            animation: progress 3s linear forwards;
+            animation: progress 4s linear forwards;
         }
         
         .notification.error .notification-progress-bar {
             background-color: #F44336;
         }
         
+        .notification.profile-update .notification-progress-bar {
+            background-color: #4285f4;
+        }
+        
         @keyframes slide-in {
-            to { transform: translateX(0); }
+            from { transform: translateX(120%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
         
         @keyframes progress {
@@ -1079,13 +1114,83 @@ document.addEventListener('DOMContentLoaded', () => {
     const logoutBtn = document.getElementById('logoutBtn');
 
     // --- HELPER FUNCTIONS ---
-    function showNotification(message, type = 'success') {
+    function showNotification(message, type = 'success', title = '', details = '') {
         const container = document.getElementById('notificationContainer');
+        
+        // Create notification elements
         const notification = document.createElement('div');
         notification.className = `notification ${type}`;
-        notification.textContent = message;
+        
+        const content = document.createElement('div');
+        content.className = 'notification-content';
+        
+        // Icon based on notification type
+        const icon = document.createElement('div');
+        icon.className = 'notification-icon';
+        let iconClass = 'fa-check-circle';
+        
+        if (type === 'error') {
+            iconClass = 'fa-exclamation-circle';
+        } else if (type === 'profile-update') {
+            iconClass = 'fa-user-check';
+        }
+        
+        icon.innerHTML = `<i class="fas ${iconClass}"></i>`;
+        
+        // Message container
+        const messageContainer = document.createElement('div');
+        messageContainer.className = 'notification-message';
+        
+        // Add title if provided
+        if (title) {
+            const titleElement = document.createElement('div');
+            titleElement.className = 'notification-title';
+            titleElement.textContent = title;
+            messageContainer.appendChild(titleElement);
+        }
+        
+        // Main message
+        const messageText = document.createElement('p');
+        messageText.className = 'notification-description';
+        messageText.textContent = message;
+        messageContainer.appendChild(messageText);
+        
+        // Add details if provided
+        if (details) {
+            const detailsText = document.createElement('p');
+            detailsText.className = 'notification-description';
+            detailsText.textContent = details;
+            messageContainer.appendChild(detailsText);
+        }
+        
+        // Close button
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'notification-close';
+        closeBtn.innerHTML = '&times;';
+        closeBtn.addEventListener('click', () => notification.remove());
+        
+        // Progress bar
+        const progress = document.createElement('div');
+        progress.className = 'notification-progress';
+        const progressBar = document.createElement('div');
+        progressBar.className = 'notification-progress-bar';
+        progress.appendChild(progressBar);
+        
+        // Assemble notification
+        content.appendChild(icon);
+        content.appendChild(messageContainer);
+        content.appendChild(closeBtn);
+        notification.appendChild(content);
+        notification.appendChild(progress);
+        
+        // Add to container
         container.appendChild(notification);
-        setTimeout(() => notification.remove(), 3000);
+        
+        // Auto-remove after 4 seconds
+        setTimeout(() => {
+            notification.style.animation = 'fade-out 0.5s forwards';
+            setTimeout(() => notification.remove(), 500);
+        }, 4000);
     }
 
     // --- CORE FUNCTIONS ---
@@ -1181,11 +1286,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
                 if (!response.ok) throw new Error(data.message);
                 
-                showNotification('Profile updated successfully!', 'success');
+                showNotification(
+                    'Your profile information has been updated',
+                    'profile-update',
+                    'Profile Updated Successfully',
+                    'Your changes have been saved to your account.'
+                );
                 // Reload to show updated name in header/sidebar if necessary
                 setTimeout(() => window.location.reload(), 1000);
             } catch (error) {
-                showNotification(error.message, 'error');
+                showNotification(
+                    error.message,
+                    'error',
+                    'Update Failed'
+                );
                 updateBtn.disabled = false;
                 updateBtn.textContent = 'Update Profile';
             }
@@ -1224,11 +1338,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
                 if (!response.ok) throw new Error(data.message);
 
-                showNotification('Password changed successfully. Please log in again.', 'success');
+                showNotification(
+                    'You will need to log in again with your new password',
+                    'profile-update',
+                    'Password Changed Successfully'
+                );
                 setTimeout(handleLogout, 2000);
 
             } catch (error) {
-                showNotification(error.message, 'error');
+                showNotification(
+                    error.message,
+                    'error',
+                    'Password Change Failed'
+                );
                 changePassBtn.disabled = false;
                 changePassBtn.textContent = 'Change Password';
             }
@@ -1245,4 +1367,5 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
 
