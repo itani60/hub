@@ -673,65 +673,14 @@
     </div>
 
 <script>
-    // --- Global Helper Function ---
-    const alertContainer = document.getElementById('alert-container');
-    function showAlert(message, type = 'error') {
-        if (!alertContainer) return;
-        alertContainer.innerHTML = `<div class="alert ${type}"><i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'}"></i><span>${message}</span></div>`;
-    }
-
-    // --- Google Sign-In Logic (Corrected to use Cognito flow) ---
-    const COGNITO_GOOGLE_SIGNIN_ENDPOINT = 'https://8e3s6ysoh8.execute-api.af-south-1.amazonaws.com/prod/google-login';
-
-    async function handleGoogleCredentialResponse(response) {
-        const googleIdToken = response.credential;
-        showAlert('Authenticating with Google...', 'success');
-        try {
-            const res = await fetch(COGNITO_GOOGLE_SIGNIN_ENDPOINT, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ idToken: googleIdToken })
-            });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.message || 'Sign-in failed.');
-            
-            // Save the official Cognito tokens
-            sessionStorage.setItem('accessToken', data.accessToken);
-            sessionStorage.setItem('refreshToken', data.refreshToken);
-
-            showAlert('Sign-in successful! Redirecting...', 'success');
-            setTimeout(() => { window.location.href = 'profile.html'; }, 1000);
-        } catch (error) {
-            showAlert(error.message, 'error');
-        }
-    }
-
-    function initializeGoogleSignIn() {
-        const GOOGLE_CLIENT_ID = "982307721628-vjauenec4eb7nnu892vqac2ohqp4chrs.apps.googleusercontent.com";
-        try {
-            google.accounts.id.initialize({
-                client_id: GOOGLE_CLIENT_ID,
-                callback: handleGoogleCredentialResponse
-            });
-            google.accounts.id.renderButton(
-                document.getElementById("google-signin-btn-container"),
-                { theme: "outline", size: "large", type: "standard", text: "signin_with", shape: "rectangular", logo_alignment: "left", width: "396" }
-            );
-        } catch (error) {
-            showAlert("Could not initialize Google Sign-In.", "error");
-        }
-    }
-
-    window.onload = initializeGoogleSignIn;
-
-
-    // --- Your Original Scripts for Email Login and UI (Restored) ---
+  
     document.addEventListener('DOMContentLoaded', () => {
+
         const api = {
             login: 'https://la81umkg80.execute-api.af-south-1.amazonaws.com/login',
             forgotPassword: 'https://la81umkg80.execute-api.af-south-1.amazonaws.com/forgot-password'
         };
-        
+
         const loginForm = document.getElementById('loginForm');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
@@ -742,7 +691,6 @@
         const cancelResetBtn = document.getElementById('cancelResetBtn');
         const registerLink = document.getElementById('register-link');
         const backToHomeBtn = document.getElementById('backToHomeBtn');
-        // Add any other selectors you had here, like for the reset modal form
 
         function setButtonLoading(button, textElement, isLoading) {
             if (!textElement.dataset.originalText) {
@@ -771,22 +719,23 @@
                             password: passwordInput.value
                         })
                     });
-                    
+
                     const data = await response.json();
 
                     if (response.ok) {
-                        // This part will need to be updated to handle Cognito tokens
-                        // when you build the email login Lambda
                         sessionStorage.setItem('accessToken', data.accessToken);
-                        sessionStorage.setItem('idToken', data.idToken); // You may not have an idToken from email login
+                        sessionStorage.setItem('idToken', data.idToken);
                         showAlert('Login successful! Redirecting...', 'success');
-                        setTimeout(() => { window.location.href = 'profile.html'; }, 1000);
+                        setTimeout(() => {
+                            window.location.href = 'profile.html';
+                        }, 1000);
                     } else {
                         showAlert(data.message || 'An unknown error occurred.');
+                        setButtonLoading(loginBtn, loginBtnText, false);
                     }
                 } catch (error) {
+                    console.error('Login request failed:', error);
                     showAlert('Could not connect to the server. Please check your connection.');
-                } finally {
                     setButtonLoading(loginBtn, loginBtnText, false);
                 }
             });
@@ -799,9 +748,8 @@
                 passwordToggle.querySelector('i').className = `fas ${isPassword ? 'fa-eye-slash' : 'fa-eye'}`;
             });
         }
-        
-        // Make sure forgotPassword is a global function if called from onclick
-        window.forgotPassword = () => { 
+
+        window.forgotPassword = () => {
             if(forgotPasswordModal) forgotPasswordModal.classList.add('active');
         };
 
@@ -821,10 +769,9 @@
                 window.location.href = 'index.html';
             });
         }
-        // Your forgot password form submission logic would go here too
     });
 </script>
-
 </body>
 </html>
+
 
