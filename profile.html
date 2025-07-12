@@ -205,43 +205,48 @@
             color: #333;
         }
         
-        /* Notification System */
+        /* Enhanced Notification System */
         .notification-container {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 9999;
-            max-width: 350px;
+            max-width: 380px;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
         }
         
         .notification {
             background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            margin-bottom: 10px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            margin-bottom: 15px;
             overflow: hidden;
-            transform: translateX(120%);
-            animation: slide-in 0.4s forwards;
+            transform: translateY(-20px);
+            opacity: 0;
+            animation: notification-slide-down 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
             display: flex;
             flex-direction: column;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            max-width: 100%;
         }
         
         .notification.success {
-            border-left: 4px solid #4CAF50;
+            border-top: 4px solid #4CAF50;
         }
         
         .notification.error {
-            border-left: 4px solid #F44336;
+            border-top: 4px solid #F44336;
         }
         
         .notification.profile-update {
-            border-left: 4px solid #4285f4;
+            background: linear-gradient(to bottom, #ffffff, #f8fbff);
+            border-top: 4px solid #4285f4;
         }
         
         .notification-content {
-            padding: 15px 20px;
+            padding: 18px 20px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
         }
         
         .notification-icon {
@@ -250,22 +255,39 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 36px;
-            height: 36px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-            background-color: rgba(0,0,0,0.05);
+            flex-shrink: 0;
         }
         
         .notification.success .notification-icon {
-            color: #4CAF50;
+            color: #fff;
+            background-color: #4CAF50;
         }
         
         .notification.error .notification-icon {
-            color: #F44336;
+            color: #fff;
+            background-color: #F44336;
         }
         
         .notification.profile-update .notification-icon {
-            color: #4285f4;
+            color: #fff;
+            background-color: #4285f4;
+            box-shadow: 0 4px 10px rgba(66, 133, 244, 0.3);
+            animation: pulse-blue 2s infinite;
+        }
+        
+        @keyframes pulse-blue {
+            0% {
+                box-shadow: 0 0 0 0 rgba(66, 133, 244, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(66, 133, 244, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(66, 133, 244, 0);
+            }
         }
         
         .notification-message {
@@ -273,15 +295,46 @@
         }
         
         .notification-title {
-            font-weight: bold;
-            margin-bottom: 5px;
-            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .notification.profile-update .notification-title {
+            color: #1a73e8;
         }
         
         .notification-description {
-            color: #666;
-            font-size: 13px;
+            color: #555;
+            font-size: 14px;
             margin: 0;
+            line-height: 1.4;
+        }
+        
+        .notification.profile-update .notification-description {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+        }
+        
+        .notification.profile-update .notification-description i {
+            margin-right: 6px;
+            color: #4285f4;
+        }
+        
+        .notification-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: #555;
+            margin-right: 8px;
         }
         
         .notification-close {
@@ -289,26 +342,36 @@
             border: none;
             color: #999;
             cursor: pointer;
-            font-size: 16px;
-            margin-left: 10px;
-            transition: color 0.2s;
+            font-size: 18px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+            margin-left: 5px;
+            margin-top: -5px;
         }
         
         .notification-close:hover {
+            background-color: rgba(0, 0, 0, 0.05);
             color: #333;
         }
         
         .notification-progress {
-            height: 3px;
-            background-color: #e0e0e0;
+            height: 4px;
+            background-color: rgba(0, 0, 0, 0.05);
             margin-top: auto;
+            overflow: hidden;
+            border-radius: 0 0 12px 12px;
         }
         
         .notification-progress-bar {
             height: 100%;
             width: 100%;
             background-color: #4CAF50;
-            animation: progress 4s linear forwards;
+            animation: progress 4.5s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
         }
         
         .notification.error .notification-progress-bar {
@@ -316,12 +379,33 @@
         }
         
         .notification.profile-update .notification-progress-bar {
-            background-color: #4285f4;
+            background: linear-gradient(to right, #4285f4, #34a853);
+            background-size: 200% 100%;
+            animation: progress 4.5s cubic-bezier(0.1, 0.9, 0.2, 1) forwards,
+                       gradient-shift 2s ease infinite;
         }
         
-        @keyframes slide-in {
-            from { transform: translateX(120%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        @keyframes notification-slide-down {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
         
         @keyframes progress {
@@ -329,7 +413,26 @@
         }
         
         @keyframes fade-out {
+            from { opacity: 1; }
             to { opacity: 0; }
+        }
+        
+        /* Mobile responsiveness for notifications */
+        @media (max-width: 480px) {
+            .notification-container {
+                max-width: 90%;
+                right: 5%;
+            }
+            
+            .notification-content {
+                padding: 15px;
+            }
+            
+            .notification-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
         }
         /* Wishlist Modal Styling */
         .modal {
@@ -1152,7 +1255,30 @@ document.addEventListener('DOMContentLoaded', () => {
         // Main message
         const messageText = document.createElement('p');
         messageText.className = 'notification-description';
-        messageText.textContent = message;
+        
+        // For profile updates, add avatar and icon
+        if (type === 'profile-update') {
+            // Get user initials from the DOM if available
+            let initials = 'U';
+            const avatarElement = document.getElementById('avatarInitials');
+            if (avatarElement && avatarElement.textContent.trim()) {
+                initials = avatarElement.textContent.trim().substring(0, 2);
+            }
+            
+            const avatarSpan = document.createElement('span');
+            avatarSpan.className = 'notification-avatar';
+            avatarSpan.textContent = initials;
+            
+            const messageIcon = document.createElement('i');
+            messageIcon.className = 'fas fa-check-circle';
+            
+            messageText.appendChild(avatarSpan);
+            messageText.appendChild(messageIcon);
+            messageText.appendChild(document.createTextNode(' ' + message));
+        } else {
+            messageText.textContent = message;
+        }
+        
         messageContainer.appendChild(messageText);
         
         // Add details if provided
@@ -1167,7 +1293,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const closeBtn = document.createElement('button');
         closeBtn.className = 'notification-close';
         closeBtn.innerHTML = '&times;';
-        closeBtn.addEventListener('click', () => notification.remove());
+        closeBtn.addEventListener('click', () => {
+            notification.style.animation = 'fade-out 0.3s forwards';
+            setTimeout(() => notification.remove(), 300);
+        });
         
         // Progress bar
         const progress = document.createElement('div');
@@ -1186,11 +1315,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add to container
         container.appendChild(notification);
         
-        // Auto-remove after 4 seconds
+        // Auto-remove after 4.5 seconds
         setTimeout(() => {
             notification.style.animation = 'fade-out 0.5s forwards';
             setTimeout(() => notification.remove(), 500);
-        }, 4000);
+        }, 4500);
     }
 
     // --- CORE FUNCTIONS ---
@@ -1367,5 +1496,4 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
-
 
