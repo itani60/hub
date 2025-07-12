@@ -8,13 +8,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
  <style>
         :root {
             --primary-color: #f80101;
             --primary-hover: #d80000;
-            --secondary-color: #4285f4;
-            --secondary-hover: #3367d6;
+            --secondary-color: #f80101;
+            --secondary-hover: #d80000;
             --dark-gray: #333;
             --medium-gray: #666;
             --light-gray: #f5f5f5;
@@ -97,7 +96,7 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(90deg, var(--primary-color), #ff5757);
         }
 
         .login-header {
@@ -222,7 +221,7 @@
             background: rgba(248, 1, 1, 0.1);
         }
 
-        .google-login-btn, .login-btn {
+        .login-btn {
             width: 100%;
             border-radius: 8px;
             font-size: 1rem;
@@ -238,21 +237,6 @@
             overflow: hidden;
             box-shadow: var(--shadow-light);
         }
-
-        .google-login-btn {
-            background: white;
-            color: #333;
-            border: 2px solid var(--border-color);
-            margin-bottom: 16px;
-        }
-
-        .google-login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(66, 133, 244, 0.3);
-            border-color: var(--secondary-color);
-        }
-
-        .google-logo { width: 24px; height: 24px; }
 
         .login-btn {
             background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
@@ -293,33 +277,6 @@
             box-shadow: var(--shadow-light);
         }
 
-        .social-login-divider {
-            display: flex;
-            align-items: center;
-            margin: 28px 0 20px;
-            color: var(--medium-gray);
-            font-size: 0.95rem;
-            font-weight: 500;
-            position: relative;
-        }
-
-        .social-login-divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: var(--border-color);
-            z-index: 1;
-        }
-
-        .social-login-divider span {
-            background: white;
-            padding: 0 16px;
-            position: relative;
-            z-index: 2;
-        }
 
         .forgot-password {
             text-align: right;
@@ -442,13 +399,6 @@
             animation: spin 1s linear infinite;
         }
 
-        .g-recaptcha {
-            margin: 0 auto 24px;
-            display: flex;
-            justify-content: center;
-            transform: scale(0.9);
-            transform-origin: center;
-        }
 
         .modal-overlay {
             position: fixed;
@@ -565,13 +515,10 @@
                 font-size: 1.75rem;
             }
 
-            .form-group input, .google-login-btn, .login-btn {
+            .form-group input, .login-btn {
                 padding: 16px 20px;
             }
 
-            .g-recaptcha {
-                transform: scale(1);
-            }
         }
 
         @media (max-width: 640px) {
@@ -600,17 +547,29 @@
                 <p>Sign in to your account to continue</p>
             </div>
             <div id="alert-container" aria-live="polite"></div>
+            
+            <script>
+                function showAlert(message, type = 'error') {
+                    const alertContainer = document.getElementById('alert-container');
+                    if (!alertContainer) return;
+                    
+                    if (!message) {
+                        alertContainer.innerHTML = '';
+                        return;
+                    }
+                    
+                    const alertElement = document.createElement('div');
+                    alertElement.className = `alert ${type}`;
+                    alertElement.innerHTML = `
+                        <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+                        ${message}
+                    `;
+                    
+                    alertContainer.innerHTML = '';
+                    alertContainer.appendChild(alertElement);
+                }
+            </script>
 
-            <div id="google-signin-btn-container">
-                <button type="button" class="google-login-btn" id="google-login-btn" style="width:100%;display:flex;align-items:center;justify-content:center;">
-                    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" class="google-logo">
-                    <span>Sign in with Google</span>
-                </button>
-            </div>
-
-            <div class="social-login-divider">
-                <span>or continue with email</span>
-            </div>
             <form class="login-form" id="loginForm" novalidate>
                 <div class="form-group">
                     <label for="email">Email Address</label>
@@ -673,65 +632,14 @@
     </div>
 
 <script>
-    // --- Global Helper Function ---
-    const alertContainer = document.getElementById('alert-container');
-    function showAlert(message, type = 'error') {
-        if (!alertContainer) return;
-        alertContainer.innerHTML = `<div class="alert ${type}"><i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'}"></i><span>${message}</span></div>`;
-    }
-
-    // --- Google Sign-In Logic (Corrected to use Cognito flow) ---
-    const COGNITO_GOOGLE_SIGNIN_ENDPOINT = 'https://8e3s6ysoh8.execute-api.af-south-1.amazonaws.com/prod/auth/google-signin';
-
-    async function handleGoogleCredentialResponse(response) {
-        const googleIdToken = response.credential;
-        showAlert('Authenticating with Google...', 'success');
-        try {
-            const res = await fetch(COGNITO_GOOGLE_SIGNIN_ENDPOINT, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ idToken: googleIdToken })
-            });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.message || 'Sign-in failed.');
-            
-            // Save the official Cognito tokens
-            sessionStorage.setItem('accessToken', data.accessToken);
-            sessionStorage.setItem('refreshToken', data.refreshToken);
-
-            showAlert('Sign-in successful! Redirecting...', 'success');
-            setTimeout(() => { window.location.href = 'profile.html'; }, 1000);
-        } catch (error) {
-            showAlert(error.message, 'error');
-        }
-    }
-
-    function initializeGoogleSignIn() {
-        const GOOGLE_CLIENT_ID = "982307721628-vjauenec4eb7nnu892vqac2ohqp4chrs.apps.googleusercontent.com";
-        try {
-            google.accounts.id.initialize({
-                client_id: GOOGLE_CLIENT_ID,
-                callback: handleGoogleCredentialResponse
-            });
-            google.accounts.id.renderButton(
-                document.getElementById("google-signin-btn-container"),
-                { theme: "outline", size: "large", type: "standard", text: "signin_with", shape: "rectangular", logo_alignment: "left", width: "396" }
-            );
-        } catch (error) {
-            showAlert("Could not initialize Google Sign-In.", "error");
-        }
-    }
-
-    window.onload = initializeGoogleSignIn;
-
-
-    // --- Your Original Scripts for Email Login and UI (Restored) ---
+  
     document.addEventListener('DOMContentLoaded', () => {
+
         const api = {
             login: 'https://la81umkg80.execute-api.af-south-1.amazonaws.com/login',
             forgotPassword: 'https://la81umkg80.execute-api.af-south-1.amazonaws.com/forgot-password'
         };
-        
+
         const loginForm = document.getElementById('loginForm');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
@@ -740,9 +648,11 @@
         const passwordToggle = document.getElementById('passwordToggle');
         const forgotPasswordModal = document.getElementById('forgotPasswordModal');
         const cancelResetBtn = document.getElementById('cancelResetBtn');
+        const submitResetBtn = document.getElementById('submitResetBtn');
+        const submitResetText = document.getElementById('submitResetText');
+        const resetEmailInput = document.getElementById('resetEmail');
         const registerLink = document.getElementById('register-link');
         const backToHomeBtn = document.getElementById('backToHomeBtn');
-        // Add any other selectors you had here, like for the reset modal form
 
         function setButtonLoading(button, textElement, isLoading) {
             if (!textElement.dataset.originalText) {
@@ -771,22 +681,23 @@
                             password: passwordInput.value
                         })
                     });
-                    
+
                     const data = await response.json();
 
                     if (response.ok) {
-                        // This part will need to be updated to handle Cognito tokens
-                        // when you build the email login Lambda
                         sessionStorage.setItem('accessToken', data.accessToken);
-                        sessionStorage.setItem('idToken', data.idToken); // You may not have an idToken from email login
+                        sessionStorage.setItem('idToken', data.idToken);
                         showAlert('Login successful! Redirecting...', 'success');
-                        setTimeout(() => { window.location.href = 'profile.html'; }, 1000);
+                        setTimeout(() => {
+                            window.location.href = 'profile.html';
+                        }, 1000);
                     } else {
                         showAlert(data.message || 'An unknown error occurred.');
+                        setButtonLoading(loginBtn, loginBtnText, false);
                     }
                 } catch (error) {
+                    console.error('Login request failed:', error);
                     showAlert('Could not connect to the server. Please check your connection.');
-                } finally {
                     setButtonLoading(loginBtn, loginBtnText, false);
                 }
             });
@@ -799,14 +710,37 @@
                 passwordToggle.querySelector('i').className = `fas ${isPassword ? 'fa-eye-slash' : 'fa-eye'}`;
             });
         }
-        
-        // Make sure forgotPassword is a global function if called from onclick
-        window.forgotPassword = () => { 
+
+        window.forgotPassword = () => {
             if(forgotPasswordModal) forgotPasswordModal.classList.add('active');
         };
 
         if (cancelResetBtn) {
             cancelResetBtn.addEventListener('click', () => forgotPasswordModal.classList.remove('active'));
+        }
+        
+        if (submitResetBtn) {
+            submitResetBtn.addEventListener('click', async () => {
+                const email = resetEmailInput.value.trim();
+                if (!email) {
+                    showAlert('Please enter your email address.');
+                    return;
+                }
+                
+                setButtonLoading(submitResetBtn, submitResetText, true);
+                
+                try {
+                    // You can add actual API call here if needed
+                    // For now, just redirect to reset-password.html
+                    setTimeout(() => {
+                        window.location.href = 'reset-password.html';
+                    }, 1000);
+                } catch (error) {
+                    console.error('Password reset request failed:', error);
+                    showAlert('Could not process your request. Please try again later.');
+                    setButtonLoading(submitResetBtn, submitResetText, false);
+                }
+            });
         }
 
         if(registerLink) {
@@ -821,11 +755,10 @@
                 window.location.href = 'index.html';
             });
         }
-        // Your forgot password form submission logic would go here too
     });
 </script>
-
 </body>
 </html>
+
 
 
