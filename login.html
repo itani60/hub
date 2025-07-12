@@ -640,7 +640,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const backToHomeBtn = document.getElementById('backToHomeBtn');
 
     function showAlert(message, type = 'error') {
-        alertContainer.innerHTML = `<div class="alert ${type}"><i class="fas fa-check-circle"></i> <span>${message}</span></div>`;
+        if (message) {
+            const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+            alertContainer.innerHTML = `<div class="alert ${type}"><i class="fas ${icon}"></i> <span>${message}</span></div>`;
+        } else {
+            alertContainer.innerHTML = '';
+        }
     }
 
     function setButtonLoading(button, textElement, isLoading, loadingText) {
@@ -654,7 +659,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginForm) {
         loginForm.addEventListener('submit', async (event) => {
             event.preventDefault();
-            showAlert('');
+            alertContainer.innerHTML = ''; // Clear any existing alerts without showing a new one
             setButtonLoading(loginBtn, loginBtnText, true, 'Signing In...');
 
             try {
@@ -730,6 +735,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
+
+
+
 
 
 
