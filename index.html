@@ -677,7 +677,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            animation: pulse 2s ease-in-out infinite;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             backdrop-filter: blur(10px);
@@ -2114,7 +2113,10 @@ document.addEventListener('DOMContentLoaded', function() {
         loginModalPasswordToggle.addEventListener('click', function() {
             const type = loginModalPassword.getAttribute('type') === 'password' ? 'text' : 'password';
             loginModalPassword.setAttribute('type', type);
-            loginModalPasswordToggle.textContent = type === 'password' ? '👁️' : '🙈';
+            const icon = loginModalPasswordToggle.querySelector('i');
+            if (icon) {
+                icon.className = 'fas fa-eye';
+            }
         });
     }
 
@@ -2212,7 +2214,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="login-modal-input-wrapper">
                             <input type="password" id="loginModalPassword" name="password" placeholder="Enter your password" required>
                             <button type="button" class="login-modal-password-toggle" id="loginModalPasswordToggle">
-                                👁️
+                                <i class="fas fa-eye"></i>
                             </button>
                         </div>
                     </div>
