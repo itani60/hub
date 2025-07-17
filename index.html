@@ -8,969 +8,17 @@
     <link rel="stylesheet" href="hero-carousel-animations.css">
     <link rel="stylesheet" href="index.css">
     <style>
-        @media screen and (min-width: 992px) {
-            .search-container {
-                width: 75%;
-                max-width: 1000px;
-            }
-        }
-        
-/* Mobile Search Modal */
-.mobile-search-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #fff;
-    z-index: 1001;
-    padding: 15px;
-    box-sizing: border-box;
-    flex-direction: column;
-}
-
-.mobile-search-modal.active {
-    display: flex;
-}
-
-.mobile-search-modal-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.mobile-search-close {
-    font-size: 24px;
-    margin-right: 15px;
-    cursor: pointer;
-    color: #333;
-}
-
-.mobile-search-form {
-    display: flex;
-    flex: 1;
-    position: relative;
-}
-
-.mobile-search-input {
-    flex: 1;
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-    outline: none;
-}
-
-.mobile-search-button {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: #777;
-    cursor: pointer;
-}
-
-.mobile-search-suggestions {
-    flex: 1;
-    overflow-y: auto;
-}
-
-.mobile-suggestions-header {
-    display: flex;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-    margin-bottom: 10px;
-}
-
-.mobile-all-results {
-    font-weight: bold;
-    margin-right: 5px;
-}
-
-.mobile-search-query {
-    color: #777;
-}
-
-.mobile-suggestions-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
-    gap: 10px;
-}
-
-.mobile-suggestion-item {
-    padding: 10px;
-    border-radius: 4px;
-    transition: background 0.2s;
-}
-
-.mobile-suggestion-item:hover {
-    background: #f5f5f5;
-}
-
-.mobile-suggestion-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: inherit;
-}
-
-.mobile-suggestion-img {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.mobile-suggestion-img img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-}
-
-.mobile-suggestion-icon {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #3498db;
-}
-
-.mobile-suggestion-name {
-    font-size: 14px;
-}
-
-.mobile-no-suggestions {
-    text-align: center;
-    padding: 20px;
-    color: #777;
-}
-
-@media (min-width: 769px) {
-    .mobile-search-modal {
-        display: none !important;
-    }
-}
-        
-        /* Wishlist Modal Styling */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            z-index: 1000;
-            overflow-y: auto;
-            padding: 20px;
-            box-sizing: border-box;
-            backdrop-filter: blur(3px);
-            transition: all 0.3s ease;
-            opacity: 0;
-        }
-        
-        .modal.visible {
-            opacity: 1;
-        }
-        
-        .modal-content {
-            background-color: #fff;
-            margin: 30px auto;
-            max-width: 800px;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
-            overflow: hidden;
-            animation: modal-fade-in 0.4s ease;
-            transform-origin: center top;
-        }
-        
-        @keyframes modal-fade-in {
-            from { opacity: 0; transform: translateY(-30px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        
-        .modal-header {
-            padding: 18px 24px;
-            border-bottom: 1px solid #eee;
-            background-color: #f9f9f9;
-            position: relative;
-        }
-        
-        .modal-header h3 {
-            margin: 0;
-            color: #333;
-            font-size: 20px;
-            font-weight: 600;
-        }
-        
-        .modal-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .view-all-btn {
-            color: #4285f4;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.2s;
-            padding: 6px 12px;
-            border-radius: 4px;
-        }
-        
-        .view-all-btn:hover {
-            color: #2b68ca;
-            background-color: rgba(66, 133, 244, 0.1);
-        }
-        
-        .remove-all-btn {
-            background-color: transparent;
-            border: 1px solid #e0e0e0;
-            color: #666;
-            padding: 8px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .remove-all-btn:hover {
-            background-color: #f5f5f5;
-            color: #333;
-            border-color: #ccc;
-        }
-        
-        .remove-all-btn i {
-            font-size: 12px;
-        }
-        
-        .close-modal, .wishlist-close-modal {
-            font-size: 24px;
-            color: #999;
-            cursor: pointer;
-            transition: color 0.2s;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-        }
-        
-        .close-modal:hover, .wishlist-close-modal:hover {
-            color: #333;
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-        
-        .modal-body {
-            padding: 24px;
-            max-height: 70vh;
-            overflow-y: auto;
-            scrollbar-width: thin;
-        }
-        
-        .modal-body::-webkit-scrollbar {
-            width: 6px;
-        }
-        
-        .modal-body::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-        
-        .modal-body::-webkit-scrollbar-thumb {
-            background: #ccc;
-            border-radius: 10px;
-        }
-        
-        .modal-body::-webkit-scrollbar-thumb:hover {
-            background: #aaa;
-        }
-        
-        /* Wishlist items in modal */
-        #wishlist-items.wishlist-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 24px;
-        }
-        
-        .wishlist-item {
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            transition: transform 0.2s, box-shadow 0.2s;
-            background-color: #fff;
-            position: relative;
-        }
-        
-        .wishlist-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
-        }
-        
-        .wishlist-item-image {
-            height: 160px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f9f9f9;
-            padding: 15px;
-        }
-        
-        .wishlist-item-image img {
-            max-height: 100%;
-            max-width: 100%;
-            object-fit: contain;
-        }
-        
-        .wishlist-item-details {
-            padding: 15px;
-        }
-        
-        .wishlist-item-title {
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 16px;
-            color: #333;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            height: 40px;
-        }
-        
-        .wishlist-item-price {
-            color: #4285f4;
-            font-weight: 600;
-            font-size: 18px;
-            margin-bottom: 12px;
-        }
-        
-        .wishlist-item-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .wishlist-view-btn {
-            background-color: #4285f4;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.2s;
-            flex: 1;
-            text-align: center;
-            text-decoration: none;
-        }
-        
-        .wishlist-view-btn:hover {
-            background-color: #2b68ca;
-        }
-        
-        .wishlist-remove-btn {
-            background: none;
-            border: none;
-            color: #999;
-            cursor: pointer;
-            font-size: 18px;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            margin-left: 8px;
-            transition: all 0.2s;
-        }
-        
-        .wishlist-remove-btn:hover {
-            color: #f44336;
-            background-color: rgba(244, 67, 54, 0.1);
-        }
-        
-        /* Empty wishlist in modal */
-        #modal-empty-wishlist {
-            text-align: center;
-            padding: 60px 20px;
-            animation: fade-in 0.5s ease;
-        }
-        
-        @keyframes fade-in {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        #modal-empty-wishlist i {
-            font-size: 64px;
-            color: #ddd;
-            margin-bottom: 20px;
-            display: block;
-        }
-        
-        #modal-empty-wishlist p {
-            margin: 8px 0;
-            color: #555;
-            font-size: 18px;
-        }
-        
-        #modal-empty-wishlist .empty-wishlist-subtext {
-            font-size: 15px;
-            color: #888;
-            max-width: 300px;
-            margin: 10px auto;
-        }
-        
-        #modal-empty-wishlist .browse-products-btn {
-            display: inline-block;
-            margin-top: 20px;
-            background-color: #4285f4;
-            color: white;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: 500;
-            transition: background-color 0.2s;
-        }
-        
-        #modal-empty-wishlist .browse-products-btn:hover {
-            background-color: #2b68ca;
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .modal-content {
-                margin: 15px auto;
-                max-width: 100%;
-            }
-            
-            #wishlist-items.wishlist-grid {
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-                gap: 15px;
-            }
-            
-            .modal-header {
-                padding: 15px;
-            }
-            
-            .modal-body {
-                padding: 15px;
-            }
-            
-            .wishlist-item-image {
-                height: 120px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            #wishlist-items.wishlist-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 12px;
-            }
-            
-            .wishlist-item-title {
-                font-size: 14px;
-                height: 36px;
-            }
-            
-            .wishlist-item-price {
-                font-size: 16px;
-            }
-            
-            .wishlist-view-btn {
-                padding: 6px 10px;
-                font-size: 13px;
-            }
-        }
-        
-        /* Notification System */
-        .notification-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-            max-width: 350px;
-        }
-        
-        .notification {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            margin-bottom: 10px;
-            overflow: hidden;
-            transform: translateX(120%);
-            animation: slide-in 0.4s forwards;
-        }
-        
-        .notification.success {
-            border-left: 4px solid #4CAF50;
-        }
-        
-        .notification.error {
-            border-left: 4px solid #F44336;
-        }
-        
-        .notification-content {
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .notification-icon {
-            margin-right: 15px;
-            font-size: 20px;
-        }
-        
-        .notification.success .notification-icon {
-            color: #4CAF50;
-        }
-        
-        .notification.error .notification-icon {
-            color: #F44336;
-        }
-        
-        .notification-message {
-            flex: 1;
-        }
-        
-        .notification-title {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .notification-close {
-            background: none;
-            border: none;
-            color: #999;
-            cursor: pointer;
-            font-size: 16px;
-            margin-left: 10px;
-        }
-        
-        .notification-progress {
-            height: 3px;
-            background-color: #e0e0e0;
-        }
-        
-        .notification-progress-bar {
-            height: 100%;
-            width: 100%;
-            background-color: #4CAF50;
-            animation: progress 3s linear forwards;
-        }
-        
-        .notification.error .notification-progress-bar {
-            background-color: #F44336;
-        }
-        
-        @keyframes slide-in {
-            to { transform: translateX(0); }
-        }
-        
-        @keyframes progress {
-            to { width: 0%; }
-        }
-        
-        @keyframes fade-out {
-            to { opacity: 0; }
-        }
-        
-        /* Login Modal Styling - Based on login.html design */
-        .login-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-            padding: 20px;
-        }
-
-        .login-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .login-modal-container {
-            width: 100%;
-            max-width: 480px;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-            overflow: hidden;
-            transform: translateY(30px) scale(0.9);
-            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-            position: relative;
-            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .login-modal.active .login-modal-container {
-            transform: translateY(0) scale(1);
-        }
-
-        .login-modal-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #f80101, #ff5757);
-        }
-
-        .login-modal-header {
-            padding: 40px 40px 20px;
-            text-align: center;
-            position: relative;
-        }
-
-        .login-modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: #666;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-
-        .login-modal-close:hover {
-            background: rgba(0, 0, 0, 0.1);
-            color: #333;
-        }
-
-        .login-modal-logo-container {
-            width: 100%;
-            max-width: 300px;
-            height: 120px;
-            margin: 0 auto 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .login-modal-logo-container img {
-            width: 90%;
-            height: 90%;
-            object-fit: contain;
-            border-radius: 16px;
-        }
-
-        .login-modal-form-container {
-            padding: 40px;
-        }
-
-        .login-modal-form-header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .login-modal-form-header h2 {
-            color: #333;
-            font-size: 1.6rem;
-            font-weight: 600;
-            margin-bottom: 6px;
-            letter-spacing: -0.02em;
-        }
-
-        .login-modal-form-header p {
-            color: #666;
-            font-size: 0.95rem;
-            font-weight: 400;
-            line-height: 1.5;
-        }
-
-        .login-modal-form-group {
-            margin-bottom: 20px;
-            position: relative;
-            animation: fadeInUp 0.6s ease-out;
-            animation-fill-mode: both;
-        }
-
-        .login-modal-form-group:nth-child(1) { animation-delay: 0.1s; }
-        .login-modal-form-group:nth-child(2) { animation-delay: 0.2s; }
-
-        .login-modal-form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-
-        .login-modal-input-wrapper {
-            position: relative;
-        }
-
-        .login-modal-form-group input {
-            width: 100%;
-            padding: 12px 14px;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            font-size: 0.95rem;
-            font-family: inherit;
-            background: #fafafa;
-            transition: all 0.3s ease;
-            outline: none;
-            font-weight: 400;
-            box-sizing: border-box;
-        }
-
-        .login-modal-form-group input::placeholder {
-            color: #666;
-            opacity: 0.7;
-        }
-
-        .login-modal-form-group input:focus {
-            border-color: #f80101;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(248, 1, 1, 0.1);
-        }
-
-        .login-modal-password-toggle {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #666;
-            cursor: pointer;
-            font-size: 1.1rem;
-            padding: 4px;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .login-modal-password-toggle:hover {
-            color: #f80101;
-            background: rgba(248, 1, 1, 0.1);
-        }
-
-        .login-modal-forgot-password {
-            text-align: right;
-            margin: -6px 0 20px;
-        }
-
-        .login-modal-forgot-password a {
-            color: #f80101;
-            font-size: 0.9rem;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .login-modal-forgot-password a:hover {
-            color: #d80000;
-            text-decoration: underline;
-        }
-
-        .login-modal-btn {
-            width: 100%;
-            border-radius: 6px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            padding: 14px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            background: linear-gradient(135deg, #f80101, #d80000);
-            color: white;
-            border: none;
-            animation: fadeInUp 0.6s ease-out 0.6s both;
-        }
-
-        .login-modal-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .login-modal-btn:hover::before {
-            left: 100%;
-        }
-
-        .login-modal-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(248, 1, 1, 0.3);
-        }
-
-        .login-modal-btn:active {
-            transform: translateY(0);
-        }
-
-        .login-modal-btn:disabled {
-            background: #666;
-            color: white;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .login-modal-register-link {
-            text-align: center;
-            margin-top: 20px;
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .login-modal-register-link a {
-            color: #f80101;
-            font-weight: 500;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .login-modal-register-link a:hover {
-            color: #d80000;
-            text-decoration: underline;
-        }
-
-        .login-modal-spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top-color: #ffffff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @media (max-width: 640px) {
-            .login-modal-container {
-                max-width: 350px;
-                margin: 0 15px;
-            }
-
-            .login-modal-header,
-            .login-modal-form-container {
-                padding: 20px;
-            }
-
-            .login-modal-form-header h2 {
-                font-size: 1.4rem;
-            }
-
-            .login-modal-logo-container {
-                max-width: 200px;
-                height: 80px;
-                margin-bottom: 20px;
-            }
-
-            .login-modal-form-group {
-                margin-bottom: 16px;
-            }
-
-            .login-modal-form-group input {
-                padding: 10px 12px;
-                font-size: 0.9rem;
-            }
-
-            .login-modal-btn {
-                padding: 12px 16px;
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .login-modal-container {
-                max-width: 320px;
-            }
-
-            .login-modal-header,
-            .login-modal-form-container {
-                padding: 16px;
-            }
-
-            .login-modal-form-header {
-                margin-bottom: 20px;
-            }
-
-            .login-modal-form-header h2 {
-                font-size: 1.3rem;
-            }
-        }
+  
     </style>
 </head>
 <body>
     <header class="header">
         <div class="header-top">
-            <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Open menu">☰</button>
+            <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Open menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
             <div class="logo">
                 <a href="index.html" class="logo-link">
                     <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg" alt="CompareHubPrices" class="logo-image">
@@ -978,8 +26,17 @@
             </div>
             <div class="search-container">
                 <form id="search-form">
-                    <input type="text" name="q" class="search-input" placeholder="Search......." id="searchInput">
-                    <button type="submit" class="search-button" aria-label="Search"><i class="fas fa-search"></i></button>
+                    <div class="search-input-wrapper">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" name="q" class="search-input" placeholder="Search for products, brands, deals..." id="searchInput">
+                        <button type="button" class="search-clear" id="searchClear" style="display: none;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <button type="submit" class="search-button" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                        <span class="search-text">Search</span>
+                    </button>
                 </form>
                 <div class="search-suggestions" id="searchSuggestions">
                     <div class="suggestions-header">
@@ -989,11 +46,20 @@
                     <div class="suggestions-grid" id="suggestionsGrid"></div>
                 </div>
             </div>
+            <div class="header-actions">
+                <button class="header-action-btn" id="notifications-btn" aria-label="Notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+                <button class="header-action-btn" id="account-btn" aria-label="Account">
+                    <i class="fas fa-user"></i>
+                </button>
+            </div>
         </div>
         <nav class="category-nav">
-            <a href="best-deals.html" class="active"><i class=""></i> Best deals</a>
+            <a href="best-deals.html"><i class=""></i> Best deals</a>
             <a href="#new-arrivals"><i class=""></i> New Arrivals</a>
-            <a href="#wishlist" id="wishlist-link"><i class="fas fa-heart"></i> Wishlist</a>
+            <a href="#" id="wishlist-link"><i class="fas fa-heart"></i> Wishlist</a>
         </nav>
     </header>
 
@@ -1135,12 +201,6 @@
                          </ul>
                     </li>
                 </ul>
-            </div>
-            <div class="sidebar-footer">
-                <div class="cookie-notice">
-                    <p>This website uses cookies to provide you with the best experience.</p>
-                    <button class="accept-cookies" onclick="acceptCookies()">Accept</button>
-                </div>
             </div>
         </nav>
         <main class="content">
@@ -1295,6 +355,20 @@
             <p>&copy; 2025 CompareHub Prices. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-banner-content">
+            <div class="cookie-banner-text">
+                <i class="fas fa-cookie-bite"></i>
+                <span>This website uses cookies to provide you with the best experience. By continuing to use this site, you agree to our use of cookies.</span>
+            </div>
+            <div class="cookie-banner-actions">
+                <button class="cookie-banner-btn accept-btn" onclick="acceptCookies()">Accept</button>
+                <button class="cookie-banner-btn decline-btn" onclick="declineCookies()">Decline</button>
+            </div>
+        </div>
+    </div>
 
 <script>
 // index.js
@@ -1818,71 +892,46 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Search functionality moved to search-suggestions.js
 
-    // ---------- SIDEBAR ----------
-    window.toggleSidebar = function() {
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('sidebarOverlay');
-        sidebar.classList.toggle('active');
-        overlay.classList.toggle('active');
-    };
-
-    window.closeSidebar = function() {
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('sidebarOverlay');
-        sidebar.classList.remove('active');
-        overlay.classList.remove('active');
-    };
-
-    window.toggleSubmenu = function(element) {
-        const item = element.parentElement;
-        const isActive = item.classList.contains('active');
-        document.querySelectorAll('.item.active').forEach(activeItem => {
-            if (activeItem !== item) activeItem.classList.remove('active');
-        });
-        item.classList.toggle('active');
-        if (!isActive) {
-            const submenuItems = item.querySelectorAll('.submenu .item');
-            submenuItems.forEach((submenuItem, index) => {
-                setTimeout(() => {
-                    submenuItem.classList.add('slide-in');
-                }, index * 50);
-            });
-        }
-    };
-
-    window.goBack = function(element) {
-        const item = element.closest('.item');
-        item.classList.remove('active');
-    };
-
-    document.getElementById('sidebarSearchInput').addEventListener('input', function(e) {
-        const searchTerm = e.target.value.toLowerCase();
-        const menuItems = document.querySelectorAll('.menu-items .item');
-        menuItems.forEach(item => {
-            const text = item.textContent.toLowerCase();
-            if (text.includes(searchTerm)) {
-                item.style.display = 'block';
-            } else {
-                item.style.display = 'none';
-            }
-        });
-    });
-
     await renderSidebarLogin();
 
-    document.addEventListener('click', function(e) {
-        const sidebar = document.getElementById('sidebar');
-        const toggle = document.querySelector('.sidebar-toggle');
-        const overlay = document.getElementById('sidebarOverlay');
-        if (sidebar && !sidebar.contains(e.target) && e.target !== toggle && e.target !== overlay) {
-            closeSidebar();
-        }
-    });
-
+    // Cookie Banner Functions
     window.acceptCookies = function() {
-        const cookieNotice = document.querySelector('.cookie-notice');
-        if (cookieNotice) cookieNotice.style.display = 'none';
+        const cookieBanner = document.getElementById('cookieBanner');
+        if (cookieBanner) {
+            cookieBanner.classList.remove('show');
+            localStorage.setItem('cookiesAccepted', 'true');
+            setTimeout(() => {
+                cookieBanner.style.display = 'none';
+            }, 400);
+        }
     };
+
+    window.declineCookies = function() {
+        const cookieBanner = document.getElementById('cookieBanner');
+        if (cookieBanner) {
+            cookieBanner.classList.remove('show');
+            localStorage.setItem('cookiesAccepted', 'false');
+            setTimeout(() => {
+                cookieBanner.style.display = 'none';
+            }, 400);
+        }
+    };
+
+    // Show cookie banner on page load if not already accepted/declined
+    function showCookieBanner() {
+        const cookiesAccepted = localStorage.getItem('cookiesAccepted');
+        if (cookiesAccepted === null) {
+            const cookieBanner = document.getElementById('cookieBanner');
+            if (cookieBanner) {
+                setTimeout(() => {
+                    cookieBanner.classList.add('show');
+                }, 1000); // Show after 1 second delay
+            }
+        }
+    }
+
+    // Initialize cookie banner
+    showCookieBanner();
 
     window.subscribeNewsletter = function(event) {
         event.preventDefault();
@@ -1900,8 +949,14 @@ document.addEventListener('DOMContentLoaded', async function() {
 <!-- Search suggestions functionality -->
 <script src="search-suggestions.js"></script>
 
+<!-- Account authentication functionality -->
+<script src="account-authentication.js"></script>
+
 <!-- Wishlist modal functionality -->
 <script src="wishlistmodal.js"></script>
+
+<!-- Sidebar functionality -->
+<script src="sidebar.js"></script>
 
 <!-- Mobile Search Modal Script -->
 <script>
@@ -1918,10 +973,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       
       // Function to check if device is a mobile phone (not tablet)
       function isMobilePhone() {
-          return window.innerWidth <= 768 &&
-                (typeof window.orientation !== 'undefined' ||
-                 navigator.userAgent.indexOf('IEMobile') !== -1 ||
-                 /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+          return window.innerWidth <= 480;
       }
       
       // Function to open mobile search modal
@@ -1945,6 +997,19 @@ document.addEventListener('DOMContentLoaded', async function() {
       }
       
       // Event listeners for opening modal
+      const searchContainer = document.querySelector('.search-container');
+      
+      // Add click listener to search container for mobile
+      if (searchContainer) {
+          searchContainer.addEventListener('click', function(e) {
+              if (isMobilePhone()) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  openMobileSearchModal();
+              }
+          }, { capture: true });
+      }
+      
       if (searchInput) {
           searchInput.addEventListener('click', function(e) {
               if (isMobilePhone()) {
@@ -2050,145 +1115,11 @@ document.addEventListener('DOMContentLoaded', async function() {
 </script>
 
 <!-- Login Modal JavaScript -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const loginModal = document.getElementById('loginModal');
-    const loginModalClose = document.getElementById('loginModalClose');
-    const loginModalForm = document.getElementById('loginModalForm');
-    const loginModalBtn = document.getElementById('loginModalBtn');
-    const loginModalBtnText = document.getElementById('loginModalBtnText');
-    const loginModalSpinner = document.getElementById('loginModalSpinner');
-    const loginModalPasswordToggle = document.getElementById('loginModalPasswordToggle');
-    const loginModalPassword = document.getElementById('loginModalPassword');
-    const loginModalForgotPassword = document.getElementById('loginModalForgotPassword');
-    const loginModalRegisterLink = document.getElementById('loginModalRegisterLink');
 
-    // Show login modal function
-    function showLoginModal() {
-        loginModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
 
-    // Hide login modal function
-    function hideLoginModal() {
-        loginModal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
+<!-- Register Modal JavaScript -->
 
-    // Update sidebar login button to show modal instead of redirecting
-    function updateSidebarLoginButton() {
-        const sidebarLogin = document.getElementById('sidebarLogin');
-        if (sidebarLogin) {
-            const loginBtn = sidebarLogin.querySelector('.login-btn');
-            if (loginBtn) {
-                loginBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    showLoginModal();
-                });
-            }
-        }
-    }
-
-    // Close modal event listeners
-    if (loginModalClose) {
-        loginModalClose.addEventListener('click', hideLoginModal);
-    }
-
-    // Close modal when clicking outside
-    loginModal.addEventListener('click', function(e) {
-        if (e.target === loginModal) {
-            hideLoginModal();
-        }
-    });
-
-    // Close modal with Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && loginModal.classList.contains('active')) {
-            hideLoginModal();
-        }
-    });
-
-    // Password toggle functionality
-    if (loginModalPasswordToggle && loginModalPassword) {
-        loginModalPasswordToggle.addEventListener('click', function() {
-            const type = loginModalPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-            loginModalPassword.setAttribute('type', type);
-            const icon = loginModalPasswordToggle.querySelector('i');
-            if (icon) {
-                icon.className = 'fas fa-eye';
-            }
-        });
-    }
-
-    // Form submission
-    if (loginModalForm) {
-        loginModalForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('loginModalEmail').value;
-            const password = document.getElementById('loginModalPassword').value;
-            
-            // Show loading state
-            loginModalBtn.disabled = true;
-            loginModalBtnText.style.display = 'none';
-            loginModalSpinner.style.display = 'block';
-            
-            try {
-                // Simulate login process (replace with actual login logic)
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                // For demo purposes, just redirect to login.html
-                // In a real implementation, you would handle the login here
-                window.location.href = 'login.html';
-                
-            } catch (error) {
-                console.error('Login error:', error);
-                alert('Login failed. Please try again.');
-            } finally {
-                // Reset button state
-                loginModalBtn.disabled = false;
-                loginModalBtnText.style.display = 'block';
-                loginModalSpinner.style.display = 'none';
-            }
-        });
-    }
-
-    // Forgot password link
-    if (loginModalForgotPassword) {
-        loginModalForgotPassword.addEventListener('click', function(e) {
-            e.preventDefault();
-            // Handle forgot password functionality
-            alert('Forgot password functionality would be implemented here');
-        });
-    }
-
-    // Register link
-    if (loginModalRegisterLink) {
-        loginModalRegisterLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            // Handle register functionality
-            window.location.href = 'register.html';
-        });
-    }
-
-    // Update sidebar login button after DOM is loaded
-    setTimeout(updateSidebarLoginButton, 100);
-    
-    // Also update when sidebar is re-rendered
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            if (mutation.target.id === 'sidebarLogin') {
-                updateSidebarLoginButton();
-            }
-        });
-    });
-    
-    const sidebarLogin = document.getElementById('sidebarLogin');
-    if (sidebarLogin) {
-        observer.observe(sidebarLogin, { childList: true, subtree: true });
-    }
-});
-</script>
+<!-- Forgot Password Modal JavaScript -->
 
     <!-- Login Modal -->
     <div class="login-modal" id="loginModal">
@@ -2204,6 +1135,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h2>Welcome Back</h2>
                     <p>Please sign in to your account to continue</p>
                 </div>
+                
+                <div id="loginAlertContainer"></div>
                 <form class="login-modal-form" id="loginModalForm">
                     <div class="login-modal-form-group">
                         <label for="loginModalEmail">Email Address</label>
@@ -2228,6 +1161,158 @@ document.addEventListener('DOMContentLoaded', function() {
                 </form>
                 <div class="login-modal-register-link">
                     Don't have an account? <a href="#" id="loginModalRegisterLink">Sign up here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="register-modal" id="registerModal">
+        <div class="register-modal-container">
+            <div class="register-modal-header">
+                <button class="register-modal-close" id="registerModalClose">&times;</button>
+                <div class="register-modal-logo-container">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg"
+                         alt="CompareHub Logo">
+                </div>
+            </div>
+            
+            <div class="register-modal-form-container">
+                <div class="register-modal-form-header">
+                    <h2>Create Account</h2>
+                    <p>Join thousands saving money with smart comparisons</p>
+                </div>
+                
+                <div id="registerAlertContainer"></div>
+                
+                <form id="registerModalForm" autocomplete="off">
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="text" class="register-modal-input" id="registerFirstname" placeholder="First Name" required>
+                            <i class="fas fa-user register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="text" class="register-modal-input" id="registerLastname" placeholder="Last Name" required>
+                            <i class="fas fa-user register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="email" class="register-modal-input" id="registerEmail" placeholder="Email Address" required>
+                            <i class="fas fa-envelope register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="password" class="register-modal-input" id="registerPassword" placeholder="Password" required>
+                            <button type="button" class="register-modal-password-toggle" onclick="toggleRegisterPassword('registerPassword')">
+                                <i class="fas fa-eye" id="registerPassword-eye"></i>
+                            </button>
+                        </div>
+                        <div class="register-modal-password-strength">
+                            <div class="register-modal-strength-title">Password Requirements</div>
+                            <div class="register-modal-strength-indicators">
+                                <div class="register-modal-strength-item" id="register-length-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>8+ characters</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-upper-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Uppercase letter</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-number-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Number</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-special-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Special character</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="password" class="register-modal-input" id="registerConfirmPassword" placeholder="Confirm Password" required>
+                            <button type="button" class="register-modal-password-toggle" onclick="toggleRegisterPassword('registerConfirmPassword')">
+                                <i class="fas fa-eye" id="registerConfirmPassword-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-checkbox-group">
+                        <div class="register-modal-checkbox">
+                            <input type="checkbox" id="registerTerms" required style="position: absolute; opacity: 0; cursor: pointer; height: 100%; width: 100%; margin: 0; z-index: 1;">
+                            <div class="register-modal-checkmark"></div>
+                        </div>
+                        <label for="registerTerms" class="register-modal-checkbox-label" style="cursor: pointer;">
+                            I agree to the <a href="Terms-of-Service.html" target="_blank" style="pointer-events: auto;">Terms of Service</a> and <a href="privacy-policy.html" target="_blank" style="pointer-events: auto;">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="register-modal-btn" id="registerModalBtn">
+                        <i class="fas fa-user-plus"></i>
+                        <span id="registerModalBtnText">Create Account</span>
+                        <div class="register-modal-spinner" id="registerModalSpinner" style="display: none;"></div>
+                    </button>
+                </form>
+                
+                <div class="register-modal-divider">
+                    <span>Already have an account?</span>
+                </div>
+                
+                <div class="register-modal-login-link">
+                    <a href="#" id="registerModalLoginLink">
+                        <i class="fas fa-arrow-left"></i> Sign in instead
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="forgot-password-modal">
+        <div class="forgot-password-modal-container">
+            <div class="forgot-password-modal-header">
+                <button class="forgot-password-modal-close" onclick="closeForgotPasswordModal()">&times;</button>
+                <div class="forgot-password-modal-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+            </div>
+            <div class="forgot-password-modal-form-container">
+                <div class="forgot-password-modal-form-header">
+                    <h2>Reset Password</h2>
+                    <p>Enter your email address and we'll send you a code to reset your password.</p>
+                </div>
+                
+                <div id="forgotPasswordAlert" class="forgot-password-modal-alert" style="display: none;"></div>
+                
+                <form id="forgotPasswordForm">
+                    <div class="forgot-password-modal-form-group">
+                        <label for="forgotPasswordEmail">Email Address</label>
+                        <input
+                            type="email"
+                            id="forgotPasswordEmail"
+                            name="email"
+                            placeholder="Enter your email address"
+                            required
+                        >
+                    </div>
+                    
+                    <button type="submit" class="forgot-password-modal-btn" id="forgotPasswordBtn">
+                        <span id="forgotPasswordBtnText">Send Reset Code</span>
+                        <div id="forgotPasswordSpinner" class="forgot-password-modal-spinner" style="display: none;"></div>
+                    </button>
+                </form>
+                
+                <div class="forgot-password-modal-back-link">
+                    <a href="#" onclick="closeForgotPasswordModal(); showLoginModal();">Back to Login</a>
                 </div>
             </div>
         </div>
