@@ -1,0 +1,2586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Articles & Reviews - CompareHub</title>
+    <meta name="description" content="Stay updated with the latest technology trends, product reviews, and buying guides from CompareHub.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="pagination-enhancements.css">
+
+    <style>
+        /* Main container styling */
+        .main-container {
+            padding-top: 120px; /* Accounts for header height */
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                padding-top: 110px; /* Adjust for smaller header on mobile */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-container {
+                padding-top: 100px; /* Further adjust for smaller screens */
+            }
+        }
+
+        /* Articles Page Specific Styles */
+        .articles-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .articles-hero {
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(135deg, #05182d 0%, #ff0000 100%);
+            color: white;
+            padding: 80px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .articles-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .articles-hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .articles-hero p {
+            font-size: 20px;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Article Categories */
+        .article-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+            justify-content: center;
+        }
+
+        .article-category {
+            background: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #333;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .article-category:hover, .article-category.active {
+            background: linear-gradient(135deg, #05182d 0%, #ff0000 100%);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Article Grid */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .article-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .article-image {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .article-card:hover .article-image img {
+            transform: scale(1.05);
+        }
+
+        .article-content {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-category-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #05182d 0%, #0066cc 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .article-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.4;
+            transition: color 0.3s ease;
+        }
+
+        .article-card:hover .article-title {
+            color: #0066cc;
+        }
+
+        .article-excerpt {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+            color: #888;
+        }
+
+        .article-date {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .article-read-more {
+            display: inline-flex;
+            align-items: center;
+            color: #0066cc;
+            font-weight: 600;
+            text-decoration: none;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .article-read-more i {
+            transition: transform 0.3s ease;
+        }
+
+        .article-read-more:hover {
+            color: #004999;
+        }
+
+        .article-read-more:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Featured Article */
+        .featured-article {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .featured-article::before {
+            content: 'FEATURED';
+            position: absolute;
+            top: 20px;
+            left: -35px;
+            background: #ff0000;
+            color: white;
+            padding: 8px 40px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transform: rotate(-45deg);
+            z-index: 1;
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .featured-article-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .featured-article-image {
+            height: 100%;
+            min-height: 400px;
+        }
+
+        .featured-article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-article-text {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-article-category {
+            display: inline-block;
+            background: linear-gradient(135deg, #05182d 0%, #0066cc 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .featured-article-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .featured-article-excerpt {
+            font-size: 18px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .featured-article-button {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, #05182d 0%, #ff0000 100%);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-decoration: none;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            align-self: flex-start;
+        }
+
+        .featured-article-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .featured-article-button i {
+            transition: transform 0.3s ease;
+        }
+
+        .featured-article-button:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Pagination styles removed - now using pagination-enhancements.css */
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #05182d 0%, #ff0000 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border: 3px solid white;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 1024px) {
+            .featured-article-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-article-image {
+                min-height: 300px;
+            }
+            
+            .featured-article-text {
+                padding: 30px;
+            }
+            
+            .featured-article-title {
+                font-size: 28px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .articles-container {
+                padding: 20px 15px;
+                border-radius: 15px;
+            }
+            
+            .articles-hero {
+                padding: 50px 25px;
+                border-radius: 15px;
+                margin-bottom: 30px;
+            }
+            
+            .articles-hero h1 {
+                font-size: 32px;
+                margin-bottom: 15px;
+            }
+            
+            .articles-hero p {
+                font-size: 16px;
+            }
+            
+            .article-categories {
+                gap: 10px;
+                margin-bottom: 30px;
+            }
+            
+            .article-category {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            .articles-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            }
+            
+            .article-image {
+                height: 180px;
+            }
+            
+            .article-content {
+                padding: 20px;
+            }
+            
+            .article-title {
+                font-size: 20px;
+            }
+            
+            .article-excerpt {
+                font-size: 15px;
+            }
+            
+            .featured-article-text {
+                padding: 25px;
+            }
+            
+            .featured-article-title {
+                font-size: 24px;
+                margin-bottom: 15px;
+            }
+            
+            .featured-article-excerpt {
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+            
+            .featured-article-button {
+                padding: 12px 25px;
+            }
+            
+            /* Removed newsletter styles */
+            
+            .back-to-top {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .articles-container {
+                padding: 15px 10px;
+                border-radius: 10px;
+            }
+            
+            .articles-hero {
+                padding: 40px 20px;
+                border-radius: 10px;
+                margin-bottom: 25px;
+            }
+            
+            .articles-hero h1 {
+                font-size: 28px;
+                margin-bottom: 12px;
+            }
+            
+            .articles-hero p {
+                font-size: 15px;
+            }
+            
+            .article-category {
+                padding: 8px 15px;
+                font-size: 13px;
+            }
+            
+            .articles-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .article-content {
+                padding: 15px;
+            }
+            
+            .article-title {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+            
+            .article-excerpt {
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+            
+            .article-meta {
+                padding-top: 10px;
+                font-size: 12px;
+            }
+            
+            .featured-article::before {
+                font-size: 10px;
+                padding: 5px 30px;
+                top: 15px;
+                left: -30px;
+            }
+            
+            .featured-article-image {
+                min-height: 200px;
+            }
+            
+            .featured-article-text {
+                padding: 20px 15px;
+            }
+            
+            .featured-article-category {
+                font-size: 12px;
+                padding: 6px 12px;
+                margin-bottom: 12px;
+            }
+            
+            .featured-article-title {
+                font-size: 20px;
+                margin-bottom: 12px;
+            }
+            
+            .featured-article-excerpt {
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+            
+            .featured-article-button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            /* Removed newsletter styles */
+            
+            .pagination-item {
+                width: 40px;
+                height: 40px;
+                font-size: 14px;
+            }
+            
+            .pagination-item.prev, .pagination-item.next {
+                padding: 0 15px;
+            }
+            
+            .back-to-top {
+                width: 45px;
+                height: 45px;
+                bottom: 15px;
+                right: 15px;
+                font-size: 18px;
+            }
+        }
+        
+        /* Optimization for 390-414px devices (iPhone 12 Pro, Pixel 7, S20 Ultra, iPhone XR) */
+        @media (min-width: 361px) and (max-width: 414px) {
+            /* Global fixes for iPhone 12 Pro and iPhone XR */
+            body {
+                width: 100%;
+                overflow-x: hidden;
+                margin: 0;
+                padding: 0;
+            }
+            
+            .main-container {
+                width: 100%;
+                box-sizing: border-box;
+                overflow-x: hidden;
+                padding-top: 100px;
+            }
+            
+            .content {
+                width: 100%;
+                box-sizing: border-box;
+                overflow-x: hidden;
+            }
+            
+            /* Articles container and hero section */
+            .articles-container {
+                padding: 10px 8px;
+                border-radius: 8px;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+                overflow: hidden;
+                margin: 0 auto;
+            }
+            
+            .articles-hero {
+                padding: 30px 15px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .articles-hero h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .articles-hero p {
+                font-size: 14px;
+                line-height: 1.4;
+                width: 100%;
+                box-sizing: border-box;
+                margin: 0 auto;
+            }
+            
+            /* Article categories */
+            .article-categories {
+                gap: 6px;
+                margin-bottom: 20px;
+                width: 100%;
+                box-sizing: border-box;
+                justify-content: center;
+                flex-wrap: wrap;
+                display: flex;
+            }
+            
+            .article-category {
+                padding: 6px 12px;
+                font-size: 12px;
+                white-space: nowrap;
+                border-radius: 20px;
+            }
+            
+            /* Featured article */
+            .featured-article {
+                margin-bottom: 25px;
+                border-radius: 10px;
+                width: 100%;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
+            
+            .featured-article-content {
+                width: 100%;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .featured-article::before {
+                font-size: 9px;
+                padding: 4px 25px;
+                top: 12px;
+                left: -25px;
+            }
+            
+            .featured-article-image {
+                min-height: 180px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .featured-article-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            
+            .featured-article-text {
+                padding: 15px 12px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .featured-article-category {
+                font-size: 11px;
+                padding: 5px 10px;
+                margin-bottom: 10px;
+                display: inline-block;
+            }
+            
+            .featured-article-title {
+                font-size: 20px;
+                margin-bottom: 10px;
+                line-height: 1.3;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .featured-article-excerpt {
+                font-size: 14px;
+                margin-bottom: 15px;
+                line-height: 1.4;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .featured-article-button {
+                padding: 8px 16px;
+                font-size: 13px;
+                border-radius: 20px;
+                display: inline-flex;
+                align-items: center;
+            }
+            
+            /* Article grid and cards */
+            .articles-grid {
+                width: 100%;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                margin-bottom: 30px;
+            }
+            
+            .article-card {
+                border-radius: 10px;
+                width: 100%;
+                box-sizing: border-box;
+                overflow: hidden;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+                margin-bottom: 0;
+            }
+            
+            .article-image {
+                height: 160px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .article-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            
+            .article-content {
+                padding: 12px 10px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .article-category-tag {
+                font-size: 10px;
+                padding: 4px 8px;
+                margin-bottom: 8px;
+                display: inline-block;
+            }
+            
+            .article-title {
+                font-size: 16px;
+                margin-bottom: 8px;
+                line-height: 1.3;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .article-excerpt {
+                font-size: 13px;
+                margin-bottom: 12px;
+                line-height: 1.4;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .article-meta {
+                padding-top: 8px;
+                font-size: 11px;
+                width: 100%;
+                box-sizing: border-box;
+                display: flex;
+                justify-content: space-between;
+            }
+            
+            .article-read-more {
+                font-size: 12px;
+            }
+            
+            /* Pagination */
+            .pagination {
+                gap: 6px;
+                margin-top: 25px;
+                width: 100%;
+                box-sizing: border-box;
+                justify-content: center;
+                display: flex;
+            }
+            
+            .pagination-item {
+                width: 36px;
+                height: 36px;
+                font-size: 13px;
+            }
+            
+            .pagination-item.prev, .pagination-item.next {
+                padding: 0 12px;
+                font-size: 12px;
+            }
+            
+            /* Back to top button */
+            .back-to-top {
+                width: 40px;
+                height: 40px;
+                bottom: 12px;
+                right: 12px;
+                font-size: 16px;
+                border-width: 2px;
+            }
+            
+            /* Ads sections */
+            .ads-section {
+                width: 100%;
+                box-sizing: border-box;
+                margin: 15px 0;
+            }
+            
+            .ads-container {
+                width: 100%;
+                max-width: 320px;
+                box-sizing: border-box;
+                height: 50px;
+            }
+            
+            /* Fix for iPhone-specific issues */
+            picture {
+                width: 100%;
+                display: block;
+            }
+            
+            picture img {
+                width: 100%;
+                height: auto;
+            }
+        }
+        
+        /* Specific optimization for 360px width devices (like Samsung Galaxy S8) */
+        @media (max-width: 360px) {
+            .articles-container {
+                padding: 10px 8px;
+                border-radius: 8px;
+            }
+            
+            .articles-hero {
+                padding: 30px 15px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+            }
+            
+            .articles-hero h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .articles-hero p {
+                font-size: 14px;
+                line-height: 1.4;
+            }
+            
+            .article-categories {
+                gap: 6px;
+                margin-bottom: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .article-category {
+                padding: 6px 12px;
+                font-size: 12px;
+                white-space: nowrap;
+            }
+            
+            .article-card {
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            }
+            
+            .article-image {
+                height: 160px;
+            }
+            
+            .article-content {
+                padding: 12px 10px;
+            }
+            
+            .article-category-tag {
+                font-size: 10px;
+                padding: 4px 8px;
+                margin-bottom: 8px;
+            }
+            
+            .article-title {
+                font-size: 16px;
+                margin-bottom: 8px;
+                line-height: 1.3;
+            }
+            
+            .article-excerpt {
+                font-size: 13px;
+                margin-bottom: 12px;
+                line-height: 1.4;
+            }
+            
+            .article-meta {
+                padding-top: 8px;
+                font-size: 11px;
+            }
+            
+            .article-read-more {
+                font-size: 12px;
+            }
+            
+            .featured-article {
+                margin-bottom: 25px;
+                border-radius: 10px;
+            }
+            
+            .featured-article::before {
+                font-size: 9px;
+                padding: 4px 25px;
+                top: 12px;
+                left: -25px;
+            }
+            
+            .featured-article-image {
+                min-height: 180px;
+            }
+            
+            .featured-article-text {
+                padding: 15px 12px;
+            }
+            
+            .featured-article-category {
+                font-size: 11px;
+                padding: 5px 10px;
+                margin-bottom: 10px;
+            }
+            
+            .featured-article-title {
+                font-size: 18px;
+                margin-bottom: 10px;
+                line-height: 1.3;
+            }
+            
+            .featured-article-excerpt {
+                font-size: 13px;
+                margin-bottom: 12px;
+                line-height: 1.4;
+            }
+            
+            .featured-article-button {
+                padding: 8px 16px;
+                font-size: 13px;
+                border-radius: 20px;
+            }
+            
+            .pagination {
+                gap: 6px;
+                margin-top: 30px;
+            }
+            
+            .pagination-item {
+                width: 36px;
+                height: 36px;
+                font-size: 13px;
+            }
+            
+            .pagination-item.prev, .pagination-item.next {
+                padding: 0 12px;
+                font-size: 12px;
+            }
+            
+            .back-to-top {
+                width: 40px;
+                height: 40px;
+                bottom: 12px;
+                right: 12px;
+                font-size: 16px;
+                border-width: 2px;
+            }
+        }
+
+        /* Google Ads Section Styles */
+        .ads-section {
+            margin: 2rem 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .ads-container {
+            width: 100%;
+            max-width: 970px;
+            min-height: 90px;
+            margin: 0 auto;
+            overflow: hidden;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .ad-placeholder {
+            width: 100%;
+            height: 100%;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+            color: #888;
+            border: 1px dashed #ccc;
+        }
+        
+        .ad-placeholder-text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .ad-placeholder-text i {
+            font-size: 1.5rem;
+        }
+        
+        /* Responsive ad sizes */
+        @media (min-width: 970px) {
+            .ads-container {
+                height: 90px; /* Leaderboard size */
+            }
+        }
+        
+        @media (max-width: 969px) and (min-width: 728px) {
+            .ads-container {
+                height: 90px; /* Leaderboard size */
+                max-width: 728px;
+            }
+        }
+        
+        @media (max-width: 727px) and (min-width: 468px) {
+            .ads-container {
+                height: 60px; /* Banner size */
+                max-width: 468px;
+            }
+        }
+        
+        @media (max-width: 467px) {
+            .ads-container {
+                height: 50px; /* Mobile banner size */
+                max-width: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg" alt="CompareHubPrices" class="logo-image">
+                </a>
+            </div>
+            <div class="search-container">
+                <form id="search-form">
+                    <input type="text" name="q" class="search-input" placeholder="Search......." id="searchInput">
+                    <button type="submit" class="search-button" aria-label="Search"><i class="fas fa-search"></i></button>
+                </form>
+                <div class="search-suggestions" id="searchSuggestions">
+                    <div class="suggestions-header">
+                        <span class="all-results">All</span>
+                        <span class="search-query" id="searchQuery">results</span>
+                    </div>
+                    <div class="suggestions-grid" id="suggestionsGrid"></div>
+                </div>
+            </div>
+        </div>
+        <nav class="category-nav">
+            <a href="best-deals.html"><i class=""></i> Best deals</a>
+            <a href="#new-arrivals"><i class=""></i> New Arrivals</a>
+            <a href="#" id="wishlist-link"><i class="fas fa-heart"></i> Wishlist</a>
+        </nav>
+    </header>
+  <div class="main-container">
+      <nav class="sidebar" id="sidebar">
+            <div class="sidebar-login" id="sidebarLogin"></div>
+            <div class="sidebar-search">
+                <input type="text" placeholder="Search categories..." id="sidebarSearchInput">
+            </div>
+            <div class="sidebar-header">
+                <h3>Browse Categories</h3>
+                <button class="close-sidebar" onclick="closeSidebar()" aria-label="Close menu">&times;</button>
+            </div>
+            
+         
+            <button class="switch-categories-btn" onclick="switchCategoryType()">
+                
+                <span id="switchBtnText">Switch to Essential Goods</span>
+            </button>
+            
+            <div class="category-type" id="categoryType">Electronics</div>
+            
+                <div class="menu-content" id="menuContent">
+                <ul class="menu-items" id="electronicsMenu">
+                  <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i> Smartphones,Tablets & Accessories</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                            <li class="item"><a href="smartphones.html" onclick="navigateToSmartphonesByType('all'); return false;">Smartphones</a></li>
+                             <li class="item"><a href="#tablets" onclick="navigateToTabletsByType('all'); return false;">Tablets</a></li>
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Accessories</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#adapters" onclick="navigateToSmartphonesAccessoriesByType('adapters'); return false;">Adapters</a></li>
+                                     <li class="item"><a href="#powerbanks" onclick="navigateToSmartphonesAccessoriesByType('powerbanks'); return false;">Powerbanks</a></li>
+                                     <li class="item"><a href="#cables" onclick="navigateToSmartphonesAccessoriesByType('cables'); return false;">Cables</a></li>
+                                    
+                                 </ul>
+                             </li>
+                             
+                         </ul>
+                    </li>
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i> Computers,Laptops & Accessories</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Laptops</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#windows" onclick="navigateToLaptopsByType('windows'); return false;">Windows</a></li>
+                                     <li class="item"><a href="#macos" onclick="navigateToLaptopsByType('macos'); return false;">MacOS</a></li>
+                                     <li class="item"><a href="#chromeos" onclick="navigateToLaptopsByType('chromeos'); return false;">ChromeOS</a></li>
+                                 </ul>
+                             </li>
+                             
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Desktops</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#windows" onclick="navigateToDesktopsByType('windows'); return false;">Windows</a></li>
+                                     <li class="item"><a href="#macos" onclick="navigateToDesktopsByType('macos'); return false;">MacOS</a></li>
+                                 </ul>
+                               </li>
+
+                              
+                               <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Accessories</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToLaptopDesktopAccessoriesByType('adapters')">Charges & Adapters</a></li>
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToLaptopDesktopAccessoriesByType('usb_hubs')">USB Hubs</a></li>
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToLaptopDesktopAccessoriesByType('keyboards')">Keyboards & Mice</a></li>
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToLaptopDesktopAccessoriesByType('speakers')">Speakers</a></li>
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToLaptopDesktopAccessoriesByType('webcams')">Webcams</a></li>    
+                                 </ul>
+                             </li>
+
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Data Storage</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#memory-cards" onclick="navigateToDataStorageByType('memory_cards'); return false;">Memory Cards</a></li>
+                                     <li class="item"><a href="#external-drivers" onclick="navigateToDataStorageByType('external_drivers'); return false;">External Drivers</a></li>
+                                    <li class="item"><a href="#usb-drivers" onclick="navigateToDataStorageByType('usb_drivers'); return false;">USB Drivers</a></li>
+                                   
+                                 </ul>
+                             </li>
+ 
+                               <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Componets</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#motherboard" onclick="navigateToComponentsByType('motherboard'); return false;">Motherboard</a></li>
+                                     <li class="item"><a href="#memory-ram" onclick="navigateToComponentsByType('memory_ram'); return false;">Memory(RAM)</a></li>
+                                     <li class="item"><a href="#graphics-card" onclick="navigateToComponentsByType('graphics_card'); return false;">Graphics Card</a></li>
+                                     <li class="item"><a href="#storage" onclick="navigateToComponentsByType('storage'); return false;">Storage</a></li>
+                                    <li class="item"><a href="#cpu" onclick="navigateToComponentsByType('cpu'); return false;">CPU</a></li>
+                                     <li class="item"><a href="#power-supply" onclick="navigateToComponentsByType('power_supply'); return false;">Power Supply</a></li>
+                                 </ul>
+                             </li>   
+
+                           </ul>
+                    </li>
+
+                    
+                  
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Wi-Fi & Networking</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="item"><a href="#routers" onclick="navigateToWifiNetworkingByType('routers'); return false;">Routers</a></li>
+                             <li class="item"><a href="#wifi-ups" onclick="navigateToWifiNetworkingByType('wifi_ups'); return false;">WiFi Ups</a></li>
+                             <li class="item"><a href="#extenders-repeaters" onclick="navigateToWifiNetworkingByType('extenders_repeaters'); return false;">Extenders & Repeaters</a></li>
+                        
+                         </ul>
+                    </li>
+
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span><i class=""></i> TV & Streaming</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="javascript:void(0);" onclick="navigateToTVStreamingByType('televisions')">Televisions</a></li>
+                            <li class="item"><a href="javascript:void(0);" onclick="navigateToTVStreamingByType('streaming_devices')">Streaming Devices</a></li>
+                        </ul>
+                    </li>
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Audio</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                            
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Earbuds & Headphones</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#earbuds" onclick="navigateToHeadphonesEarbudsByType('earbuds'); return false;">Earbuds</a></li>
+                                     <li class="item"><a href="#headphones" onclick="navigateToHeadphonesEarbudsByType('headphones'); return false;">Headphones</a></li>
+                                 </ul>
+                             </li>
+                             
+                                 <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Portable Speakers</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#bluetooth-speakers" onclick="navigateToPortableSpeakersByType('bluetooth_speakers'); return false;">Bluetooth Speakers</a></li>
+                                     <li class="item"><a href="#party-speakers" onclick="navigateToPortableSpeakersByType('party_speakers'); return false;">Party Speakers</a></li>
+
+                                 </ul>
+                             </li>
+
+
+
+                           <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Home Entertainment Systems</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#hifi-systems" onclick="navigateToHomeEntertainmentByType('hifi_systems'); return false;">Hi-Fi Systems</a></li>
+                                     <li class="item"><a href="#soundbars" onclick="navigateToHomeEntertainmentByType('soundbars'); return false;">Soundbars</a></li>
+                                 </ul>
+                              </li>
+                         </ul>
+                    </li>
+
+                        <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Wearables Devices</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             
+                             <li class="item"><a href="#smartwatches" onclick="navigateToWearablesByType('smartwatches'); return false;">Smartwatches</a></li>
+                             <li class="item"><a href="#fitness-trackers" onclick="navigateToWearablesByType('fitness_trackers'); return false;">Fitness Trackers</a></li>
+                             
+                         </ul>
+                    </li>
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Climate Control</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                         
+                             <li class="item"><a href="#fans" onclick="navigateToClimateControlByType('fans'); return false;">Fans</a></li>
+                             <li class="item"><a href="#air-conditioners" onclick="navigateToClimateControlByType('air_conditioners'); return false;">Air Conditioners</a></li>
+                              <li class="item"><a href="#air-coolers" onclick="navigateToClimateControlByType('air_coolers'); return false;">Air Coolers</a></li>
+                         </ul>
+                    </li>
+
+
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Gaming</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                            <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('console')">Consoles</a></li>
+                            <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('laptop')">Gaming Laptops</a></li>
+                            <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('pc')">Gaming PCs</a></li>
+                            <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('monitor')">Gaming Monitors</a></li>
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span> XBOX Accessories</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('xbox_accessories')">Accessories</a></li>
+                                     
+                                 </ul>
+                             </li>
+
+
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Nintendo Accessories</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('nintendo_accessories')">Accessories</a></li>
+                                
+                                 </ul>
+                             </li>
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span> Playstation Accessories</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('xbox_accessories')">Accessories</a></li>
+                                    
+                                 </ul>
+                             </li>
+
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span> PC Gaming Accessories</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('pc_accessories_keyboards')">Gaming Keyboards & Mouse</a></li>
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('pc_accessories_headsets')">Gaming Headsets</a></li>
+                    
+                                 </ul>
+                             </li>
+                             
+                         </ul>
+                    </li>
+
+                      
+                        <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Appliances</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Fridges & Freezers</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#fridges" onclick="navigateToAppliancesByType('fridges'); return false;">Fridges</a></li>
+                                     <li class="item"><a href="#freezers" onclick="navigateToAppliancesByType('freezers'); return false;">Freezers</a></li>
+                                 </ul>
+                             </li>
+                             
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Microwaves, Ovens & Stoves</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#microwaves" onclick="navigateToAppliancesByType('microwaves'); return false;">Microwaves</a></li>
+                                     <li class="item"><a href="#ovens" onclick="navigateToAppliancesByType('ovens'); return false;">Ovens</a></li>
+                                     <li class="item"><a href="#stoves" onclick="navigateToAppliancesByType('stoves'); return false;">Stoves</a></li>
+                                 </ul>
+                             </li>
+
+
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Kettles, Coffee Machines</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#kettles" onclick="navigateToAppliancesByType('kettles'); return false;">Kettles</a></li>
+                                     <li class="item"><a href="#coffee-machines" onclick="navigateToAppliancesByType('coffee_machines'); return false;">Coffee Machines</a></li>
+                                    
+                                 </ul>
+                             </li>
+
+
+
+
+                               <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Floorcare</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#vacuum-cleaners" onclick="navigateToAppliancesByType('vacuum_cleaners'); return false;">Vacuum Cleaners</a></li>
+                                     <li class="item"><a href="#robot-vacuums" onclick="navigateToAppliancesByType('robot_vacuums'); return false;">Robot Vacuums</a></li>
+                                 
+                                 </ul>
+                             </li>
+                                
+
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Food Preparation</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#mixers" onclick="navigateToAppliancesByType('mixers'); return false;">Mixers</a></li>
+                                     <li class="item"><a href="#food-processors" onclick="navigateToAppliancesByType('food_processors'); return false;">Food Processors</a></li>
+                                     <li class="item"><a href="#blenders-juicers" onclick="navigateToAppliancesByType('blenders_juicers'); return false;">Blenders & Juicers</a></li>
+                                 </ul>
+                             </li>
+                                                
+
+
+                               <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Heaters & Electric Blankets</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#heaters" onclick="navigateToAppliancesByType('heaters'); return false;">Heaters</a></li>
+                                     <li class="item"><a href="#electric-blankets" onclick="navigateToAppliancesByType('electric_blankets'); return false;">Electric Blankets</a></li>
+                                 </ul>
+                             </li>
+                               
+                              <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Personal Care</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#electric-shavers" onclick="navigateToAppliancesByType('electric_shavers'); return false;">Electric Shavers</a></li>
+                                     <li class="item"><a href="#hair-care" onclick="navigateToAppliancesByType('hair_care'); return false;">Hair Care</a></li>
+                                 </ul>
+                             </li>
+                               
+                               <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Cookers & Air Fryers</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#air-fryers" onclick="navigateToAppliancesByType('air_fryers'); return false;">Air Fryers</a></li>
+                                     <li class="item"><a href="#grillers" onclick="navigateToAppliancesByType('grillers'); return false;">Grillers</a></li>
+                                    <li class="item"><a href="#cooker-steamers" onclick="navigateToAppliancesByType('cooker_steamers'); return false;">Cooker&Steamers</a></li>
+                                     <li class="item"><a href="#hotplates" onclick="navigateToAppliancesByType('hotplates'); return false;">Hotplates</a></li>
+                                     
+                                 </ul>
+                             </li>
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Toasters & Sandwich Makers</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#toasters" onclick="navigateToAppliancesByType('toasters'); return false;">Toasters</a></li>
+                                     <li class="item"><a href="#sandwich-makers" onclick="navigateToAppliancesByType('sandwich_makers'); return false;">Sandwich Makers</a></li>
+                                     
+                                 </ul>
+                             </li>
+                             
+                             <li class="item"><a href="#dishwashers" onclick="navigateToAppliancesByType('dishwashers'); return false;">Dishwashers</a></li>
+                             <li class="item"><a href="#irons-steamers" onclick="navigateToAppliancesByType('irons_steamers'); return false;">Irons & Steamers</a></li>
+                             <li class="item"><a href="#sewing-machine" onclick="navigateToAppliancesByType('sewing_machine'); return false;">Sewing Machine</a></li>
+                             <li class="item"><a href="#humidifiers-purifiers" onclick="navigateToAppliancesByType('humidifiers_purifiers'); return false;">Humidifiers & Purifiers</a></li>
+                            
+                         </ul>
+                    </li>
+
+
+                       <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span><i class=""></i>Power Solutions</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                      
+                            <li class="item"><a href="#ups" onclick="navigateToPowerSolutionsByType('ups'); return false;">UPS</a></li>
+                            <li class="item"><a href="#power-stations" onclick="navigateToPowerSolutionsByType('power_stations'); return false;">Power Stations</a></li>
+                            <li class="item"><a href="#inverters" onclick="navigateToPowerSolutionsByType('inverters'); return false;">Inverters</a></li>
+                            
+                        </ul>
+                    </li>
+
+
+                         
+
+                </ul>
+                
+                
+                <ul class="menu-items" id="foodMenu" style="display: none;">
+                    <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Household</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                            
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Cleaning and Hygiene</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#monitors">Bleaches</a></li>
+                                     <li class="item"><a href="#towers">Dishwashing Liquids</a></li>
+                                     <li class="item"><a href="#monitors">Bleaches</a></li>
+                                     <li class="item"><a href="#towers">Air Freshners</a></li>
+                                     <li class="item"><a href="#monitors">Bleaches</a></li>
+                                     <li class="item"><a href="#towers">Headphones</a></li>
+                                 </ul>
+                             </li>
+                             
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Essential Cleaning Tools</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#monitors">Beef</a></li>
+                                     <li class="item"><a href="#towers">Chicken meat</a></li>
+                                     <li class="item"><a href="#towers">Milk</a></li>
+                                 </ul>
+                             </li>
+
+
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Kitchen Essentials</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#laptop-bags">Kettle & Toasters</a></li>
+                                     <li class="item"><a href="#laptop-cooling">Hotplates</a></li>
+                                     <li class="item"><a href="#stands">Air-fryer</a></li>
+                                 </ul>
+                             </li>
+                             
+                             <li class="item"><a href="#windows-laptops">Insect Control</a></li>
+                             <li class="item"><a href="#macos-laptops">Pet Care</a></li>
+                             <li class="item"><a href="#chrome-os-laptops">Pest control</a></li>
+                         </ul>
+                    </li>
+
+                     <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Foods</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                            
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Cleaning and Hygiene</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#monitors">Bleaches</a></li>
+                                     <li class="item"><a href="#towers">Dishwashing Liquids</a></li>
+                                     <li class="item"><a href="#monitors">Bleaches</a></li>
+                                     <li class="item"><a href="#towers">Air Freshners</a></li>
+                                     <li class="item"><a href="#monitors">Bleaches</a></li>
+                                     <li class="item"><a href="#towers">Headphones</a></li>
+                                 </ul>
+                             </li>
+                             
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Essential Cleaning Tools</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#monitors">Beef</a></li>
+                                     <li class="item"><a href="#towers">Chicken meat</a></li>
+                                     <li class="item"><a href="#towers">Milk</a></li>
+                                 </ul>
+                             </li>
+
+
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Home Appliances</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#laptop-bags">Hi-Fi Systems</a></li>
+                                     <li class="item"><a href="#laptop-cooling">Soundbars</a></li>
+                                     <li class="item"><a href="#stands">Stands</a></li>
+                                 </ul>
+                             </li>
+                             
+                            
+                         </ul>
+                    </li>
+
+
+                      <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Personal Care</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                            
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Toiletries</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#monitors">Deodorants</a></li>
+                                     <li class="item"><a href="#towers">Hand Care</a></li>
+                                 </ul>
+                             </li>
+                             
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Hair Care</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#monitors">Bluetooth Speakers</a></li>
+                                     <li class="item"><a href="#towers">Headphones</a></li>
+                                     <li class="item"><a href="#towers">Radios</a></li>
+                                 </ul>
+                             </li>
+
+
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Foot Care</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#laptop-bags">Hi-Fi Systems</a></li>
+                                     <li class="item"><a href="#laptop-cooling">Soundbars</a></li>
+                                     <li class="item"><a href="#stands">Stands</a></li>
+                                 </ul>
+                             </li>
+                             
+                             
+                         </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <div class="articles-container">
+                <div class="articles-hero">
+                    <h1>Tech Articles & Reviews</h1>
+                    <p>Stay updated with the latest technology trends, product reviews, and buying guides to make informed purchasing decisions.</p>
+                </div>
+
+                <div class="article-categories">
+                    <div class="article-category active">All Articles</div>
+                    <div class="article-category">Smartphones</div>
+                    <div class="article-category">Laptops</div>
+                    <div class="article-category">TVs</div>
+                    <div class="article-category">Audio</div>
+                    <div class="article-category">Buying Guides</div>
+                </div>
+
+                <!-- Featured Article -->
+                <div class="featured-article">
+                    <div class="featured-article-content">
+                        <div class="featured-article-image">
+                            <picture>
+                                <source media="(max-width: 480px)" srcset="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&auto=format&fit=crop&w=480&q=80">
+                                <source media="(max-width: 768px)" srcset="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&auto=format&fit=crop&w=768&q=80">
+                                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" alt="Top 5 Smartphones of 2025">
+                            </picture>
+                        </div>
+                        <div class="featured-article-text">
+                            <span class="featured-article-category">Smartphones</span>
+                            <h2 class="featured-article-title">Top 5 Smartphones of 2025: Which One Should You Buy?</h2>
+                            <p class="featured-article-excerpt">We compare the latest flagship phones from Apple, Samsung, Google, and more to help you make the right choice for your needs and budget.</p>
+                            <a href="#" class="featured-article-button">Read Full Article <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article Grid -->
+                <div class="articles-grid">
+                    <!-- Article 1 -->
+                    <div class="article-card">
+                        <div class="article-image">
+                            <picture>
+                                <source media="(max-width: 480px)" srcset="https://images.unsplash.com/photo-1544652478-6653e09f18a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=480&q=80">
+                                <source media="(max-width: 768px)" srcset="https://images.unsplash.com/photo-1544652478-6653e09f18a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=768&q=80">
+                                <img src="https://images.unsplash.com/photo-1544652478-6653e09f18a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Smart Home Essentials">
+                            </picture>
+                        </div>
+                        <div class="article-content">
+                            <span class="article-category-tag">Smart Home</span>
+                            <h3 class="article-title">Smart Home Essentials: Building Your Connected Home in 2025</h3>
+                            <p class="article-excerpt">From smart speakers to security systems, here's everything you need to know about creating a modern smart home.</p>
+                            <div class="article-meta">
+                                <div class="article-date"><i class="far fa-calendar-alt"></i> July 15, 2025</div>
+                                <a href="#" class="article-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Google Ads Section -->
+                    <section class="ads-section">
+                        <div class="ads-container" id="googleAdsContainer">
+                            <!-- Google AdSense code would be inserted here -->
+                            <div class="ad-placeholder">
+                                <div class="ad-placeholder-text">
+                                    <i class="fas fa-ad"></i>
+                                    <span>Advertisement</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Article 2 -->
+                    <div class="article-card">
+                        <div class="article-image">
+                            <picture>
+                                <source media="(max-width: 480px)" srcset="https://images.unsplash.com/photo-1526570207772-784d36084510?ixlib=rb-1.2.1&auto=format&fit=crop&w=480&q=80">
+                                <source media="(max-width: 768px)" srcset="https://images.unsplash.com/photo-1526570207772-784d36084510?ixlib=rb-1.2.1&auto=format&fit=crop&w=768&q=80">
+                                <img src="https://images.unsplash.com/photo-1526570207772-784d36084510?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Best Laptops for Students">
+                            </picture>
+                        </div>
+                        <div class="article-content">
+                            <span class="article-category-tag">Laptops</span>
+                            <h3 class="article-title">Best Laptops for Students in 2025: Budget-Friendly Options</h3>
+                            <p class="article-excerpt">Find the perfect laptop for your studies without breaking the bank. We've tested dozens of models to bring you the best options.</p>
+                            <div class="article-meta">
+                                <div class="article-date"><i class="far fa-calendar-alt"></i> July 10, 2025</div>
+                                <a href="#" class="article-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Article 3 -->
+                    <div class="article-card">
+                        <div class="article-image">
+                            <picture>
+                                <source media="(max-width: 480px)" srcset="https://images.unsplash.com/photo-1546435770-a3e426bf472b?ixlib=rb-1.2.1&auto=format&fit=crop&w=480&q=80">
+                                <source media="(max-width: 768px)" srcset="https://images.unsplash.com/photo-1546435770-a3e426bf472b?ixlib=rb-1.2.1&auto=format&fit=crop&w=768&q=80">
+                                <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="OLED vs QLED TVs">
+                            </picture>
+                        </div>
+                        <div class="article-content">
+                            <span class="article-category-tag">TVs</span>
+                            <h3 class="article-title">OLED vs QLED: Which TV Technology Is Right For You?</h3>
+                            <p class="article-excerpt">Confused about TV technologies? We break down the differences between OLED and QLED to help you make an informed decision.</p>
+                            <div class="article-meta">
+                                <div class="article-date"><i class="far fa-calendar-alt"></i> July 5, 2025</div>
+                                <a href="#" class="article-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Article 4 -->
+                    <div class="article-card">
+                        <div class="article-image">
+                            <picture>
+                                <source media="(max-width: 480px)" srcset="https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?ixlib=rb-1.2.1&auto=format&fit=crop&w=480&q=80">
+                                <source media="(max-width: 768px)" srcset="https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?ixlib=rb-1.2.1&auto=format&fit=crop&w=768&q=80">
+                                <img src="https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Wireless Earbuds">
+                            </picture>
+                        </div>
+                        <div class="article-content">
+                            <span class="article-category-tag">Audio</span>
+                            <h3 class="article-title">Top 10 Wireless Earbuds: Sound Quality Champions</h3>
+                            <p class="article-excerpt">Looking for the perfect wireless earbuds? We've tested dozens of models to find the best options for every budget and use case.</p>
+                            <div class="article-meta">
+                                <div class="article-date"><i class="far fa-calendar-alt"></i> June 28, 2025</div>
+                                <a href="#" class="article-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Article 5 -->
+                    <div class="article-card">
+                        <div class="article-image">
+                            <picture>
+                                <source media="(max-width: 480px)" srcset="https://images.unsplash.com/photo-1591815302525-756a9bcc3425?ixlib=rb-1.2.1&auto=format&fit=crop&w=480&q=80">
+                                <source media="(max-width: 768px)" srcset="https://images.unsplash.com/photo-1591815302525-756a9bcc3425?ixlib=rb-1.2.1&auto=format&fit=crop&w=768&q=80">
+                                <img src="https://images.unsplash.com/photo-1591815302525-756a9bcc3425?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Gaming Consoles">
+                            </picture>
+                        </div>
+                        <div class="article-content">
+                            <span class="article-category-tag">Gaming</span>
+                            <h3 class="article-title">PlayStation 6 vs Xbox Series Z: Next-Gen Console Showdown</h3>
+                            <p class="article-excerpt">The next generation of gaming consoles has arrived. We compare the latest offerings from Sony and Microsoft to help you choose.</p>
+                            <div class="article-meta">
+                                <div class="article-date"><i class="far fa-calendar-alt"></i> June 20, 2025</div>
+                                <a href="#" class="article-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Google Ads Section (After Gaming) -->
+                    <section class="ads-section">
+                        <div class="ads-container" id="googleAdsContainer2">
+                            <!-- Google AdSense code would be inserted here -->
+                            <div class="ad-placeholder">
+                                <div class="ad-placeholder-text">
+                                    <i class="fas fa-ad"></i>
+                                    <span>Advertisement</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Article 6 -->
+                    <div class="article-card">
+                        <div class="article-image">
+                            <picture>
+                                <source media="(max-width: 480px)" srcset="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&auto=format&fit=crop&w=480&q=80">
+                                <source media="(max-width: 768px)" srcset="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&auto=format&fit=crop&w=768&q=80">
+                                <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Laptop Buying Guide">
+                            </picture>
+                        </div>
+                        <div class="article-content">
+                            <span class="article-category-tag">Buying Guide</span>
+                            <h3 class="article-title">Ultimate Laptop Buying Guide: How to Choose the Perfect Device</h3>
+                            <p class="article-excerpt">From processors to display quality, our comprehensive guide covers everything you need to know before purchasing a new laptop.</p>
+                            <div class="article-meta">
+                                <div class="article-date"><i class="far fa-calendar-alt"></i> June 15, 2025</div>
+                                <a href="#" class="article-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination section only -->
+
+                <!-- Pagination -->
+                <div class="pagination-container">
+                    <div class="pagination" id="pagination">
+                        <button class="page-nav" data-page="prev" aria-label="Previous page">&laquo;</button>
+                        <div class="pages">
+                            <button class="page-number active">1</button>
+                            <button class="page-number">2</button>
+                            <button class="page-number">3</button>
+                            <button class="page-number">4</button>
+                        </div>
+                        <button class="page-nav" data-page="next" aria-label="Next page">&raquo;</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+    
+    <!-- Mobile Search Modal -->
+    <div class="mobile-search-modal" id="mobileSearchModal">
+        <div class="mobile-search-modal-header">
+            <span class="mobile-search-close" id="mobileSearchClose">&times;</span>
+            <form class="mobile-search-form" id="mobileSearchForm">
+                <input type="text" class="mobile-search-input" id="mobileSearchInput" placeholder="Search...">
+                <button type="submit" class="mobile-search-button"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="mobile-search-suggestions" id="mobileSearchSuggestions">
+            <div class="mobile-suggestions-header">
+                <span class="mobile-all-results">All</span>
+                <span class="mobile-search-query" id="mobileSearchQuery">results</span>
+            </div>
+            <div class="mobile-suggestions-grid" id="mobileSuggestionsGrid"></div>
+        </div>
+    </div>
+    
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About CompareHubPrices</h3>
+                <ul>
+                    <li><a href="about-us.html">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                <ul>
+                    <li><a href="contact-us.html">Contact Us</a></li>
+                    <li><a href="FAQs.html">FAQs</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="Terms-of-Service.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="newsletter-section">
+                    <h4>Get the Best Deals in Your Inbox</h4>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                        <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CompareHub Prices. All rights reserved.</p>
+        </div>
+        <style>
+            /* Base footer styles */
+            .footer {
+                width: 100%;
+                overflow: hidden;
+                box-sizing: border-box;
+            }
+            
+            .footer-content {
+                display: flex;
+                flex-wrap: wrap;
+                box-sizing: border-box;
+                width: 100%;
+            }
+            
+            .footer-bottom {
+                width: 100%;
+                padding: 15px;
+                text-align: center;
+                background-color: inherit;
+                margin: 0;
+                box-sizing: border-box;
+            }
+            
+            /* Mobile optimization for footer */
+            @media (max-width: 768px) {
+                .footer-content {
+                    flex-direction: column;
+                    padding: 20px 15px;
+                }
+                
+                .footer-section {
+                    width: 100%;
+                    margin-bottom: 20px;
+                    padding: 0;
+                }
+                
+                .footer-bottom {
+                    padding: 10px 15px;
+                }
+                
+                .footer-bottom p {
+                    font-size: 14px;
+                    margin: 0;
+                }
+                
+                .newsletter-form {
+                    flex-direction: column;
+                }
+                
+                .newsletter-form input {
+                    width: 100%;
+                    margin-bottom: 10px;
+                    box-sizing: border-box;
+                }
+                
+                .newsletter-form button {
+                    width: 100%;
+                }
+                
+                .social-icons {
+                    justify-content: center;
+                }
+            }
+            
+            /* Small mobile devices */
+            @media (max-width: 480px) {
+                .footer {
+                    padding: 0;
+                }
+                
+                .footer-content {
+                    padding: 15px 10px;
+                }
+                
+                .footer-section {
+                    margin-bottom: 15px;
+                }
+                
+                .footer-section h3 {
+                    font-size: 18px;
+                    margin-bottom: 10px;
+                }
+                
+                .footer-section ul {
+                    padding-left: 0;
+                }
+                
+                .footer-section ul li {
+                    margin-bottom: 5px;
+                }
+                
+                .footer-section ul li a {
+                    font-size: 14px;
+                }
+                
+                .newsletter-section h4 {
+                    font-size: 16px;
+                    margin-bottom: 10px;
+                }
+                
+                .footer-bottom p {
+                    font-size: 12px;
+                }
+            }
+            
+            /* Specific optimization for 360px width devices (like Oppo A74 5G) */
+            @media (max-width: 360px) {
+                .footer-content {
+                    padding: 10px 8px;
+                }
+                
+                .footer-section h3 {
+                    font-size: 16px;
+                    margin-bottom: 8px;
+                }
+                
+                .footer-section ul li a {
+                    font-size: 13px;
+                }
+                
+                .newsletter-section h4 {
+                    font-size: 14px;
+                }
+                
+                .newsletter-form input,
+                .newsletter-form button {
+                    padding: 8px;
+                    font-size: 13px;
+                }
+                
+                .social-icons a {
+                    margin: 0 5px;
+                    font-size: 18px;
+                }
+                
+                .footer-bottom {
+                    padding: 8px;
+                }
+                
+                .footer-bottom p {
+                    font-size: 11px;
+                }
+            }
+            
+            /* Optimization for 390-414px devices (iPhone 12 Pro, Pixel 7, S20 Ultra, iPhone XR) */
+            @media (min-width: 361px) and (max-width: 414px) {
+                /* Footer specific styles for iPhone 12 Pro and iPhone XR */
+                .footer {
+                    width: 100%;
+                    box-sizing: border-box;
+                    overflow: hidden;
+                    margin: 0;
+                    padding: 0;
+                }
+                
+                .footer-content {
+                    padding: 10px 8px;
+                    width: 100%;
+                    box-sizing: border-box;
+                    display: flex;
+                    flex-direction: column;
+                    margin: 0;
+                }
+                
+                .footer-section {
+                    width: 100%;
+                    box-sizing: border-box;
+                    margin-bottom: 12px;
+                    padding: 0;
+                }
+                
+                .footer-section h3 {
+                    font-size: 16px;
+                    margin-bottom: 8px;
+                    margin-top: 0;
+                }
+                
+                .footer-section ul {
+                    padding-left: 0;
+                    margin: 0;
+                    list-style: none;
+                    width: 100%;
+                    box-sizing: border-box;
+                }
+                
+                .footer-section ul li {
+                    margin-bottom: 6px;
+                }
+                
+                .footer-section ul li a {
+                    font-size: 13px;
+                    text-decoration: none;
+                    display: inline-block;
+                }
+                
+                .newsletter-section {
+                    width: 100%;
+                    box-sizing: border-box;
+                    margin-top: 5px;
+                }
+                
+                .newsletter-section h4 {
+                    font-size: 14px;
+                    margin-bottom: 8px;
+                    margin-top: 0;
+                }
+                
+                .newsletter-form {
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+                    box-sizing: border-box;
+                }
+                
+                .newsletter-form input {
+                    width: 100%;
+                    box-sizing: border-box;
+                    padding: 8px;
+                    font-size: 13px;
+                    margin-bottom: 6px;
+                    border-radius: 4px;
+                    height: 36px;
+                }
+                
+                .newsletter-form button {
+                    width: 100%;
+                    box-sizing: border-box;
+                    padding: 8px;
+                    font-size: 13px;
+                    border-radius: 4px;
+                    height: 36px;
+                }
+                
+                .social-icons {
+                    display: flex;
+                    justify-content: center;
+                    margin: 12px 0;
+                    width: 100%;
+                    box-sizing: border-box;
+                }
+                
+                .social-icons a {
+                    margin: 0 5px;
+                    font-size: 18px;
+                }
+                
+                .footer-bottom {
+                    width: 100%;
+                    box-sizing: border-box;
+                    padding: 8px;
+                    text-align: center;
+                    margin: 0;
+                }
+                
+                .footer-bottom p {
+                    font-size: 11px;
+                    margin: 0;
+                    line-height: 1.3;
+                }
+                
+                /* Specific fixes for iPhone XR (414 x 896) */
+                @media (width: 414px) and (height: 896px) {
+                    .footer {
+                        max-width: 414px;
+                        margin: 0 auto;
+                    }
+                    
+                    .footer-content {
+                        padding: 12px 10px;
+                    }
+                    
+                    .footer-section {
+                        margin-bottom: 14px;
+                    }
+                    
+                    .footer-section h3 {
+                        font-size: 15px;
+                    }
+                    
+                    .footer-section ul li a {
+                        font-size: 13px;
+                    }
+                    
+                    .newsletter-section h4 {
+                        font-size: 14px;
+                    }
+                    
+                    .newsletter-form input,
+                    .newsletter-form button {
+                        height: 38px;
+                    }
+                    
+                    .social-icons {
+                        margin: 10px 0;
+                    }
+                    
+                    .social-icons a {
+                        margin: 0 6px;
+                    }
+                }
+                
+                /* Specific fixes for iPhone 12 Pro (390 x 844) */
+                @media (width: 390px) and (height: 844px) {
+                    .footer {
+                        max-width: 390px;
+                        margin: 0 auto;
+                    }
+                    
+                    .footer-content {
+                        padding: 12px 10px;
+                    }
+                    
+                    .footer-section {
+                        margin-bottom: 14px;
+                    }
+                    
+                    .footer-section h3 {
+                        font-size: 15px;
+                    }
+                    
+                    .footer-section ul li a {
+                        font-size: 13px;
+                    }
+                    
+                    .newsletter-section h4 {
+                        font-size: 14px;
+                    }
+                    
+                    .newsletter-form input,
+                    .newsletter-form button {
+                        height: 38px;
+                    }
+                    
+                    .social-icons {
+                        margin: 10px 0;
+                    }
+                    
+                    .social-icons a {
+                        margin: 0 6px;
+                    }
+                }
+            }
+        </style>
+    </footer>
+
+    <script>
+            // Back to Top Button
+            const backToTopButton = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.style.display = 'flex';
+                } else {
+                    backToTopButton.style.display = 'none';
+                }
+            });
+            
+            backToTopButton.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Category Filter Functionality
+            const categoryButtons = document.querySelectorAll('.article-category');
+            
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    // Here you would add logic to filter articles based on category
+                    // For demonstration purposes, we're just toggling the active class
+                });
+            });
+
+            // Sidebar Toggle
+            function toggleSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                sidebar.classList.toggle('active');
+            }
+            
+            function closeSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                sidebar.classList.remove('active');
+            }
+            
+            function toggleSubmenu(element) {
+                const submenu = element.nextElementSibling;
+                submenu.classList.add('active');
+            }
+            
+            function goBack(element) {
+                const submenu = element.parentElement;
+                submenu.classList.remove('active');
+            }
+            
+            function subscribeNewsletter(event) {
+                event.preventDefault();
+                const input = event.target.querySelector('input[type="email"]');
+                if (input && input.value) {
+                    alert('Thank you for subscribing!');
+                    input.value = '';
+                }
+            }
+        </script>
+        
+        <!-- Search suggestions functionality -->
+        <script src="search-suggestions.js"></script>
+        
+        <!-- Account authentication functionality -->
+        <script src="account-authentication.js"></script>
+        
+        <!-- Wishlist functionality -->
+        <script src="wishlist.js"></script>
+        
+        <!-- Sidebar functionality -->
+<!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-modal-container">
+            <div class="login-modal-header">
+                <button class="login-modal-close" id="loginModalClose">&times;</button>
+                <div class="login-modal-logo-container">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg" alt="Logo">
+                </div>
+            </div>
+            <div class="login-modal-form-container">
+                <div class="login-modal-form-header">
+                    <h2>Welcome Back</h2>
+                    <p>Please sign in to your account to continue</p>
+                </div>
+                
+                <div id="loginAlertContainer"></div>
+                <form class="login-modal-form" id="loginModalForm">
+                    <div class="login-modal-form-group">
+                        <label for="loginModalEmail">Email Address</label>
+                        <input type="email" id="loginModalEmail" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="login-modal-form-group">
+                        <label for="loginModalPassword">Password</label>
+                        <div class="login-modal-input-wrapper">
+                            <input type="password" id="loginModalPassword" name="password" placeholder="Enter your password" required>
+                            <button type="button" class="login-modal-password-toggle" id="loginModalPasswordToggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="login-modal-forgot-password">
+                        <a href="#" id="loginModalForgotPassword">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="login-modal-btn" id="loginModalBtn">
+                        <span id="loginModalBtnText">Sign In</span>
+                        <div class="login-modal-spinner" id="loginModalSpinner" style="display: none;"></div>
+                    </button>
+                </form>
+                <div class="login-modal-register-link">
+                    Don't have an account? <a href="#" id="loginModalRegisterLink">Sign up here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="register-modal" id="registerModal">
+        <div class="register-modal-container">
+            <div class="register-modal-header">
+                <button class="register-modal-close" id="registerModalClose">&times;</button>
+                <div class="register-modal-logo-container">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg"
+                         alt="CompareHub Logo">
+                </div>
+            </div>
+            
+            <div class="register-modal-form-container">
+                <div class="register-modal-form-header">
+                    <h2>Create Account</h2>
+                    <p>Join thousands saving money with smart comparisons</p>
+                </div>
+                
+                <div id="registerAlertContainer"></div>
+                
+                <form id="registerModalForm" autocomplete="off">
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="text" class="register-modal-input" id="registerFirstname" placeholder="First Name" required>
+                            <i class="fas fa-user register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="text" class="register-modal-input" id="registerLastname" placeholder="Last Name" required>
+                            <i class="fas fa-user register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="email" class="register-modal-input" id="registerEmail" placeholder="Email Address" required>
+                            <i class="fas fa-envelope register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="password" class="register-modal-input" id="registerPassword" placeholder="Password" required>
+                            <button type="button" class="register-modal-password-toggle" onclick="toggleRegisterPassword('registerPassword')">
+                                <i class="fas fa-eye" id="registerPassword-eye"></i>
+                            </button>
+                        </div>
+                        <div class="register-modal-password-strength">
+                            <div class="register-modal-strength-title">Password Requirements</div>
+                            <div class="register-modal-strength-indicators">
+                                <div class="register-modal-strength-item" id="register-length-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>8+ characters</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-upper-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Uppercase letter</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-number-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Number</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-special-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Special character</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="password" class="register-modal-input" id="registerConfirmPassword" placeholder="Confirm Password" required>
+                            <button type="button" class="register-modal-password-toggle" onclick="toggleRegisterPassword('registerConfirmPassword')">
+                                <i class="fas fa-eye" id="registerConfirmPassword-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-checkbox-group">
+                        <div class="register-modal-checkbox">
+                            <input type="checkbox" id="registerTerms" required style="position: absolute; opacity: 0; cursor: pointer; height: 100%; width: 100%; margin: 0; z-index: 1;">
+                            <div class="register-modal-checkmark"></div>
+                        </div>
+                        <label for="registerTerms" class="register-modal-checkbox-label" style="cursor: pointer;">
+                            I agree to the <a href="Terms-of-Service.html" target="_blank" style="pointer-events: auto;">Terms of Service</a> and <a href="privacy-policy.html" target="_blank" style="pointer-events: auto;">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="register-modal-btn" id="registerModalBtn">
+                        <i class="fas fa-user-plus"></i>
+                        <span id="registerModalBtnText">Create Account</span>
+                        <div class="register-modal-spinner" id="registerModalSpinner" style="display: none;"></div>
+                    </button>
+                </form>
+                
+                <div class="register-modal-divider">
+                    <span>Already have an account?</span>
+                </div>
+                
+                <div class="register-modal-login-link">
+                    <a href="#" id="registerModalLoginLink">
+                        <i class="fas fa-arrow-left"></i> Sign in instead
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="forgot-password-modal">
+        <div class="forgot-password-modal-container">
+            <div class="forgot-password-modal-header">
+                <button class="forgot-password-modal-close" onclick="closeForgotPasswordModal()">&times;</button>
+                <div class="forgot-password-modal-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+            </div>
+            <div class="forgot-password-modal-form-container">
+                <div class="forgot-password-modal-form-header">
+                    <h2>Reset Password</h2>
+                    <p>Enter your email address and we'll send you a code to reset your password.</p>
+                </div>
+                
+                <div id="forgotPasswordAlert" class="forgot-password-modal-alert" style="display: none;"></div>
+                
+                <form id="forgotPasswordForm">
+                    <div class="forgot-password-modal-form-group">
+                        <label for="forgotPasswordEmail">Email Address</label>
+                        <input
+                            type="email"
+                            id="forgotPasswordEmail"
+                            name="email"
+                            placeholder="Enter your email address"
+                            required
+                        >
+                    </div>
+                    
+                    <button type="submit" class="forgot-password-modal-btn" id="forgotPasswordBtn">
+                        <span id="forgotPasswordBtnText">Send Reset Code</span>
+                        <div id="forgotPasswordSpinner" class="forgot-password-modal-spinner" style="display: none;"></div>
+                    </button>
+                </form>
+                
+                <div class="forgot-password-modal-back-link">
+                    <a href="#" onclick="closeForgotPasswordModal(); showLoginModal();">Back to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+        <script src="sidebar.js"></script>

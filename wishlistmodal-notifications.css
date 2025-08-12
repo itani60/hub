@@ -1,0 +1,179 @@
+/* Wishlist Modal Notifications Styling */
+
+.notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    width: 350px;
+    max-width: calc(100vw - 40px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.notification {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    transform: translateX(120%);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    border-left: 4px solid #ccc;
+}
+
+.notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.notification.hiding {
+    transform: translateX(120%);
+    opacity: 0;
+}
+
+.notification.success {
+    border-left-color: #4CAF50;
+}
+
+.notification.error {
+    border-left-color: #F44336;
+}
+
+.notification.warning {
+    border-left-color: #FF9800;
+}
+
+.notification.info {
+    border-left-color: #2196F3;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px 8px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.notification-title {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.notification-title i {
+    font-size: 16px;
+}
+
+.notification.success .notification-title i {
+    color: #4CAF50;
+}
+
+.notification.error .notification-title i {
+    color: #F44336;
+}
+
+.notification.warning .notification-title i {
+    color: #FF9800;
+}
+
+.notification.info .notification-title i {
+    color: #2196F3;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    transition: background-color 0.2s;
+}
+
+.notification-close:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #666;
+}
+
+.notification-body {
+    padding: 10px 15px;
+}
+
+.notification-message {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #333;
+}
+
+.notification-progress {
+    height: 3px;
+    width: 100%;
+    background-color: #ccc;
+    position: relative;
+}
+
+.notification.success .notification-progress {
+    background-color: #4CAF50;
+}
+
+.notification.error .notification-progress {
+    background-color: #F44336;
+}
+
+.notification.warning .notification-progress {
+    background-color: #FF9800;
+}
+
+.notification.info .notification-progress {
+    background-color: #2196F3;
+}
+
+/* Animation for wishlist heart */
+@keyframes heartBeat {
+    0% {
+        transform: scale(1);
+    }
+    14% {
+        transform: scale(1.3);
+    }
+    28% {
+        transform: scale(1);
+    }
+    42% {
+        transform: scale(1.3);
+    }
+    70% {
+        transform: scale(1);
+    }
+}
+
+.wishlist-heart.active {
+    animation: heartBeat 1s;
+    color: #ff4757;
+}
+
+.wishlist-heart:not(.active) {
+    color: #ccc;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .notification-container {
+        width: calc(100% - 40px);
+        top: 10px;
+        right: 10px;
+        left: 10px;
+    }
+}

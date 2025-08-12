@@ -1,0 +1,2540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage - CompareHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="hero-carousel-animations.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="pagination-enhancements.css">
+    <style>
+        /* Main Content Container Styles */
+        .main-content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        /* Breadcrumb Styles */
+        .breadcrumb {
+            padding: 10px 0;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .breadcrumb a {
+            color: #ff3a3a;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: #cc2e2e;
+            text-decoration: underline;
+        }
+        
+        .breadcrumb-separator {
+            margin: 0 8px;
+            color: #999;
+        }
+        
+        .content-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .page-heading {
+            color: #fff;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 24px;
+            background-color: #ff3a3a;
+            text-align: center;
+        }
+        
+        /* Notifications Container Styles */
+        .notifications-container {
+            margin-top: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        
+        /* Notification Item Styles */
+        .notification-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .notification-item {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            padding: 12px 15px;
+            border-left: 3px solid #ff3a3a;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .notification-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .notification-item.unread {
+            background-color: rgba(255, 58, 58, 0.05);
+        }
+        
+        .notification-item.read {
+            border-left-color: #ccc;
+            opacity: 0.8;
+        }
+        
+        .notification-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 58, 58, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff3a3a;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        
+        .notification-item.price-alert .notification-icon {
+            background: rgba(255, 152, 0, 0.1);
+            color: #ff9800;
+        }
+        
+        .notification-item.new-deal .notification-icon {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4caf50;
+        }
+        
+        .notification-content {
+            flex: 1;
+            position: relative;
+            padding-bottom: 20px; /* Make room for the timestamp */
+            margin-left: 10px; /* Add space between icon and content */
+            overflow: visible; /* Ensure content isn't cut off */
+        }
+        
+        /* For mobile, adjust content layout */
+        @media (max-width: 768px) {
+            .notification-content {
+                padding-bottom: 25px; /* Space for timestamp */
+                padding-right: 120px; /* Space for the link */
+                position: relative; /* Ensure proper positioning context */
+                min-height: 40px; /* Minimum height to accommodate title and timestamp */
+            }
+        }
+        
+        .notification-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #333;
+            margin: 0 0 3px 0;
+        }
+        
+        /* For mobile, display title with proper spacing for the link */
+        @media (max-width: 768px) {
+            .notification-title {
+                display: inline-block;
+                margin-right: 0;
+                max-width: 60%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding-right: 5px; /* Add some space between title and link */
+                margin-bottom: 5px; /* Add space below the title */
+            }
+        }
+        
+        .notification-message {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.4;
+            margin: 0 0 6px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        /* Show message on desktop, hide on mobile */
+        @media (max-width: 768px) {
+            .notification-message {
+                display: none;
+            }
+        }
+        
+        /* Ensure message is properly displayed on desktop */
+        @media (min-width: 769px) {
+            .notification-message {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                max-width: 100%;
+            }
+        }
+        
+        .notification-time {
+            color: #999;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            position: absolute;
+            bottom: 10px;
+            left: 0; /* Start from the left edge */
+            width: 100%; /* Full width */
+            justify-content: flex-start;
+            padding-left: 10px;
+        }
+        
+        /* Mobile-specific timestamp styling */
+        @media (max-width: 768px) {
+            .notification-time {
+                font-size: 10px;
+                padding-top: 3px;
+                border-top: 1px solid #f0f0f0;
+                padding-top: 5px;
+            }
+        }
+        
+        .notification-time i {
+            display: inline-block;
+            margin-right: 5px;
+            font-size: 11px;
+        }
+        
+        .notification-actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            position: absolute;
+            bottom: 8px;
+            right: 10px;
+            width: auto;
+            z-index: 1; /* Ensure actions appear above the timestamp */
+        }
+        
+        /* For mobile, adjust actions layout */
+        @media (max-width: 768px) {
+            .notification-actions {
+                position: absolute;
+                bottom: 8px;
+                right: 10px;
+                width: auto;
+                justify-content: flex-end;
+                z-index: 2; /* Ensure actions appear above the timestamp */
+            }
+            
+            .notification-actions .mark-read-btn {
+                font-size: 10px;
+                padding: 2px 6px;
+                margin-right: 5px;
+            }
+            
+            /* Hide the notification link in the actions section on mobile */
+            .notification-actions .notification-link {
+                display: none;
+            }
+        }
+        
+        .notification-link {
+            color: #ff3a3a;
+            font-size: 12px;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.2s ease;
+            margin-left: 10px;
+        }
+        
+        /* For mobile, we handle link positioning via JavaScript */
+        @media (max-width: 768px) {
+            /* Base styles for notification links in mobile view */
+            .notification-content .notification-link {
+                font-size: 11px;
+                white-space: nowrap;
+                max-width: 110px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                z-index: 3; /* Ensure it's above other elements */
+            }
+        }
+        
+        .notification-link:hover {
+            color: #d32f2f;
+            text-decoration: underline;
+        }
+        
+        .notification-link i {
+            margin-left: 5px;
+            font-size: 12px;
+        }
+        
+        .mark-read-btn {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 11px;
+            cursor: pointer;
+            padding: 3px 8px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+        
+        .mark-read-btn:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: #333;
+        }
+        
+        .notification-close {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            color: #ccc;
+            background: none;
+            border: none;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .notification-close:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: #ff3a3a;
+        }
+        
+        /* Filter Controls */
+        .notification-filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .filter-btn:hover {
+            background: #eeeeee;
+        }
+        
+        .filter-btn.active {
+            background: #ff3a3a;
+            color: white;
+            border-color: #ff3a3a;
+            box-shadow: 0 2px 8px rgba(255, 58, 58, 0.3);
+            transform: translateY(-1px);
+        }
+        
+        /* Ensure active filter is visible on mobile */
+        @media (max-width: 768px) {
+            .filter-btn.active {
+                order: -1; /* Move active filter to the start */
+            }
+            
+            /* Add fading edge effect to indicate scrollable area */
+            .notification-filters::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 100%;
+                width: 30px;
+                background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,1));
+                pointer-events: none;
+            }
+            
+            .notification-filters {
+                position: relative;
+                padding-right: 30px; /* Space for the fade effect */
+            }
+        }
+        
+        .notification-header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .mark-all-read {
+            background: none;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+        }
+        
+        .mark-all-read:hover {
+            background: #f5f5f5;
+            color: #333;
+        }
+        
+        .mark-all-read:active {
+            transform: scale(0.95);
+            background: #f0f0f0;
+        }
+        
+        .mark-all-read i {
+            font-size: 12px;
+        }
+        
+        /* Touch-friendly styles */
+        @media (hover: none) {
+            /* Larger tap targets for touch devices */
+            .filter-btn {
+                min-height: 36px;
+                min-width: 70px;
+            }
+            
+            .notification-close {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .mark-read-btn {
+                padding: 8px 12px;
+                margin-top: 5px;
+            }
+            
+            /* Remove hover effects that don't work well on touch */
+            .notification-item:hover {
+                transform: none;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            }
+            
+            /* Add active state for touch feedback */
+            .notification-item:active {
+                background-color: #f9f9f9;
+            }
+            
+            .notification-link:active {
+                color: #ff5252;
+            }
+            
+            .mark-read-btn:active {
+                background: rgba(0, 0, 0, 0.1);
+            }
+            
+            .notification-close:active {
+                background: rgba(0, 0, 0, 0.1);
+                transform: scale(0.9);
+            }
+        }
+        
+        /* Responsive Adjustments */
+        /* Tablet Styles */
+        @media (max-width: 992px) {
+            .main-content-container {
+                padding: 15px;
+                margin: 0 10px;
+            }
+            
+            .content-container {
+                padding: 15px;
+            }
+            
+            .page-heading {
+                font-size: 22px;
+                padding: 12px;
+            }
+            
+            .notification-filters {
+                gap: 8px;
+            }
+            
+            .filter-btn {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+        }
+        
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .main-content-container {
+                padding: 10px;
+                margin: 0 5px;
+                border-radius: 15px;
+            }
+            
+            .content-container {
+                padding: 10px;
+            }
+            
+            .page-heading {
+                font-size: 20px;
+                padding: 10px;
+                margin-bottom: 15px;
+            }
+            
+            .notification-filters {
+                overflow-x: auto;
+                padding: 5px 0 15px 0;
+                flex-wrap: nowrap;
+                margin-bottom: 15px;
+                -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+                display: flex;
+                width: 100%;
+                justify-content: flex-start;
+                gap: 10px;
+                scrollbar-width: none; /* Hide scrollbar for Firefox */
+            }
+            
+            /* Hide scrollbar for Chrome, Safari and Opera */
+            .notification-filters::-webkit-scrollbar {
+                display: none;
+            }
+            
+            .filter-btn {
+                padding: 8px 15px;
+                font-size: 13px;
+                white-space: nowrap;
+                flex-shrink: 0;
+                border-radius: 20px;
+                min-width: 80px;
+                text-align: center;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 36px;
+            }
+            
+            .notification-header-actions {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+                margin-bottom: 20px;
+                width: 100%;
+            }
+            
+            .mark-all-read {
+                width: 100%;
+                justify-content: center;
+                padding: 12px;
+                font-size: 14px;
+                font-weight: 500;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                background-color: #f5f5f5;
+            }
+            
+            .notification-item {
+                padding: 10px 10px 30px 10px; /* Increased bottom padding for timestamp */
+                gap: 8px;
+                margin-bottom: 8px;
+                border-left-width: 2px;
+                position: relative; /* Ensure proper positioning context */
+            }
+            
+            /* Ensure notification content is properly displayed */
+            .notification-item .notification-content {
+                overflow: visible;
+                width: auto;
+            }
+            
+            .notification-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+            
+            .notification-title {
+                font-size: 13px;
+                margin-right: 0; /* Remove right margin */
+                margin-bottom: 2px;
+                max-width: 60%; /* Limit width to make room for the link */
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            
+            .notification-message {
+                font-size: 12px;
+                margin-bottom: 4px;
+                -webkit-line-clamp: 2;
+                line-height: 1.3;
+            }
+            
+            .notification-actions {
+                position: absolute;
+                bottom: 8px;
+                right: 10px;
+                flex-direction: row;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            .notification-link {
+                font-size: 13px;
+                margin-left: 5px;
+            }
+            
+            .mark-read-btn {
+                font-size: 12px;
+            }
+            
+            .notification-close {
+                top: 10px;
+                right: 10px;
+                width: 22px;
+                height: 22px;
+            }
+        }
+        
+        /* Small Mobile Styles */
+        @media (max-width: 480px) {
+            .main-content-container {
+                padding: 8px;
+                border-radius: 12px;
+            }
+            
+            .content-container {
+                padding: 8px;
+            }
+            
+            .page-heading {
+                font-size: 18px;
+                padding: 8px;
+            }
+            
+            /* Improved filter buttons for small screens */
+            .notification-filters {
+                padding: 3px 0 12px 0;
+                gap: 8px;
+            }
+            
+            .filter-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+                min-width: 70px;
+                height: 32px;
+            }
+            
+            .notification-header-actions {
+                gap: 12px;
+                margin-bottom: 15px;
+            }
+            
+            .mark-all-read {
+                padding: 10px;
+                font-size: 13px;
+                border-radius: 6px;
+            }
+            
+            .notification-item {
+                padding: 6px 8px;
+                gap: 6px;
+                margin-bottom: 6px;
+                border-radius: 6px;
+                border-left-width: 2px;
+            }
+            
+            .notification-icon {
+                width: 24px;
+                height: 24px;
+                font-size: 10px;
+            }
+            
+            .notification-title {
+                font-size: 12px;
+                margin-right: 0; /* Remove right margin */
+                margin-bottom: 1px;
+                max-width: 50%; /* Limit width to make room for the link */
+            }
+            
+            .notification-message {
+                font-size: 11px;
+                margin-bottom: 3px;
+                -webkit-line-clamp: 2;
+                line-height: 1.2;
+            }
+            
+            .notification-time {
+                font-size: 10px;
+                position: absolute;
+                bottom: 8px;
+                left: 0;
+                width: 100%;
+                padding-left: 8px;
+            }
+            
+            .notification-actions {
+                margin-top: 3px;
+            }
+            
+            .notification-link {
+                font-size: 11px;
+                margin-left: 3px;
+            }
+            
+            .mark-read-btn {
+                font-size: 10px;
+                padding: 2px 6px;
+            }
+            
+            .notification-close {
+                top: 4px;
+                right: 4px;
+                width: 16px;
+                height: 16px;
+                font-size: 9px;
+            }
+            
+            /* Adjust notification list spacing */
+            .notification-list {
+                gap: 8px;
+            }
+            
+            .empty-title {
+                font-size: 18px;
+            }
+            
+            .empty-message {
+                font-size: 14px;
+            }
+        }
+        
+        /* Empty State */
+        .empty-notifications {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+        
+        .empty-icon {
+            font-size: 48px;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        
+        .empty-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .empty-message {
+            font-size: 16px;
+            max-width: 400px;
+            margin: 0 auto 20px;
+            line-height: 1.6;
+        }
+        
+        /* Fix for bottom right gap */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        .main-container {
+            min-height: calc(100vh - 60px - 250px); /* Adjust based on header and footer height */
+            position: relative;
+            width: 100%;
+            overflow: hidden; /* Prevent content overflow */
+        }
+        
+        .footer {
+            width: 100%;
+            margin-top: 20px;
+            clear: both; /* Ensure footer clears any floated elements */
+        }
+        
+        /* Additional fixes for mobile view */
+        @media (max-width: 768px) {
+            .content {
+                width: 100%;
+                overflow: hidden;
+            }
+            
+            .main-content-container {
+                width: 100%;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
+            
+            .content-container {
+                width: 100%;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
+        }
+        
+        /* Notification Details Modal Styles */
+        .notification-details-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .notification-details-modal.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        .notification-details-modal-container {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 80%;
+            max-width: 350px;
+            max-height: 80vh;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(150%);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .notification-details-modal.active .notification-details-modal-container {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .notification-details-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            background-color: #fff;
+        }
+        
+        .notification-details-modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+        
+        .notification-details-modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+        
+        .notification-details-modal-close:hover,
+        .notification-details-modal-close:active {
+            background-color: rgba(0, 0, 0, 0.05);
+            color: #ff3a3a;
+        }
+        
+        .notification-details-modal-content {
+            padding: 20px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            flex: 1;
+        }
+        
+        .notification-details-modal-footer {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .notification-details-modal-btn {
+            background-color: #ff3a3a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .notification-details-modal-btn:hover,
+        .notification-details-modal-btn:active {
+            background-color: #e62e2e;
+        }
+        
+        .notification-details-content {
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 40px; /* Space for the timestamp at the bottom */
+        }
+        
+        .notification-details-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin: 0 0 10px 0;
+        }
+        
+        .notification-details-message {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #555;
+            margin: 0 0 15px 0;
+        }
+        
+        .notification-details-time {
+            font-size: 14px;
+            color: #888;
+            display: flex;
+            align-items: center;
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 1010;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 8px 12px;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .notification-details-time i {
+            margin-right: 5px;
+        }
+        
+        .notification-details-actions {
+            margin-top: 20px;
+            text-align: right;
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+        }
+        
+        .notification-details-link {
+            display: inline-block;
+            background-color: #f5f5f5;
+            color: #333;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            margin-right: 10px;
+        }
+        
+        .notification-details-link:hover,
+        .notification-details-link:active {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Open menu">☰</button>
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg" alt="CompareHubPrices" class="logo-image">
+                </a>
+            </div>
+            <div class="search-container">
+                <form id="search-form">
+                    <input type="text" name="q" class="search-input" placeholder="Search......." id="searchInput">
+                    <button type="submit" class="search-button" aria-label="Search"><i class="fas fa-search"></i></button>
+                </form>
+                <div class="search-suggestions" id="searchSuggestions">
+                    <div class="suggestions-header">
+                        <span class="all-results">All</span>
+                        <span class="search-query" id="searchQuery">results</span>
+                    </div>
+                    <div class="suggestions-grid" id="suggestionsGrid"></div>
+                </div>
+            </div>
+        </div>
+        <nav class="category-nav">
+            <a href="best-deals.html" class="active"><i class=""></i> Best deals</a>
+            <a href="#new-arrivals"><i class=""></i> New Arrivals</a>
+           
+            <a href="#notifications" id="notifications-link" class="mobile-only"><i class="fas fa-bell"></i> Notifications</a>
+        </nav>
+    </header>
+
+     <div class="main-container">
+      <nav class="sidebar" id="sidebar">
+            <div class="sidebar-login" id="sidebarLogin"></div>
+            <div class="sidebar-search">
+                <input type="text" placeholder="Search categories..." id="sidebarSearchInput">
+            </div>
+            <div class="sidebar-header">
+                <h3>Browse Categories</h3>
+                <button class="close-sidebar" onclick="closeSidebar()" aria-label="Close menu">&times;</button>
+            </div>
+            
+         
+            <button class="switch-categories-btn" onclick="switchCategoryType()">
+                
+                <span id="switchBtnText">Switch to Essential Goods</span>
+            </button>
+            
+            <div class="category-type" id="categoryType">Electronics</div>
+            
+              <div class="menu-content" id="menuContent">
+                <ul class="menu-items" id="electronicsMenu">
+                  <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i> Smartphones,Tablets & Accessories</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                            <li class="item"><a href="smartphones.html" onclick="navigateToSmartphonesByType('all'); return false;">Smartphones</a></li>
+                             <li class="item"><a href="#tablets" onclick="navigateToTabletsByType('all'); return false;">Tablets</a></li>
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Accessories</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#adapters" onclick="navigateToSmartphonesAccessoriesByType('adapters'); return false;">Adapters</a></li>
+                                     <li class="item"><a href="#powerbanks" onclick="navigateToSmartphonesAccessoriesByType('powerbanks'); return false;">Powerbanks</a></li>
+                                     <li class="item"><a href="#cables" onclick="navigateToSmartphonesAccessoriesByType('cables'); return false;">Cables</a></li>
+                                    
+                                 </ul>
+                             </li>
+                             
+                         </ul>
+                    </li>
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i> Computers,Laptops & Accessories</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Laptops</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#windows" onclick="navigateToLaptopsByType('windows'); return false;">Windows</a></li>
+                                     <li class="item"><a href="#macos" onclick="navigateToLaptopsByType('macos'); return false;">MacOS</a></li>
+                                     <li class="item"><a href="#chromeos" onclick="navigateToLaptopsByType('chromeos'); return false;">ChromeOS</a></li>
+                                 </ul>
+                             </li>
+                             
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Desktops</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#windows" onclick="navigateToDesktopsByType('windows'); return false;">Windows</a></li>
+                                     <li class="item"><a href="#macos" onclick="navigateToDesktopsByType('macos'); return false;">MacOS</a></li>
+                                 </ul>
+                               </li>
+
+                              
+                               <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Accessories</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToLaptopDesktopAccessoriesByType('adapters')">Charges & Adapters</a></li>
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToLaptopDesktopAccessoriesByType('usb_hubs')">USB Hubs</a></li>
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToLaptopDesktopAccessoriesByType('keyboards')">Keyboards & Mice</a></li>
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToLaptopDesktopAccessoriesByType('speakers')">Speakers</a></li>
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToLaptopDesktopAccessoriesByType('webcams')">Webcams</a></li>    
+                                 </ul>
+                             </li>
+
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Data Storage</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#memory-cards" onclick="navigateToDataStorageByType('memory_cards'); return false;">Memory Cards</a></li>
+                                     <li class="item"><a href="#external-drivers" onclick="navigateToDataStorageByType('external_drivers'); return false;">External Drivers</a></li>
+                                    <li class="item"><a href="#usb-drivers" onclick="navigateToDataStorageByType('usb_drivers'); return false;">USB Drivers</a></li>
+                                   
+                                 </ul>
+                             </li>
+ 
+                               <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Componets</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#motherboard" onclick="navigateToComponentsByType('motherboard'); return false;">Motherboard</a></li>
+                                     <li class="item"><a href="#memory-ram" onclick="navigateToComponentsByType('memory_ram'); return false;">Memory(RAM)</a></li>
+                                     <li class="item"><a href="#graphics-card" onclick="navigateToComponentsByType('graphics_card'); return false;">Graphics Card</a></li>
+                                     <li class="item"><a href="#storage" onclick="navigateToComponentsByType('storage'); return false;">Storage</a></li>
+                                    <li class="item"><a href="#cpu" onclick="navigateToComponentsByType('cpu'); return false;">CPU</a></li>
+                                     <li class="item"><a href="#power-supply" onclick="navigateToComponentsByType('power_supply'); return false;">Power Supply</a></li>
+                                 </ul>
+                             </li>   
+
+                           </ul>
+                    </li>
+
+                    
+                  
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Wi-Fi & Networking</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="item"><a href="#routers" onclick="navigateToWifiNetworkingByType('routers'); return false;">Routers</a></li>
+                             <li class="item"><a href="#wifi-ups" onclick="navigateToWifiNetworkingByType('wifi_ups'); return false;">WiFi Ups</a></li>
+                             <li class="item"><a href="#extenders-repeaters" onclick="navigateToWifiNetworkingByType('extenders_repeaters'); return false;">Extenders & Repeaters</a></li>
+                        
+                         </ul>
+                    </li>
+
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span><i class=""></i> TV & Streaming</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="javascript:void(0);" onclick="navigateToTVStreamingByType('televisions')">Televisions</a></li>
+                            <li class="item"><a href="javascript:void(0);" onclick="navigateToTVStreamingByType('streaming_devices')">Streaming Devices</a></li>
+                        </ul>
+                    </li>
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Audio</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                            
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Earbuds & Headphones</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#earbuds" onclick="navigateToHeadphonesEarbudsByType('earbuds'); return false;">Earbuds</a></li>
+                                     <li class="item"><a href="#headphones" onclick="navigateToHeadphonesEarbudsByType('headphones'); return false;">Headphones</a></li>
+                                 </ul>
+                             </li>
+                             
+                                 <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Portable Speakers</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#bluetooth-speakers" onclick="navigateToPortableSpeakersByType('bluetooth_speakers'); return false;">Bluetooth Speakers</a></li>
+                                     <li class="item"><a href="#party-speakers" onclick="navigateToPortableSpeakersByType('party_speakers'); return false;">Party Speakers</a></li>
+
+                                 </ul>
+                             </li>
+
+
+
+                           <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Home Entertainment Systems</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#hifi-systems" onclick="navigateToHomeEntertainmentByType('hifi_systems'); return false;">Hi-Fi Systems</a></li>
+                                     <li class="item"><a href="#soundbars" onclick="navigateToHomeEntertainmentByType('soundbars'); return false;">Soundbars</a></li>
+                                 </ul>
+                              </li>
+                         </ul>
+                    </li>
+
+                        <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Wearables Devices</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             
+                             <li class="item"><a href="#smartwatches" onclick="navigateToWearablesByType('smartwatches'); return false;">Smartwatches</a></li>
+                             <li class="item"><a href="#fitness-trackers" onclick="navigateToWearablesByType('fitness_trackers'); return false;">Fitness Trackers</a></li>
+                             
+                         </ul>
+                    </li>
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Climate Control</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                         
+                             <li class="item"><a href="#fans" onclick="navigateToClimateControlByType('fans'); return false;">Fans</a></li>
+                             <li class="item"><a href="#air-conditioners" onclick="navigateToClimateControlByType('air_conditioners'); return false;">Air Conditioners</a></li>
+                              <li class="item"><a href="#air-coolers" onclick="navigateToClimateControlByType('air_coolers'); return false;">Air Coolers</a></li>
+                         </ul>
+                    </li>
+
+
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Gaming</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                            <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('console')">Consoles</a></li>
+                            <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('laptop')">Gaming Laptops</a></li>
+                            <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('pc')">Gaming PCs</a></li>
+                            <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('monitor')">Gaming Monitors</a></li>
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span> XBOX Accessories</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('xbox_accessories')">Accessories</a></li>
+                                     
+                                 </ul>
+                             </li>
+
+
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Nintendo Accessories</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('nintendo_accessories')">Accessories</a></li>
+                                
+                                 </ul>
+                             </li>
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span> Playstation Accessories</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('xbox_accessories')">Accessories</a></li>
+                                    
+                                 </ul>
+                             </li>
+
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span> PC Gaming Accessories</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('pc_accessories_keyboards')">Gaming Keyboards & Mouse</a></li>
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('pc_accessories_headsets')">Gaming Headsets</a></li>
+                    
+                                 </ul>
+                             </li>
+                             
+                         </ul>
+                    </li>
+
+                      
+                        <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Appliances</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Fridges & Freezers</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#fridges" onclick="navigateToAppliancesByType('fridges'); return false;">Fridges</a></li>
+                                     <li class="item"><a href="#freezers" onclick="navigateToAppliancesByType('freezers'); return false;">Freezers</a></li>
+                                 </ul>
+                             </li>
+                             
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Microwaves, Ovens & Stoves</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#microwaves" onclick="navigateToAppliancesByType('microwaves'); return false;">Microwaves</a></li>
+                                     <li class="item"><a href="#ovens" onclick="navigateToAppliancesByType('ovens'); return false;">Ovens</a></li>
+                                     <li class="item"><a href="#stoves" onclick="navigateToAppliancesByType('stoves'); return false;">Stoves</a></li>
+                                 </ul>
+                             </li>
+
+
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Kettles, Coffee Machines</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#kettles" onclick="navigateToAppliancesByType('kettles'); return false;">Kettles</a></li>
+                                     <li class="item"><a href="#coffee-machines" onclick="navigateToAppliancesByType('coffee_machines'); return false;">Coffee Machines</a></li>
+                                    
+                                 </ul>
+                             </li>
+
+
+
+
+                               <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Floorcare</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#vacuum-cleaners" onclick="navigateToAppliancesByType('vacuum_cleaners'); return false;">Vacuum Cleaners</a></li>
+                                     <li class="item"><a href="#robot-vacuums" onclick="navigateToAppliancesByType('robot_vacuums'); return false;">Robot Vacuums</a></li>
+                                 
+                                 </ul>
+                             </li>
+                                
+
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Food Preparation</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#mixers" onclick="navigateToAppliancesByType('mixers'); return false;">Mixers</a></li>
+                                     <li class="item"><a href="#food-processors" onclick="navigateToAppliancesByType('food_processors'); return false;">Food Processors</a></li>
+                                     <li class="item"><a href="#blenders-juicers" onclick="navigateToAppliancesByType('blenders_juicers'); return false;">Blenders & Juicers</a></li>
+                                 </ul>
+                             </li>
+                                                
+
+
+                               <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Heaters & Electric Blankets</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#heaters" onclick="navigateToAppliancesByType('heaters'); return false;">Heaters</a></li>
+                                     <li class="item"><a href="#electric-blankets" onclick="navigateToAppliancesByType('electric_blankets'); return false;">Electric Blankets</a></li>
+                                 </ul>
+                             </li>
+                               
+                              <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Personal Care</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#electric-shavers" onclick="navigateToAppliancesByType('electric_shavers'); return false;">Electric Shavers</a></li>
+                                     <li class="item"><a href="#hair-care" onclick="navigateToAppliancesByType('hair_care'); return false;">Hair Care</a></li>
+                                 </ul>
+                             </li>
+                               
+                               <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Cookers & Air Fryers</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#air-fryers" onclick="navigateToAppliancesByType('air_fryers'); return false;">Air Fryers</a></li>
+                                     <li class="item"><a href="#grillers" onclick="navigateToAppliancesByType('grillers'); return false;">Grillers</a></li>
+                                    <li class="item"><a href="#cooker-steamers" onclick="navigateToAppliancesByType('cooker_steamers'); return false;">Cooker&Steamers</a></li>
+                                     <li class="item"><a href="#hotplates" onclick="navigateToAppliancesByType('hotplates'); return false;">Hotplates</a></li>
+                                     
+                                 </ul>
+                             </li>
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Toasters & Sandwich Makers</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#toasters" onclick="navigateToAppliancesByType('toasters'); return false;">Toasters</a></li>
+                                     <li class="item"><a href="#sandwich-makers" onclick="navigateToAppliancesByType('sandwich_makers'); return false;">Sandwich Makers</a></li>
+                                     
+                                 </ul>
+                             </li>
+                             
+                             <li class="item"><a href="#dishwashers" onclick="navigateToAppliancesByType('dishwashers'); return false;">Dishwashers</a></li>
+                             <li class="item"><a href="#irons-steamers" onclick="navigateToAppliancesByType('irons_steamers'); return false;">Irons & Steamers</a></li>
+                             <li class="item"><a href="#sewing-machine" onclick="navigateToAppliancesByType('sewing_machine'); return false;">Sewing Machine</a></li>
+                             <li class="item"><a href="#humidifiers-purifiers" onclick="navigateToAppliancesByType('humidifiers_purifiers'); return false;">Humidifiers & Purifiers</a></li>
+                            
+                         </ul>
+                    </li>
+
+
+                       <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span><i class=""></i>Power Solutions</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                      
+                            <li class="item"><a href="#ups" onclick="navigateToPowerSolutionsByType('ups'); return false;">UPS</a></li>
+                            <li class="item"><a href="#power-stations" onclick="navigateToPowerSolutionsByType('power_stations'); return false;">Power Stations</a></li>
+                            <li class="item"><a href="#inverters" onclick="navigateToPowerSolutionsByType('inverters'); return false;">Inverters</a></li>
+                            
+                        </ul>
+                    </li>
+
+
+                         
+
+                </ul>
+                
+                
+                <ul class="menu-items" id="foodMenu" style="display: none;">
+                    <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Household</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                            
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Cleaning and Hygiene</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#monitors">Bleaches</a></li>
+                                     <li class="item"><a href="#towers">Dishwashing Liquids</a></li>
+                                     <li class="item"><a href="#monitors">Bleaches</a></li>
+                                     <li class="item"><a href="#towers">Air Freshners</a></li>
+                                     <li class="item"><a href="#monitors">Bleaches</a></li>
+                                     <li class="item"><a href="#towers">Headphones</a></li>
+                                 </ul>
+                             </li>
+                             
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Essential Cleaning Tools</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#monitors">Beef</a></li>
+                                     <li class="item"><a href="#towers">Chicken meat</a></li>
+                                     <li class="item"><a href="#towers">Milk</a></li>
+                                 </ul>
+                             </li>
+
+
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Kitchen Essentials</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#laptop-bags">Kettle & Toasters</a></li>
+                                     <li class="item"><a href="#laptop-cooling">Hotplates</a></li>
+                                     <li class="item"><a href="#stands">Air-fryer</a></li>
+                                 </ul>
+                             </li>
+                             
+                             <li class="item"><a href="#windows-laptops">Insect Control</a></li>
+                             <li class="item"><a href="#macos-laptops">Pet Care</a></li>
+                             <li class="item"><a href="#chrome-os-laptops">Pest control</a></li>
+                         </ul>
+                    </li>
+
+                     <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Foods</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                            
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Cleaning and Hygiene</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#monitors">Bleaches</a></li>
+                                     <li class="item"><a href="#towers">Dishwashing Liquids</a></li>
+                                     <li class="item"><a href="#monitors">Bleaches</a></li>
+                                     <li class="item"><a href="#towers">Air Freshners</a></li>
+                                     <li class="item"><a href="#monitors">Bleaches</a></li>
+                                     <li class="item"><a href="#towers">Headphones</a></li>
+                                 </ul>
+                             </li>
+                             
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Essential Cleaning Tools</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#monitors">Beef</a></li>
+                                     <li class="item"><a href="#towers">Chicken meat</a></li>
+                                     <li class="item"><a href="#towers">Milk</a></li>
+                                 </ul>
+                             </li>
+
+
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Home Appliances</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#laptop-bags">Hi-Fi Systems</a></li>
+                                     <li class="item"><a href="#laptop-cooling">Soundbars</a></li>
+                                     <li class="item"><a href="#stands">Stands</a></li>
+                                 </ul>
+                             </li>
+                             
+                            
+                         </ul>
+                    </li>
+
+
+                      <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Personal Care</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                            
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Toiletries</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#monitors">Deodorants</a></li>
+                                     <li class="item"><a href="#towers">Hand Care</a></li>
+                                 </ul>
+                             </li>
+                             
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Hair Care</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#monitors">Bluetooth Speakers</a></li>
+                                     <li class="item"><a href="#towers">Headphones</a></li>
+                                     <li class="item"><a href="#towers">Radios</a></li>
+                                 </ul>
+                             </li>
+
+
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Foot Care</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#laptop-bags">Hi-Fi Systems</a></li>
+                                     <li class="item"><a href="#laptop-cooling">Soundbars</a></li>
+                                     <li class="item"><a href="#stands">Stands</a></li>
+                                 </ul>
+                             </li>
+                             
+                             
+                         </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <div class="main-content-container">
+                <div class="breadcrumb">
+                    <a href="my-profile.html">My Profile</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span>Notifications</span>
+                </div>
+                <div class="content-container">
+                    <h2 class="page-heading">Notifications</h2>
+                    <div class="notifications-container">
+                        <!-- Notification Filters and Actions -->
+                        <div class="notification-header-actions">
+                            <div class="notification-filters">
+                                <button class="filter-btn active" data-filter="all">All</button>
+                                <button class="filter-btn" data-filter="price-alert">Price Alerts</button>
+                                <button class="filter-btn" data-filter="new-deal">New Deals</button>
+                                <button class="filter-btn" data-filter="wishlist">Wishlist</button>
+                                <button class="filter-btn" data-filter="unread">Unread</button>
+                            </div>
+                            <button class="mark-all-read" id="markAllRead">
+                                <i class="fas fa-check-double"></i> Mark all as read
+                            </button>
+                        </div>
+                        
+                        <!-- Notification List -->
+                        <div class="notification-list" id="notificationList">
+                            <!-- Price Alert Notification -->
+                            <div class="notification-item price-alert unread" data-type="price-alert">
+                                <div class="notification-icon">
+                                    <i class="fas fa-tag"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <h3 class="notification-title">Price Drop Alert</h3>
+                                    <p class="notification-message">
+                                        The Samsung Galaxy S25 Ultra you've been watching has dropped in price by R2,500 at Takealot.
+                                    </p>
+                                    <div class="notification-time">
+                                        <i class="far fa-clock"></i> 2 hours ago
+                                    </div>
+                                    <div class="notification-actions">
+                                        <a href="#" class="notification-link">View Product <i class="fas fa-arrow-right"></i></a>
+                                        <button class="mark-read-btn">Mark as read</button>
+                                    </div>
+                                </div>
+                                <button class="notification-close">
+                                    <!-- Icon removed for "mark as read" feature -->
+                                </button>
+                            </div>
+                            
+                            <!-- New Deal Notification -->
+                            <div class="notification-item new-deal unread" data-type="new-deal">
+                                <div class="notification-icon">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <div class="notification-content">
+                                    <h3 class="notification-title">New Flash Deal</h3>
+                                    <p class="notification-message">
+                                        Limited time offer: 30% off on all Apple accessories at iStore. Ends in 24 hours!
+                                    </p>
+                                    <div class="notification-time">
+                                        <i class="far fa-clock"></i> 5 hours ago
+                                    </div>
+                                    <div class="notification-actions">
+                                        <a href="#" class="notification-link">Shop Now <i class="fas fa-arrow-right"></i></a>
+                                        <button class="mark-read-btn">Mark as read</button>
+                                    </div>
+                                </div>
+                                <button class="notification-close">
+                                    <!-- Icon removed for "mark as read" feature -->
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        <div class="pagination-container">
+                            <div class="pagination" id="pagination">
+                                <button class="page-nav" data-page="prev" aria-label="Previous page">&laquo;</button>
+                                <div class="pages">
+                                    <button class="page-number active">1</button>
+                                </div>
+                                <button class="page-nav" data-page="next" aria-label="Next page">&raquo;</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+<!-- Mobile Search Modal -->
+    <div class="mobile-search-modal" id="mobileSearchModal">
+        <div class="mobile-search-modal-header">
+            <span class="mobile-search-close" id="mobileSearchClose">&times;</span>
+            <form class="mobile-search-form" id="mobileSearchForm">
+                <input type="text" class="mobile-search-input" id="mobileSearchInput" placeholder="Search...">
+                <button type="submit" class="mobile-search-button"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="mobile-search-suggestions" id="mobileSearchSuggestions">
+            <div class="mobile-suggestions-header">
+                <span class="mobile-all-results">All</span>
+                <span class="mobile-search-query" id="mobileSearchQuery">results</span>
+            </div>
+            <div class="mobile-suggestions-grid" id="mobileSuggestionsGrid"></div>
+        </div>
+    </div>
+    
+  
+    
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About CompareHubPrices</h3>
+                <ul>
+                    <li><a href="about-us.html">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                <ul>
+                    <li><a href="contact-us.html">Contact Us</a></li>
+                    <li><a href="FAQs.html">FAQs</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="Terms-of-Service.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="newsletter-section">
+                    <h4>Get the Best Deals in Your Inbox</h4>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                        <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CompareHub Prices. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-banner-content">
+            <div class="cookie-banner-text">
+                <i class="fas fa-cookie-bite"></i>
+                <span>This website uses cookies to provide you with the best experience. By continuing to use this site, you agree to our use of cookies.</span>
+            </div>
+            <div class="cookie-banner-actions">
+                <button class="cookie-banner-btn accept-btn" onclick="acceptCookies()">Accept</button>
+                <button class="cookie-banner-btn decline-btn" onclick="declineCookies()">Decline</button>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Search suggestions functionality -->
+<script src="search-suggestions.js"></script>
+
+<!-- Account authentication functionality -->
+<script src="account-authentication.js"></script>
+<script src="content-padding.js"></script>
+<!-- Wishlist functionality -->
+<script src="wishlist.js"></script>
+
+<!-- Sidebar functionality -->
+<script src="sidebar.js"></script>
+
+
+
+<!-- Forgot Password Modal JavaScript -->
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-modal-container">
+            <div class="login-modal-header">
+                <button class="login-modal-close" id="loginModalClose">&times;</button>
+                <div class="login-modal-logo-container">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg" alt="Logo">
+                </div>
+            </div>
+            <div class="login-modal-form-container">
+                <div class="login-modal-form-header">
+                    <h2>Welcome Back</h2>
+                    <p>Please sign in to your account to continue</p>
+                </div>
+                
+                <div id="loginAlertContainer"></div>
+                <form class="login-modal-form" id="loginModalForm">
+                    <div class="login-modal-form-group">
+                        <label for="loginModalEmail">Email Address</label>
+                        <input type="email" id="loginModalEmail" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="login-modal-form-group">
+                        <label for="loginModalPassword">Password</label>
+                        <div class="login-modal-input-wrapper">
+                            <input type="password" id="loginModalPassword" name="password" placeholder="Enter your password" required>
+                            <button type="button" class="login-modal-password-toggle" id="loginModalPasswordToggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="login-modal-forgot-password">
+                        <a href="#" id="loginModalForgotPassword">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="login-modal-btn" id="loginModalBtn">
+                        <span id="loginModalBtnText">Sign In</span>
+                        <div class="login-modal-spinner" id="loginModalSpinner" style="display: none;"></div>
+                    </button>
+                </form>
+                <div class="login-modal-register-link">
+                    Don't have an account? <a href="#" id="loginModalRegisterLink">Sign up here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="register-modal" id="registerModal">
+        <div class="register-modal-container">
+            <div class="register-modal-header">
+                <button class="register-modal-close" id="registerModalClose">&times;</button>
+                <div class="register-modal-logo-container">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg"
+                         alt="CompareHub Logo">
+                </div>
+            </div>
+            
+            <div class="register-modal-form-container">
+                <div class="register-modal-form-header">
+                    <h2>Create Account</h2>
+                    <p>Join thousands saving money with smart comparisons</p>
+                </div>
+                
+                <div id="registerAlertContainer"></div>
+                
+                <form id="registerModalForm" autocomplete="off">
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="text" class="register-modal-input" id="registerFirstname" placeholder="First Name" required>
+                            <i class="fas fa-user register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="text" class="register-modal-input" id="registerLastname" placeholder="Last Name" required>
+                            <i class="fas fa-user register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="email" class="register-modal-input" id="registerEmail" placeholder="Email Address" required>
+                            <i class="fas fa-envelope register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="password" class="register-modal-input" id="registerPassword" placeholder="Password" required>
+                            <button type="button" class="register-modal-password-toggle" onclick="toggleRegisterPassword('registerPassword')">
+                                <i class="fas fa-eye" id="registerPassword-eye"></i>
+                            </button>
+                        </div>
+                        <div class="register-modal-password-strength">
+                            <div class="register-modal-strength-title">Password Requirements</div>
+                            <div class="register-modal-strength-indicators">
+                                <div class="register-modal-strength-item" id="register-length-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>8+ characters</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-upper-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Uppercase letter</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-number-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Number</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-special-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Special character</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="password" class="register-modal-input" id="registerConfirmPassword" placeholder="Confirm Password" required>
+                            <button type="button" class="register-modal-password-toggle" onclick="toggleRegisterPassword('registerConfirmPassword')">
+                                <i class="fas fa-eye" id="registerConfirmPassword-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-checkbox-group">
+                        <div class="register-modal-checkbox">
+                            <input type="checkbox" id="registerTerms" required style="position: absolute; opacity: 0; cursor: pointer; height: 100%; width: 100%; margin: 0; z-index: 1;">
+                            <div class="register-modal-checkmark"></div>
+                        </div>
+                        <label for="registerTerms" class="register-modal-checkbox-label" style="cursor: pointer;">
+                            I agree to the <a href="Terms-of-Service.html" target="_blank" style="pointer-events: auto;">Terms of Service</a> and <a href="privacy-policy.html" target="_blank" style="pointer-events: auto;">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="register-modal-btn" id="registerModalBtn">
+                        <i class="fas fa-user-plus"></i>
+                        <span id="registerModalBtnText">Create Account</span>
+                        <div class="register-modal-spinner" id="registerModalSpinner" style="display: none;"></div>
+                    </button>
+                </form>
+                
+                <div class="register-modal-divider">
+                    <span>Already have an account?</span>
+                </div>
+                
+                <div class="register-modal-login-link">
+                    <a href="#" id="registerModalLoginLink">
+                        <i class="fas fa-arrow-left"></i> Sign in instead
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="forgot-password-modal">
+        <div class="forgot-password-modal-container">
+            <div class="forgot-password-modal-header">
+                <button class="forgot-password-modal-close" onclick="closeForgotPasswordModal()">&times;</button>
+                <div class="forgot-password-modal-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+            </div>
+            <div class="forgot-password-modal-form-container">
+                <div class="forgot-password-modal-form-header">
+                    <h2>Reset Password</h2>
+                    <p>Enter your email address and we'll send you a code to reset your password.</p>
+                </div>
+                
+                <div id="forgotPasswordAlert" class="forgot-password-modal-alert" style="display: none;"></div>
+                
+                <form id="forgotPasswordForm">
+                    <div class="forgot-password-modal-form-group">
+                        <label for="forgotPasswordEmail">Email Address</label>
+                        <input
+                            type="email"
+                            id="forgotPasswordEmail"
+                            name="email"
+                            placeholder="Enter your email address"
+                            required
+                        >
+                    </div>
+                    
+                    <button type="submit" class="forgot-password-modal-btn" id="forgotPasswordBtn">
+                        <span id="forgotPasswordBtnText">Send Reset Code</span>
+                        <div id="forgotPasswordSpinner" class="forgot-password-modal-spinner" style="display: none;"></div>
+                    </button>
+                </form>
+                
+                <div class="forgot-password-modal-back-link">
+                    <a href="#" onclick="closeForgotPasswordModal(); showLoginModal();">Back to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get DOM elements
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const notificationItems = document.querySelectorAll('.notification-item');
+            const markAllReadBtn = document.getElementById('markAllRead');
+            const notificationList = document.getElementById('notificationList');
+            const filtersContainer = document.querySelector('.notification-filters');
+            
+            // Check if device is mobile
+            const isMobile = window.innerWidth <= 768;
+            
+            // Change notification link text for mobile and move links outside of actions
+            if (isMobile) {
+                document.querySelectorAll('.notification-item').forEach(item => {
+                    const content = item.querySelector('.notification-content');
+                    const actions = item.querySelector('.notification-actions');
+                    const link = actions.querySelector('.notification-link');
+                    
+                    if (link) {
+                        // Clone the link
+                        const newLink = link.cloneNode(true);
+                        
+                        // Update text
+                        if (newLink.textContent.includes('View Product') || newLink.textContent.includes('Shop Now')) {
+                            newLink.innerHTML = 'View Full Notification <i class="fas fa-arrow-right"></i>';
+                        }
+                        
+                        // Add the link directly to the content
+                        content.appendChild(newLink);
+                        
+                        // Position it absolutely
+                        newLink.style.position = 'absolute';
+                        newLink.style.top = '0';
+                        newLink.style.right = '10px';
+                        newLink.style.fontSize = '11px';
+                        newLink.style.whiteSpace = 'nowrap';
+                        newLink.style.maxWidth = '110px';
+                        newLink.style.overflow = 'hidden';
+                        newLink.style.textOverflow = 'ellipsis';
+                        
+                        // Add a class to identify this as a mobile-specific link
+                        newLink.classList.add('mobile-notification-link');
+                    }
+                });
+            } else {
+                // Ensure any previously added mobile links are removed on desktop
+                document.querySelectorAll('.mobile-notification-link').forEach(link => {
+                    link.remove();
+                });
+            }
+            
+            // Variables for touch handling
+            let startX, startY;
+            let isScrolling = false;
+            
+            // Add horizontal scroll to filters on mobile with touch
+            if (isMobile && filtersContainer) {
+                // Make filter buttons visible on mobile
+                filterButtons.forEach(btn => {
+                    btn.style.display = 'block';
+                });
+                
+                // Prevent click events from firing immediately on touch devices
+                filtersContainer.addEventListener('touchstart', function(e) {
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                    isScrolling = false;
+                }, { passive: true });
+                
+                filtersContainer.addEventListener('touchmove', function(e) {
+                    if (!startX || !startY) return;
+                    
+                    const diffX = startX - e.touches[0].clientX;
+                    const diffY = startY - e.touches[0].clientY;
+                    
+                    // If horizontal scrolling is more significant than vertical
+                    if (Math.abs(diffX) > Math.abs(diffY)) {
+                        isScrolling = true;
+                    }
+                }, { passive: true });
+                
+                filtersContainer.addEventListener('touchend', function(e) {
+                    startX = null;
+                    startY = null;
+                    
+                    // Reset after a short delay
+                    setTimeout(() => {
+                        isScrolling = false;
+                    }, 100);
+                }, { passive: true });
+            }
+            
+            // Filter notifications with improved touch handling
+            filterButtons.forEach(button => {
+                // Use touchend for mobile devices to prevent delay
+                const eventType = isMobile ? 'touchend' : 'click';
+                
+                button.addEventListener(eventType, function(e) {
+                    // Prevent default only for touch events
+                    if (e.type === 'touchend') {
+                        e.preventDefault();
+                    }
+                    
+                    // Don't process if we were scrolling
+                    if (isScrolling) return;
+                    
+                    // Add haptic feedback for mobile if available
+                    if (isMobile && window.navigator && window.navigator.vibrate) {
+                        window.navigator.vibrate(30);
+                    }
+                    
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button with animation
+                    this.classList.add('active');
+                    
+                    // Get filter type
+                    const filterType = this.getAttribute('data-filter');
+                    
+                    // Show/hide notifications based on filter with animation
+                    notificationItems.forEach(item => {
+                        // Prepare for animation
+                        item.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+                        
+                        if (filterType === 'all') {
+                            showNotificationWithAnimation(item);
+                        } else if (filterType === 'unread') {
+                            if (item.classList.contains('unread')) {
+                                showNotificationWithAnimation(item);
+                            } else {
+                                hideNotificationWithAnimation(item);
+                            }
+                        } else {
+                            if (item.getAttribute('data-type') === filterType) {
+                                showNotificationWithAnimation(item);
+                            } else {
+                                hideNotificationWithAnimation(item);
+                            }
+                        }
+                    });
+                    
+                    // Check if there are any visible notifications
+                    setTimeout(() => {
+                        checkEmptyState();
+                    }, 300); // Wait for animations to complete
+                });
+            });
+            
+            // Helper functions for animations
+            function showNotificationWithAnimation(item) {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(10px)';
+                item.style.display = 'flex';
+                
+                // Trigger reflow
+                void item.offsetWidth;
+                
+                // Animate in
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, 10);
+            }
+            
+            function hideNotificationWithAnimation(item) {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(10px)';
+                
+                // Remove after animation
+                setTimeout(() => {
+                    item.style.display = 'none';
+                }, 200);
+            }
+            
+            // Mark individual notification as read with improved touch handling
+            const markReadButtons = document.querySelectorAll('.mark-read-btn');
+            markReadButtons.forEach(button => {
+                // Use touchend for mobile devices to prevent delay
+                const eventType = isMobile ? 'touchend' : 'click';
+                
+                button.addEventListener(eventType, function(e) {
+                    // Prevent default only for touch events
+                    if (e.type === 'touchend') {
+                        e.preventDefault();
+                    }
+                    
+                    // Don't process if we were scrolling
+                    if (isScrolling) return;
+                    
+                    const notificationItem = this.closest('.notification-item');
+                    
+                    // Add haptic feedback for mobile if available
+                    if (isMobile && window.navigator && window.navigator.vibrate) {
+                        window.navigator.vibrate(30);
+                    }
+                    
+                    notificationItem.classList.remove('unread');
+                    notificationItem.classList.add('read');
+                    
+                    // Add a subtle animation for feedback
+                    this.style.transition = 'all 0.3s ease';
+                    this.style.transform = 'scale(0.8)';
+                    this.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        this.style.display = 'none';
+                    }, 300);
+                    
+                    // Check if there are any unread notifications left
+                    checkUnreadNotifications();
+                });
+            });
+            
+            // Delete notification with improved touch handling
+            const closeButtons = document.querySelectorAll('.notification-close');
+            closeButtons.forEach(button => {
+                // Use touchend for mobile devices to prevent delay
+                const eventType = isMobile ? 'touchend' : 'click';
+                
+                button.addEventListener(eventType, function(e) {
+                    // Prevent default only for touch events
+                    if (e.type === 'touchend') {
+                        e.preventDefault();
+                    }
+                    
+                    // Don't process if we were scrolling
+                    if (isScrolling) return;
+                    
+                    const notificationItem = this.closest('.notification-item');
+                    
+                    // Add haptic feedback for mobile if available
+                    if (isMobile && window.navigator && window.navigator.vibrate) {
+                        window.navigator.vibrate(50);
+                    }
+                    
+                    // Add fade-out animation - different for mobile vs desktop
+                    if (isMobile) {
+                        notificationItem.style.opacity = '0';
+                        notificationItem.style.height = notificationItem.offsetHeight + 'px';
+                        notificationItem.style.transform = 'translateX(10px)';
+                        notificationItem.style.transition = 'all 0.3s ease';
+                        
+                        // Animate height to collapse smoothly
+                        setTimeout(() => {
+                            notificationItem.style.height = '0';
+                            notificationItem.style.margin = '0';
+                            notificationItem.style.padding = '0';
+                        }, 50);
+                    } else {
+                        notificationItem.style.opacity = '0';
+                        notificationItem.style.transform = 'translateX(20px)';
+                        notificationItem.style.transition = 'all 0.3s ease';
+                    }
+                    
+                    // Remove the notification after animation completes
+                    setTimeout(() => {
+                        notificationItem.remove();
+                        
+                        // Check if there are any notifications left
+                        checkEmptyState();
+                        
+                        // Check if there are any unread notifications left
+                        checkUnreadNotifications();
+                    }, 300);
+                });
+            });
+            
+            // Mark all notifications as read with improved touch handling
+            if (markAllReadBtn) {
+                // Use touchend for mobile devices to prevent delay
+                const eventType = isMobile ? 'touchend' : 'click';
+                
+                markAllReadBtn.addEventListener(eventType, function(e) {
+                    // Prevent default only for touch events
+                    if (e.type === 'touchend') {
+                        e.preventDefault();
+                    }
+                    
+                    // Don't process if we were scrolling
+                    if (isScrolling) return;
+                    
+                    const unreadNotifications = document.querySelectorAll('.notification-item.unread');
+                    
+                    // Add haptic feedback for mobile if available
+                    if (isMobile && window.navigator && window.navigator.vibrate) {
+                        window.navigator.vibrate(50);
+                    }
+                    
+                    // Add visual feedback
+                    this.style.transition = 'all 0.2s ease';
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 200);
+                    
+                    unreadNotifications.forEach((notification, index) => {
+                        // Stagger the animations for a nice effect
+                        setTimeout(() => {
+                            notification.classList.remove('unread');
+                            notification.classList.add('read');
+                            
+                            // Add a subtle animation
+                            notification.style.transition = 'background-color 0.3s ease';
+                            notification.style.backgroundColor = 'rgba(240, 240, 240, 0.5)';
+                            setTimeout(() => {
+                                notification.style.backgroundColor = '';
+                            }, 300);
+                            
+                            // Hide the "Mark as read" button with animation
+                            const markReadBtn = notification.querySelector('.mark-read-btn');
+                            if (markReadBtn) {
+                                markReadBtn.style.transition = 'all 0.3s ease';
+                                markReadBtn.style.transform = 'scale(0.8)';
+                                markReadBtn.style.opacity = '0';
+                                setTimeout(() => {
+                                    markReadBtn.style.display = 'none';
+                                }, 300);
+                            }
+                        }, index * (isMobile ? 100 : 50)); // Longer stagger on mobile for better visibility
+                    });
+                    
+                    // Disable the "Mark all as read" button if there are no unread notifications
+                    this.disabled = true;
+                    this.style.opacity = '0.5';
+                    this.style.cursor = 'default';
+                });
+            }
+            
+            // Function to check if there are any notifications left
+            function checkEmptyState() {
+                if (notificationList) {
+                    const visibleNotifications = Array.from(notificationItems).filter(item =>
+                        item.style.display !== 'none' && item.parentNode === notificationList
+                    );
+                    
+                    if (visibleNotifications.length === 0) {
+                        // Create empty state message if it doesn't exist
+                        if (!document.querySelector('.empty-notifications')) {
+                            const emptyState = document.createElement('div');
+                            emptyState.className = 'empty-notifications';
+                            emptyState.style.opacity = '0';
+                            emptyState.style.transform = 'translateY(20px)';
+                            emptyState.style.transition = 'all 0.3s ease';
+                            emptyState.innerHTML = `
+                                <div class="empty-icon">
+                                    <i class="far fa-bell-slash"></i>
+                                </div>
+                                <h3 class="empty-title">No notifications found</h3>
+                                <p class="empty-message">
+                                    There are no notifications matching your current filter.
+                                    Try changing the filter or check back later.
+                                </p>
+                            `;
+                            notificationList.appendChild(emptyState);
+                            
+                            // Trigger animation
+                            setTimeout(() => {
+                                emptyState.style.opacity = '1';
+                                emptyState.style.transform = 'translateY(0)';
+                            }, 10);
+                        }
+                    } else {
+                        // Remove empty state message if it exists
+                        const emptyState = document.querySelector('.empty-notifications');
+                        if (emptyState) {
+                            emptyState.style.opacity = '0';
+                            emptyState.style.transform = 'translateY(20px)';
+                            
+                            setTimeout(() => {
+                                emptyState.remove();
+                            }, 300);
+                        }
+                    }
+                }
+            }
+            
+            // Function to check if there are any unread notifications
+            function checkUnreadNotifications() {
+                if (markAllReadBtn) {
+                    const unreadNotifications = document.querySelectorAll('.notification-item.unread');
+                    
+                    if (unreadNotifications.length === 0) {
+                        // Disable the "Mark all as read" button
+                        markAllReadBtn.disabled = true;
+                        markAllReadBtn.style.opacity = '0.5';
+                        markAllReadBtn.style.cursor = 'default';
+                    } else {
+                        // Enable the "Mark all as read" button
+                        markAllReadBtn.disabled = false;
+                        markAllReadBtn.style.opacity = '1';
+                        markAllReadBtn.style.cursor = 'pointer';
+                    }
+                }
+            }
+            
+            // Handle window resize for responsive adjustments
+            window.addEventListener('resize', function() {
+                const newIsMobile = window.innerWidth <= 768;
+                
+                // Only update if mobile state changed
+                if (newIsMobile !== isMobile) {
+                    // Refresh the page to apply correct event handlers
+                    // This is a simple approach - a more complex one would
+                    // remove and reattach event listeners
+                    location.reload();
+                }
+            });
+            
+            // Initial check for empty state and unread notifications
+            checkEmptyState();
+            checkUnreadNotifications();
+        });
+        
+        // Wait for DOM to be fully loaded before initializing modal functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile notification details modal functionality
+            const notificationLinks = document.querySelectorAll('.notification-link');
+            const notificationDetailsModal = document.getElementById('notificationDetailsModal');
+            
+            // Check if modal elements exist before proceeding
+            if (!notificationDetailsModal) {
+                console.error('Notification details modal not found');
+                return;
+            }
+            
+            const notificationDetailsClose = document.getElementById('notificationDetailsClose');
+            const notificationDetailsCloseBtn = document.getElementById('notificationDetailsCloseBtn');
+            const notificationDetailsContent = document.getElementById('notificationDetailsContent');
+            const notificationDetailsTitle = document.getElementById('notificationDetailsTitle');
+            
+            // Check if device is mobile
+            const isMobileDevice = window.innerWidth <= 768;
+            
+            // Change notification link text for mobile
+            if (isMobileDevice) {
+                notificationLinks.forEach(link => {
+                    link.innerHTML = 'View Full Notification <i class="fas fa-arrow-right"></i>';
+                });
+            }
+            
+            // Show notification details modal
+            notificationLinks.forEach(link => {
+                const eventType = isMobileDevice ? 'touchend' : 'click';
+                
+                link.addEventListener(eventType, function(e) {
+                    e.preventDefault();
+                    
+                    if (isMobileDevice && notificationDetailsModal && notificationDetailsContent) {
+                        // Get notification details
+                        const notificationItem = this.closest('.notification-item');
+                        const title = notificationItem.querySelector('.notification-title').textContent;
+                        const message = notificationItem.querySelector('.notification-message').textContent;
+                        const time = notificationItem.querySelector('.notification-time').innerHTML;
+                        const type = notificationItem.getAttribute('data-type');
+                        
+                        // Set modal title if element exists
+                        if (notificationDetailsTitle) {
+                            notificationDetailsTitle.textContent = title;
+                        }
+                        
+                        // Create content HTML
+                        let contentHTML = `
+                            <div class="notification-details-content">
+                                <div class="notification-details-message">${message}</div>
+                                <div class="notification-details-actions">
+                                    <a href="#" class="notification-details-link">
+                                        <i class="fas fa-external-link-alt"></i> Open Product Page
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="notification-details-time">${time}</div>
+                        `;
+                        
+                        // Set modal content
+                        notificationDetailsContent.innerHTML = contentHTML;
+                        
+                        // Show modal with animation
+                        notificationDetailsModal.classList.add('active');
+                        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+                        
+                        // Add haptic feedback for mobile if available
+                        if (window.navigator && window.navigator.vibrate) {
+                            window.navigator.vibrate(30);
+                        }
+                    } else {
+                        // For desktop, use the original link behavior
+                        window.location.href = this.getAttribute('href');
+                    }
+                });
+            });
+            
+            // Close notification details modal
+            function closeNotificationDetailsModal() {
+                if (notificationDetailsModal) {
+                    notificationDetailsModal.classList.remove('active');
+                    document.body.style.overflow = ''; // Restore background scrolling
+                    
+                    // Add haptic feedback for mobile if available
+                    if (isMobileDevice && window.navigator && window.navigator.vibrate) {
+                        window.navigator.vibrate(20);
+                    }
+                }
+            }
+            
+            if (notificationDetailsClose) {
+                notificationDetailsClose.addEventListener('click', closeNotificationDetailsModal);
+            }
+            
+            if (notificationDetailsCloseBtn) {
+                notificationDetailsCloseBtn.addEventListener('click', closeNotificationDetailsModal);
+            }
+            
+            // Close modal when clicking outside the content
+            if (notificationDetailsModal) {
+                notificationDetailsModal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeNotificationDetailsModal();
+                    }
+                });
+            }
+        });
+    </script>
+    
+    <!-- Notification Details Modal for Mobile -->
+    <div class="notification-details-modal" id="notificationDetailsModal">
+        <div class="notification-details-modal-container">
+            <div class="notification-details-modal-header">
+                <h3 class="notification-details-modal-title" id="notificationDetailsTitle">Notification Details</h3>
+                <button class="notification-details-modal-close" id="notificationDetailsClose">&times;</button>
+            </div>
+            <div class="notification-details-modal-content" id="notificationDetailsContent">
+                <!-- Content will be populated dynamically -->
+            </div>
+            <div class="notification-details-modal-footer">
+                <button class="notification-details-modal-btn" id="notificationDetailsCloseBtn">Close</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

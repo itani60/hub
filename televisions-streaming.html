@@ -1,0 +1,2111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV & Streaming - CompareHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="hero-carousel-animations.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="pagination-enhancements.css">
+    <link rel="stylesheet" href="filter-panel-enhancements.css">
+    <link rel="stylesheet" href="product-card-enhancements.css">
+    
+    
+    <link rel="stylesheet" href="wishlistmodal.css">
+    <link rel="stylesheet" href="wishlistmodal-notifications.css">
+
+
+    
+    <style>
+  
+/* Sidebar submenu hiding CSS - More specific selectors */
+.sidebar .menu-items .submenu {
+    max-height: 0 !important;
+    overflow: hidden !important;
+    transition: max-height 0.3s ease !important;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+    border-radius: 8px !important;
+    margin: 4px 8px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+.sidebar .menu-items .item.active > .submenu {
+    max-height: 300px !important;
+    padding: 8px 0 !important;
+    overflow-y: auto !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: #cbd5e0 #f7fafc !important;
+}
+
+/* Custom scrollbar for webkit browsers */
+.sidebar .menu-items .item.active > .submenu::-webkit-scrollbar {
+    width: 6px !important;
+}
+
+.sidebar .menu-items .item.active > .submenu::-webkit-scrollbar-track {
+    background: #f7fafc !important;
+    border-radius: 3px !important;
+}
+
+.sidebar .menu-items .item.active > .submenu::-webkit-scrollbar-thumb {
+    background: #cbd5e0 !important;
+    border-radius: 3px !important;
+    transition: background 0.2s ease !important;
+}
+
+.sidebar .menu-items .item.active > .submenu::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0 !important;
+}
+
+/* Ensure nested submenus are also hidden by default */
+.sidebar .menu-items .submenu .submenu {
+    max-height: 0 !important;
+    overflow: hidden !important;
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%) !important;
+    border-radius: 6px !important;
+    margin: 4px 12px !important;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.sidebar .menu-items .item.active > .submenu .item.active > .submenu {
+    max-height: 200px !important;
+    padding: 6px 0 !important;
+    overflow-y: auto !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: #cbd5e0 #f7fafc !important;
+}
+
+/* Custom scrollbar for nested submenus */
+.sidebar .menu-items .item.active > .submenu .item.active > .submenu::-webkit-scrollbar {
+    width: 4px !important;
+}
+
+.sidebar .menu-items .item.active > .submenu .item.active > .submenu::-webkit-scrollbar-track {
+    background: #f7fafc !important;
+    border-radius: 2px !important;
+}
+
+.sidebar .menu-items .item.active > .submenu .item.active > .submenu::-webkit-scrollbar-thumb {
+    background: #cbd5e0 !important;
+    border-radius: 2px !important;
+}
+
+.sidebar .menu-items .item.active > .submenu .item.active > .submenu::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0 !important;
+}
+
+/* Custom scrollbar for main sidebar */
+.sidebar {
+    scrollbar-width: thin !important;
+    scrollbar-color: #cbd5e0 #f7fafc !important;
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 8px !important;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #f7fafc !important;
+    border-radius: 4px !important;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #cbd5e0 !important;
+    border-radius: 4px !important;
+    transition: background 0.2s ease !important;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0 !important;
+}
+
+.sidebar::-webkit-scrollbar-corner {
+    background: #f7fafc !important;
+}
+
+/* Style submenu items with better backgrounds and hover effects */
+.sidebar .menu-items .submenu .item a {
+    background: rgba(255, 255, 255, 0.7) !important;
+    margin: 2px 8px !important;
+    border-radius: 4px !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+.sidebar .menu-items .submenu .item a:hover {
+    background: rgba(66, 133, 244, 0.1) !important;
+    box-shadow: 0 2px 6px rgba(66, 133, 244, 0.2) !important;
+    transform: translateX(2px) !important;
+}
+
+/* Style nested submenu items */
+.sidebar .menu-items .submenu .submenu .item a {
+    background: rgba(255, 255, 255, 0.8) !important;
+    margin: 2px 12px !important;
+    font-size: 13px !important;
+}
+
+.sidebar .menu-items .submenu .submenu .item a:hover {
+    background: rgba(52, 168, 83, 0.1) !important;
+    box-shadow: 0 2px 6px rgba(52, 168, 83, 0.2) !important;
+}
+
+/* Style the submenu-item dividers */
+.sidebar .menu-items .submenu-item {
+    background: rgba(255, 255, 255, 0.9) !important;
+    margin: 2px 8px !important;
+    border-radius: 6px !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
+    border: 1px solid rgba(0, 0, 0, 0.03) !important;
+}
+
+.sidebar .menu-items .submenu-item:hover {
+    background: rgba(66, 133, 244, 0.08) !important;
+    box-shadow: 0 2px 8px rgba(66, 133, 244, 0.15) !important;
+}
+
+.product-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid #eee;
+}
+
+.product-card .wishlist-heart {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    color: #ff4757;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    border-color: #ddd;
+}
+
+.product-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(to bottom, #f9f9f9, #f5f5f5);
+    position: relative;
+    height: 220px;
+    border-bottom: 1px solid #eee;
+    overflow: hidden;
+}
+
+.product-image img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    transition: transform 0.4s ease;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.08);
+}
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Open menu">☰</button>
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg" alt="CompareHubPrices" class="logo-image">
+                </a>
+            </div>
+            <div class="search-container">
+                <form id="search-form">
+                    <input type="text" name="q" class="search-input" placeholder="Search......." id="searchInput">
+                    <button type="submit" class="search-button" aria-label="Search"><i class="fas fa-search"></i></button>
+                </form>
+                <div class="search-suggestions" id="searchSuggestions">
+                    <div class="suggestions-header">
+                        <span class="all-results">All</span>
+                        <span class="search-query" id="searchQuery">results</span>
+                    </div>
+                    <div class="suggestions-grid" id="suggestionsGrid"></div>
+                </div>
+            </div>
+        </div>
+        <nav class="category-nav">
+            <a href="best-deals.html" class="active"><i class=""></i> Best deals</a>
+            <a href="#new-arrivals"><i class=""></i> New Arrivals</a>
+            <a href="#" id="notifications-link"><i class="fas fa-bell"></i> Notifications</a>
+        </nav>
+    </header>
+
+     <div class="main-container">
+      <nav class="sidebar" id="sidebar">
+            <div class="sidebar-login" id="sidebarLogin"></div>
+            <div class="sidebar-search">
+                <input type="text" placeholder="Search categories..." id="sidebarSearchInput">
+            </div>
+            <div class="sidebar-header">
+                <h3>Browse Categories</h3>
+                <button class="close-sidebar" onclick="closeSidebar()" aria-label="Close menu">&times;</button>
+            </div>
+            
+         
+            <button class="switch-categories-btn" onclick="switchCategoryType()">
+                
+                <span id="switchBtnText">Switch to Essential Goods</span>
+            </button>
+            
+            <div class="category-type" id="categoryType">Electronics</div>
+            
+              <div class="menu-content" id="menuContent">
+                <ul class="menu-items" id="electronicsMenu">
+                  <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i> Smartphones,Tablets & Accessories</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                            <li class="item"><a href="smartphones.html" onclick="navigateToSmartphonesByType('all'); return false;">Smartphones</a></li>
+                             <li class="item"><a href="#tablets" onclick="navigateToTabletsByType('all'); return false;">Tablets</a></li>
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Accessories</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#adapters" onclick="navigateToSmartphonesAccessoriesByType('adapters'); return false;">Adapters</a></li>
+                                     <li class="item"><a href="#powerbanks" onclick="navigateToSmartphonesAccessoriesByType('powerbanks'); return false;">Powerbanks</a></li>
+                                     <li class="item"><a href="#cables" onclick="navigateToSmartphonesAccessoriesByType('cables'); return false;">Cables</a></li>
+                                    
+                                 </ul>
+                             </li>
+                             
+                         </ul>
+                    </li>
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i> Computers,Laptops & Accessories</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Laptops</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#windows" onclick="navigateToLaptopsByType('windows'); return false;">Windows</a></li>
+                                     <li class="item"><a href="#macos" onclick="navigateToLaptopsByType('macos'); return false;">MacOS</a></li>
+                                     <li class="item"><a href="#chromeos" onclick="navigateToLaptopsByType('chromeos'); return false;">ChromeOS</a></li>
+                                 </ul>
+                             </li>
+                             
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Desktops</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#windows" onclick="navigateToDesktopsByType('windows'); return false;">Windows</a></li>
+                                     <li class="item"><a href="#macos" onclick="navigateToDesktopsByType('macos'); return false;">MacOS</a></li>
+                                 </ul>
+                               </li>
+
+                              
+                               <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Accessories</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToLaptopDesktopAccessoriesByType('adapters')">Charges & Adapters</a></li>
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToLaptopDesktopAccessoriesByType('usb_hubs')">USB Hubs</a></li>
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToLaptopDesktopAccessoriesByType('keyboards')">Keyboards & Mice</a></li>
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToLaptopDesktopAccessoriesByType('speakers')">Speakers</a></li>
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToLaptopDesktopAccessoriesByType('webcams')">Webcams</a></li>    
+                                 </ul>
+                             </li>
+
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Data Storage</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#memory-cards" onclick="navigateToDataStorageByType('memory_cards'); return false;">Memory Cards</a></li>
+                                     <li class="item"><a href="#external-drivers" onclick="navigateToDataStorageByType('external_drivers'); return false;">External Drivers</a></li>
+                                    <li class="item"><a href="#usb-drivers" onclick="navigateToDataStorageByType('usb_drivers'); return false;">USB Drivers</a></li>
+                                   
+                                 </ul>
+                             </li>
+ 
+                               <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Componets</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#motherboard" onclick="navigateToComponentsByType('motherboard'); return false;">Motherboard</a></li>
+                                     <li class="item"><a href="#memory-ram" onclick="navigateToComponentsByType('memory_ram'); return false;">Memory(RAM)</a></li>
+                                     <li class="item"><a href="#graphics-card" onclick="navigateToComponentsByType('graphics_card'); return false;">Graphics Card</a></li>
+                                     <li class="item"><a href="#storage" onclick="navigateToComponentsByType('storage'); return false;">Storage</a></li>
+                                    <li class="item"><a href="#cpu" onclick="navigateToComponentsByType('cpu'); return false;">CPU</a></li>
+                                     <li class="item"><a href="#power-supply" onclick="navigateToComponentsByType('power_supply'); return false;">Power Supply</a></li>
+                                 </ul>
+                             </li>   
+
+                           </ul>
+                    </li>
+
+                    
+                  
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Wi-Fi & Networking</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             <li class="item"><a href="#routers" onclick="navigateToWifiNetworkingByType('routers'); return false;">Routers</a></li>
+                             <li class="item"><a href="#wifi-ups" onclick="navigateToWifiNetworkingByType('wifi_ups'); return false;">WiFi Ups</a></li>
+                             <li class="item"><a href="#extenders-repeaters" onclick="navigateToWifiNetworkingByType('extenders_repeaters'); return false;">Extenders & Repeaters</a></li>
+                        
+                         </ul>
+                    </li>
+
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span><i class=""></i> TV & Streaming</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="javascript:void(0);" onclick="navigateToTVStreamingByType('televisions')">Televisions</a></li>
+                            <li class="item"><a href="javascript:void(0);" onclick="navigateToTVStreamingByType('streaming_devices')">Streaming Devices</a></li>
+                        </ul>
+                    </li>
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Audio</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                            
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Earbuds & Headphones</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#earbuds" onclick="navigateToHeadphonesEarbudsByType('earbuds'); return false;">Earbuds</a></li>
+                                     <li class="item"><a href="#headphones" onclick="navigateToHeadphonesEarbudsByType('headphones'); return false;">Headphones</a></li>
+                                 </ul>
+                             </li>
+                             
+                                 <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Portable Speakers</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#bluetooth-speakers" onclick="navigateToPortableSpeakersByType('bluetooth_speakers'); return false;">Bluetooth Speakers</a></li>
+                                     <li class="item"><a href="#party-speakers" onclick="navigateToPortableSpeakersByType('party_speakers'); return false;">Party Speakers</a></li>
+
+                                 </ul>
+                             </li>
+
+
+
+                           <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Home Entertainment Systems</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#hifi-systems" onclick="navigateToHomeEntertainmentByType('hifi_systems'); return false;">Hi-Fi Systems</a></li>
+                                     <li class="item"><a href="#soundbars" onclick="navigateToHomeEntertainmentByType('soundbars'); return false;">Soundbars</a></li>
+                                 </ul>
+                              </li>
+                         </ul>
+                    </li>
+
+                        <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Wearables Devices</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             
+                             <li class="item"><a href="#smartwatches" onclick="navigateToWearablesByType('smartwatches'); return false;">Smartwatches</a></li>
+                             <li class="item"><a href="#fitness-trackers" onclick="navigateToWearablesByType('fitness_trackers'); return false;">Fitness Trackers</a></li>
+                             
+                         </ul>
+                    </li>
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Climate Control</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                         
+                             <li class="item"><a href="#fans" onclick="navigateToClimateControlByType('fans'); return false;">Fans</a></li>
+                             <li class="item"><a href="#air-conditioners" onclick="navigateToClimateControlByType('air_conditioners'); return false;">Air Conditioners</a></li>
+                              <li class="item"><a href="#air-coolers" onclick="navigateToClimateControlByType('air_coolers'); return false;">Air Coolers</a></li>
+                         </ul>
+                    </li>
+
+
+
+                       <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Gaming</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                            <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('console')">Consoles</a></li>
+                            <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('laptop')">Gaming Laptops</a></li>
+                            <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('pc')">Gaming PCs</a></li>
+                            <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('monitor')">Gaming Monitors</a></li>
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span> XBOX Accessories</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('xbox_accessories')">Accessories</a></li>
+                                     
+                                 </ul>
+                             </li>
+
+
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Nintendo Accessories</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('nintendo_accessories')">Accessories</a></li>
+                                
+                                 </ul>
+                             </li>
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span> Playstation Accessories</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('xbox_accessories')">Accessories</a></li>
+                                    
+                                 </ul>
+                             </li>
+
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span> PC Gaming Accessories</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('pc_accessories_keyboards')">Gaming Keyboards & Mouse</a></li>
+                                     <li class="item"><a href="javascript:void(0);" onclick="navigateToGamingByType('pc_accessories_headsets')">Gaming Headsets</a></li>
+                    
+                                 </ul>
+                             </li>
+                             
+                         </ul>
+                    </li>
+
+                      
+                        <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Appliances</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                             
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Fridges & Freezers</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#fridges" onclick="navigateToAppliancesByType('fridges'); return false;">Fridges</a></li>
+                                     <li class="item"><a href="#freezers" onclick="navigateToAppliancesByType('freezers'); return false;">Freezers</a></li>
+                                 </ul>
+                             </li>
+                             
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Microwaves, Ovens & Stoves</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#microwaves" onclick="navigateToAppliancesByType('microwaves'); return false;">Microwaves</a></li>
+                                     <li class="item"><a href="#ovens" onclick="navigateToAppliancesByType('ovens'); return false;">Ovens</a></li>
+                                     <li class="item"><a href="#stoves" onclick="navigateToAppliancesByType('stoves'); return false;">Stoves</a></li>
+                                 </ul>
+                             </li>
+
+
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Kettles, Coffee Machines</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#kettles" onclick="navigateToAppliancesByType('kettles'); return false;">Kettles</a></li>
+                                     <li class="item"><a href="#coffee-machines" onclick="navigateToAppliancesByType('coffee_machines'); return false;">Coffee Machines</a></li>
+                                    
+                                 </ul>
+                             </li>
+
+
+
+
+                               <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Floorcare</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#vacuum-cleaners" onclick="navigateToAppliancesByType('vacuum_cleaners'); return false;">Vacuum Cleaners</a></li>
+                                     <li class="item"><a href="#robot-vacuums" onclick="navigateToAppliancesByType('robot_vacuums'); return false;">Robot Vacuums</a></li>
+                                 
+                                 </ul>
+                             </li>
+                                
+
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Food Preparation</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#mixers" onclick="navigateToAppliancesByType('mixers'); return false;">Mixers</a></li>
+                                     <li class="item"><a href="#food-processors" onclick="navigateToAppliancesByType('food_processors'); return false;">Food Processors</a></li>
+                                     <li class="item"><a href="#blenders-juicers" onclick="navigateToAppliancesByType('blenders_juicers'); return false;">Blenders & Juicers</a></li>
+                                 </ul>
+                             </li>
+                                                
+
+
+                               <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Heaters & Electric Blankets</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#heaters" onclick="navigateToAppliancesByType('heaters'); return false;">Heaters</a></li>
+                                     <li class="item"><a href="#electric-blankets" onclick="navigateToAppliancesByType('electric_blankets'); return false;">Electric Blankets</a></li>
+                                 </ul>
+                             </li>
+                               
+                              <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Personal Care</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#electric-shavers" onclick="navigateToAppliancesByType('electric_shavers'); return false;">Electric Shavers</a></li>
+                                     <li class="item"><a href="#hair-care" onclick="navigateToAppliancesByType('hair_care'); return false;">Hair Care</a></li>
+                                 </ul>
+                             </li>
+                               
+                               <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Cookers & Air Fryers</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#air-fryers" onclick="navigateToAppliancesByType('air_fryers'); return false;">Air Fryers</a></li>
+                                     <li class="item"><a href="#grillers" onclick="navigateToAppliancesByType('grillers'); return false;">Grillers</a></li>
+                                    <li class="item"><a href="#cooker-steamers" onclick="navigateToAppliancesByType('cooker_steamers'); return false;">Cooker&Steamers</a></li>
+                                     <li class="item"><a href="#hotplates" onclick="navigateToAppliancesByType('hotplates'); return false;">Hotplates</a></li>
+                                     
+                                 </ul>
+                             </li>
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Toasters & Sandwich Makers</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#toasters" onclick="navigateToAppliancesByType('toasters'); return false;">Toasters</a></li>
+                                     <li class="item"><a href="#sandwich-makers" onclick="navigateToAppliancesByType('sandwich_makers'); return false;">Sandwich Makers</a></li>
+                                     
+                                 </ul>
+                             </li>
+                             
+                             <li class="item"><a href="#dishwashers" onclick="navigateToAppliancesByType('dishwashers'); return false;">Dishwashers</a></li>
+                             <li class="item"><a href="#irons-steamers" onclick="navigateToAppliancesByType('irons_steamers'); return false;">Irons & Steamers</a></li>
+                             <li class="item"><a href="#sewing-machine" onclick="navigateToAppliancesByType('sewing_machine'); return false;">Sewing Machine</a></li>
+                             <li class="item"><a href="#humidifiers-purifiers" onclick="navigateToAppliancesByType('humidifiers_purifiers'); return false;">Humidifiers & Purifiers</a></li>
+                            
+                         </ul>
+                    </li>
+
+
+                       <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span><i class=""></i>Power Solutions</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                      
+                            <li class="item"><a href="#ups" onclick="navigateToPowerSolutionsByType('ups'); return false;">UPS</a></li>
+                            <li class="item"><a href="#power-stations" onclick="navigateToPowerSolutionsByType('power_stations'); return false;">Power Stations</a></li>
+                            <li class="item"><a href="#inverters" onclick="navigateToPowerSolutionsByType('inverters'); return false;">Inverters</a></li>
+                            
+                        </ul>
+                    </li>
+
+
+                         
+
+                </ul>
+                
+                
+                <ul class="menu-items" id="foodMenu" style="display: none;">
+                    <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Household</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                            
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Cleaning and Hygiene</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#monitors">Bleaches</a></li>
+                                     <li class="item"><a href="#towers">Dishwashing Liquids</a></li>
+                                     <li class="item"><a href="#monitors">Bleaches</a></li>
+                                     <li class="item"><a href="#towers">Air Freshners</a></li>
+                                     <li class="item"><a href="#monitors">Bleaches</a></li>
+                                     <li class="item"><a href="#towers">Headphones</a></li>
+                                 </ul>
+                             </li>
+                             
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Essential Cleaning Tools</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#monitors">Beef</a></li>
+                                     <li class="item"><a href="#towers">Chicken meat</a></li>
+                                     <li class="item"><a href="#towers">Milk</a></li>
+                                 </ul>
+                             </li>
+
+
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Kitchen Essentials</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#laptop-bags">Kettle & Toasters</a></li>
+                                     <li class="item"><a href="#laptop-cooling">Hotplates</a></li>
+                                     <li class="item"><a href="#stands">Air-fryer</a></li>
+                                 </ul>
+                             </li>
+                             
+                             <li class="item"><a href="#windows-laptops">Insect Control</a></li>
+                             <li class="item"><a href="#macos-laptops">Pet Care</a></li>
+                             <li class="item"><a href="#chrome-os-laptops">Pest control</a></li>
+                         </ul>
+                    </li>
+
+                     <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Foods</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                            
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Cleaning and Hygiene</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#monitors">Bleaches</a></li>
+                                     <li class="item"><a href="#towers">Dishwashing Liquids</a></li>
+                                     <li class="item"><a href="#monitors">Bleaches</a></li>
+                                     <li class="item"><a href="#towers">Air Freshners</a></li>
+                                     <li class="item"><a href="#monitors">Bleaches</a></li>
+                                     <li class="item"><a href="#towers">Headphones</a></li>
+                                 </ul>
+                             </li>
+                             
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Essential Cleaning Tools</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#monitors">Beef</a></li>
+                                     <li class="item"><a href="#towers">Chicken meat</a></li>
+                                     <li class="item"><a href="#towers">Milk</a></li>
+                                 </ul>
+                             </li>
+
+
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Home Appliances</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#laptop-bags">Hi-Fi Systems</a></li>
+                                     <li class="item"><a href="#laptop-cooling">Soundbars</a></li>
+                                     <li class="item"><a href="#stands">Stands</a></li>
+                                 </ul>
+                             </li>
+                             
+                            
+                         </ul>
+                    </li>
+
+
+                      <li class="item">
+                         <div class="submenu-item" onclick="toggleSubmenu(this)">
+                             <span><i class=""></i>Personal Care</span>
+                             <i class="fa-solid fa-chevron-right"></i>
+                         </div>
+                         <ul class="menu-items submenu">
+                            
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Toiletries</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#monitors">Deodorants</a></li>
+                                     <li class="item"><a href="#towers">Hand Care</a></li>
+                                 </ul>
+                             </li>
+                             
+                                <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Hair Care</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#monitors">Bluetooth Speakers</a></li>
+                                     <li class="item"><a href="#towers">Headphones</a></li>
+                                     <li class="item"><a href="#towers">Radios</a></li>
+                                 </ul>
+                             </li>
+
+
+
+                             <li class="item">
+                                 <div class="submenu-item" onclick="toggleSubmenu(this)">
+                                     <span>Foot Care</span>
+                                     <i class="fa-solid fa-chevron-right"></i>
+                                 </div>
+                                 <ul class="menu-items submenu">
+                                     <li class="item"><a href="#laptop-bags">Hi-Fi Systems</a></li>
+                                     <li class="item"><a href="#laptop-cooling">Soundbars</a></li>
+                                     <li class="item"><a href="#stands">Stands</a></li>
+                                 </ul>
+                             </li>
+                             
+                             
+                         </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+        <main class="content">
+            <section class="hero-carousel">
+                <div class="hero-slides">
+                    <div class="hero-slide active">
+                        <a href="https://www.takealot.com/black-friday" target="_blank" class="hero-slide-link">
+                            <picture>
+                                <source media="(max-width: 480px)" srcset="https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/ecommerce/za/2025/June/MEGA/WAP-1080x1152.webp">
+                                <source media="(max-width: 768px)" srcset="https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/ecommerce/za/2025/June/MEGA/WAP-1080x1152.webp">
+                                <img src="https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/ecommerce/za/2025/June/MEGA/WEB--3840x1136.webp" alt="Black Friday Deals" class="hero-image">
+                            </picture>
+                        </a>
+                    </div>
+                    <div class="hero-slide">
+                        <a href="https://www.amazon.com/prime-day" target="_blank" class="hero-slide-link">
+                            <picture>
+                                <source media="(max-width: 480px)" srcset="https://hisense.co.za/wp-content/uploads/2025/05/100KV_1920x800-1024x427.jpg">
+                                <source media="(max-width: 768px)" srcset="https://www.asus.com/WebsitesBanner/ZA/banners/store/acizy7bp3pbajipj/acizy7bp3pbajipj-0_0_tablet_0_1X.jpg?webp">
+                                <img src="https://www.defy.co.za/content/dam/defy/za/images-defy-homepage/desktop/Defy_Homepage_Desktop-Blog-Article-Hero-1.png/jcr:content/renditions/original" alt="Prime Day Deals" class="hero-image">
+                            </picture>
+                        </a>
+                    </div>
+                    <div class="hero-slide">
+                         <a href="https://www.takealot.com/tech-deals" target="_blank" class="hero-slide-link">
+                             <picture>
+                                 <source media="(max-width: 480px)" srcset="https://www.asus.com/WebsitesBanner/ZA/banners/store/acizy7bp3pbajipj/acizy7bp3pbajipj-0_0_mobile_0_1X.jpg?webp">
+                                 <source media="(max-width: 768px)" srcset="https://www.asus.com/WebsitesBanner/ZA/banners/store/acizy7bp3pbajipj/acizy7bp3pbajipj-0_0_tablet_0_1X.jpg?webp">
+                                 <img src="https://www.asus.com/WebsitesBanner/ZA/banners/store/acizy7bp3pbajipj/acizy7bp3pbajipj-0_0_desktop_0_1X.jpg?webp" alt="Tech Deals" class="hero-image">
+                             </picture>
+                         </a>
+                    </div>
+                    <div class="hero-slide">
+                         <a href="https://www.amazon.com/home-appliances" target="_blank" class="hero-slide-link">
+                             <picture>
+                                 <source media="(max-width: 480px)" srcset="https://www.asus.com/WebsitesBanner/ZA/banners/store/mh69pfka5ufjjdyj/mh69pfka5ufjjdyj-0_0_mobile_0_1X.jpg">
+                                 <source media="(max-width: 768px)" srcset="https://www.asus.com/WebsitesBanner/ZA/banners/store/mh69pfka5ufjjdyj/mh69pfka5ufjjdyj-0_0_tablet_0_1X.jpg">
+                                 <img src="https://www.asus.com/WebsitesBanner/ZA/banners/store/mh69pfka5ufjjdyj/mh69pfka5ufjjdyj-0_0_desktop_0_1X.jpg" alt="Home Appliances Sale" class="hero-image">
+                             </picture>
+                         </a>
+                    </div>
+                </div>
+                <div class="hero-indicators">
+                    <span class="hero-indicator active" data-slide="0"></span>
+                    <span class="hero-indicator" data-slide="1"></span>
+                    <span class="hero-indicator" data-slide="2"></span>
+                    <span class="hero-indicator" data-slide="3"></span>
+                </div>
+            </section>
+           
+        
+             <section class="deals-section">
+                <div class="deals-controls">
+                    <h2 class="section-title">TV & Streaming</h2>
+                    <div class="sort-options">
+                        <label for="sort-by">Sort by:</label>
+                        <select id="sort-by">
+                            <option value="relevance">Relevance</option>
+                            <option value="price-asc">Price: Low to High</option>
+                            <option value="price-desc">Price: High to Low</option>
+                            <option value="brand-asc">Brand: A to Z</option>
+                            <option value="brand-desc">Brand: Z to A</option>
+                        </select>
+                    </div>
+                </div>
+
+                
+                <div class="filter-buttons">
+                    <button class="filter-button" data-panel="brand-panel">
+                        <i class="fas fa-tag"></i> Brand
+                    </button>
+                    <button class="filter-button" data-panel="screen-size-panel">
+                        <i class="fas fa-tv"></i> Screen Size
+                    </button>
+                    <button class="filter-button" data-panel="os-panel">
+                        <i class="fas fa-mobile-alt"></i> OS
+                    </button>
+                    <button class="filter-button" data-panel="price-panel">
+                        <i class="fas fa-money-bill-wave"></i> Price Range
+                    </button>
+                    <button id="clear-filters" class="filter-button clear">
+                        <i class="fas fa-times"></i> Clear All
+                    </button>
+                </div>
+
+             
+                <div id="brand-panel" class="filter-panel">
+                    <h3>TV & Streaming Brands</h3>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox" name="brand" value="all" checked> All Brands
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="brand" value="apple"> Apple
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="brand" value="hisense"> Hisense
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="brand" value="jvc"> JVC
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="brand" value="mecool"> MECOOL
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="brand" value="netogy"> Netogy
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="brand" value="orion"> Orion
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="brand" value="qvwi"> QVWI
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="brand" value="samsung"> Samsung
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="brand" value="sinotec"> Sinotec
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="brand" value="skyworth"> Skyworth
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="brand" value="tcl"> TCL
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="brand" value="telefunken"> Telefunken
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="brand" value="toshiba"> Toshiba
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="brand" value="xiaomi"> Xiaomi
+                        </label>
+                    </div>
+                    <div class="apply-buttons">
+                        <button class="apply-filters">Apply</button>
+                        <button class="cancel-filters">Cancel</button>
+                    </div>
+                </div>
+
+                <div id="screen-size-panel" class="filter-panel">
+                    <h3>Screen Size</h3>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox" name="screen_size" value="all" checked> All Sizes
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="screen_size" value="32"> 32 inches
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="screen_size" value="40-43"> 40-43 inches
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="screen_size" value="49-50"> 49-50 inches
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="screen_size" value="55"> 55 inches
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="screen_size" value="65"> 65 inches
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="screen_size" value="75"> 75 inches
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="screen_size" value="85+"> 85+ inches
+                        </label>
+                    </div>
+                    <div class="apply-buttons">
+                        <button class="apply-filters">Apply</button>
+                        <button class="cancel-filters">Cancel</button>
+                    </div>
+                </div>
+
+
+               
+                <div id="os-panel" class="filter-panel">
+                    <h3>Smart TV & Streaming Platform</h3>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox" name="os" value="all" checked> All Platforms
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="os" value="android"> Android
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="os" value="android_9"> Android 9.0
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="os" value="android_11"> Android 11
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="os" value="google_tv"> Google TV
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="os" value="tvos"> tvOS
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="os" value="vidaa"> VIDAA Smart
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="os" value="webos"> Web OS
+                        </label>
+                    </div>
+                    <div class="apply-buttons">
+                        <button class="apply-filters">Apply</button>
+                        <button class="cancel-filters">Cancel</button>
+                    </div>
+                </div>
+
+                
+                <div id="price-panel" class="filter-panel">
+                    <h3>Price Range</h3>
+                    <div class="filter-options">
+                        <label class="filter-option">
+                            <input type="checkbox" name="price" value="0-1000"> Under R1,000
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="price" value="1000-2000"> R1,000 - R2,000
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="price" value="2000-5000"> R2,000 - R5,000
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="price" value="5000-10000"> R5,000 - R10,000
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="price" value="10000-15000"> R10,000 - R15,000
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="price" value="15000-20000"> R15,000 - R20,000
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="price" value="20000-30000"> R20,000 - R30,000
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="price" value="30000-50000"> R30,000 - R50,000
+                        </label>
+                        <label class="filter-option">
+                            <input type="checkbox" name="price" value="50000+"> Over R50,000
+                        </label>
+                    </div>
+                    <div class="apply-buttons">
+                        <button class="apply-filters">Apply</button>
+                        <button class="cancel-filters">Cancel</button>
+                    </div>
+                </div>
+
+                
+                <div class="products-grid" id="products-grid">
+                    
+                </div>
+
+            
+                <div class="pagination-container">
+                    <div class="pagination" id="pagination">
+                        <button class="page-nav" data-page="prev" aria-label="Previous page">&laquo;</button>
+                        <div class="pages">
+                          
+                        </div>
+                        <button class="page-nav" data-page="next" aria-label="Next page">&raquo;</button>
+                    </div>
+                </div>
+            </section>
+            
+         
+        </main>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+<!-- Mobile Search Modal -->
+    <div class="mobile-search-modal" id="mobileSearchModal">
+        <div class="mobile-search-modal-header">
+            <span class="mobile-search-close" id="mobileSearchClose">&times;</span>
+            <form class="mobile-search-form" id="mobileSearchForm">
+                <input type="text" class="mobile-search-input" id="mobileSearchInput" placeholder="Search...">
+                <button type="submit" class="mobile-search-button"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="mobile-search-suggestions" id="mobileSearchSuggestions">
+            <div class="mobile-suggestions-header">
+                <span class="mobile-all-results">All</span>
+                <span class="mobile-search-query" id="mobileSearchQuery">results</span>
+            </div>
+            <div class="mobile-suggestions-grid" id="mobileSuggestionsGrid"></div>
+        </div>
+    </div>
+    
+  
+   
+    
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About CompareHubPrices</h3>
+                <ul>
+                    <li><a href="about-us.html">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                <ul>
+                    <li><a href="contact-us.html">Contact Us</a></li>
+                    <li><a href="FAQs.html">FAQs</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="Terms-of-Service.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+                <div class="newsletter-section">
+                    <h4>Get the Best Deals in Your Inbox</h4>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                        <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CompareHub Prices. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-banner-content">
+            <div class="cookie-banner-text">
+                <i class="fas fa-cookie-bite"></i>
+                <span>This website uses cookies to provide you with the best experience. By continuing to use this site, you agree to our use of cookies.</span>
+            </div>
+            <div class="cookie-banner-actions">
+                <button class="cookie-banner-btn accept-btn" onclick="acceptCookies()">Accept</button>
+                <button class="cookie-banner-btn decline-btn" onclick="declineCookies()">Decline</button>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Search suggestions functionality -->
+<script src="search-suggestions.js"></script>
+
+<!-- Account authentication functionality -->
+<script src="account-authentication.js"></script>
+<script src="content-padding.js"></script>
+<!-- Notifications functionality -->
+<script src="notifications.js"></script>
+<!-- Wishlist functionality -->
+<script src="wishlist.js"></script>
+<script src="mobile-search.js"></script>
+<!-- Sidebar functionality -->
+<script src="sidebar.js"></script>
+
+<!-- TV & Streaming functionality -->
+<script src="television-streaming.js"></script>
+
+<script>
+// Initialize filter functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Filter button functionality
+    const filterButtons = document.querySelectorAll('.filter-button:not(.clear)');
+    const filterPanels = document.querySelectorAll('.filter-panel');
+    const clearFiltersButton = document.getElementById('clear-filters');
+    
+    // Show filter panel when clicking on filter button
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const panelId = this.getAttribute('data-panel');
+            const panel = document.getElementById(panelId);
+            
+            // Close all other panels
+            filterPanels.forEach(p => {
+                if (p.id !== panelId) {
+                    p.classList.remove('active');
+                }
+            });
+            
+            // Toggle current panel
+            panel.classList.toggle('active');
+        });
+    });
+    
+    // Close filter panel when clicking on cancel button
+    const cancelButtons = document.querySelectorAll('.cancel-filters');
+    cancelButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const panel = this.closest('.filter-panel');
+            panel.classList.remove('active');
+        });
+    });
+    
+    // Apply filters when clicking on apply button
+    const applyButtons = document.querySelectorAll('.apply-filters');
+    applyButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const panel = this.closest('.filter-panel');
+            panel.classList.remove('active');
+            
+            // Get selected filter values
+            const selectedFilters = {};
+            
+            // Brand filters
+            const brandCheckboxes = document.querySelectorAll('input[name="brand"]:checked');
+            if (brandCheckboxes.length > 0) {
+                selectedFilters.brand = Array.from(brandCheckboxes).map(cb => cb.value);
+            }
+            
+            // Screen size filters
+            const screenSizeCheckboxes = document.querySelectorAll('input[name="screen_size"]:checked');
+            if (screenSizeCheckboxes.length > 0) {
+                selectedFilters.screen_size = Array.from(screenSizeCheckboxes).map(cb => cb.value);
+            }
+            
+            // OS filters
+            const osCheckboxes = document.querySelectorAll('input[name="os"]:checked');
+            if (osCheckboxes.length > 0) {
+                selectedFilters.os = Array.from(osCheckboxes).map(cb => cb.value);
+            }
+            
+            // Price filters
+            const priceCheckboxes = document.querySelectorAll('input[name="price"]:checked');
+            if (priceCheckboxes.length > 0) {
+                selectedFilters.price = Array.from(priceCheckboxes).map(cb => cb.value);
+            }
+            
+            // Apply filters to products
+            applyFilters(selectedFilters);
+        });
+    });
+    
+    // Clear all filters
+    clearFiltersButton.addEventListener('click', function() {
+        // Use the resetFilters function from television-streaming.js
+        if (typeof window.resetFilters === 'function') {
+            window.resetFilters();
+        } else {
+            // Fallback if the function is not available
+            // Reset all checkboxes to default state
+            document.querySelectorAll('input[value="all"]').forEach(cb => {
+                cb.checked = true;
+            });
+            
+            document.querySelectorAll('.filter-options input:not([value="all"])').forEach(cb => {
+                cb.checked = false;
+            });
+            
+            // Close all panels
+            filterPanels.forEach(panel => {
+                panel.classList.remove('active');
+            });
+            
+            // Reset filters
+            applyFilters({});
+        }
+    });
+    
+    // Function to apply filters
+    function applyFilters(filters) {
+        // Get the current product type from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productType = urlParams.get('type');
+        
+        // Call the display function with filters
+        if (typeof window.displayTVStreamingProducts === 'function') {
+            window.displayTVStreamingProducts(productType, filters);
+        }
+    }
+    
+    // Initialize price alerts
+    setTimeout(function() {
+        initializePriceAlerts();
+    }, 1000);
+    
+    function initializePriceAlerts() {
+        // Add price alert bells to product cards
+        const productCards = document.querySelectorAll('.product-card');
+        productCards.forEach(card => {
+            // Check if card already has a price alert bell
+            if (!card.querySelector('.price-alert-bell')) {
+                const productId = card.getAttribute('data-product-id');
+                const productPriceElement = card.querySelector('.current-price');
+                
+                if (productPriceElement) {
+                    const productPrice = parseFloat(productPriceElement.textContent.replace(/[^0-9.]/g, ''));
+                    const productName = card.querySelector('.product-name').textContent;
+                    const productImage = card.querySelector('.product-image img').src;
+                    
+                    // Create bell icon
+                    const bellIcon = document.createElement('div');
+                    bellIcon.className = 'price-alert-bell';
+                    bellIcon.setAttribute('data-product-id', productId);
+                    bellIcon.setAttribute('data-product-price', productPrice);
+                    bellIcon.innerHTML = '<i class="fas fa-bell"></i>';
+                    
+                    // Add click event
+                    bellIcon.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        togglePriceAlert(productId, productPrice, productName, productImage);
+                    });
+                    
+                    // Check if this product already has an alert set
+                    const alerts = getPriceAlerts();
+                    const hasAlert = alerts.some(alert => alert.productId === productId);
+                    
+                    // Update bell appearance based on alert status
+                    if (hasAlert) {
+                        bellIcon.classList.add('active');
+                    }
+                    
+                    // Add to card
+                    card.appendChild(bellIcon);
+                }
+            }
+        });
+    }
+});
+</script>
+
+<!-- Forgot Password Modal JavaScript -->
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-modal-container">
+            <div class="login-modal-header">
+                <button class="login-modal-close" id="loginModalClose">&times;</button>
+                <div class="login-modal-logo-container">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg" alt="Logo">
+                </div>
+            </div>
+            <div class="login-modal-form-container">
+                <div class="login-modal-form-header">
+                    <h2>Welcome Back</h2>
+                    <p>Please sign in to your account to continue</p>
+                </div>
+                
+                <div id="loginAlertContainer"></div>
+                <form class="login-modal-form" id="loginModalForm">
+                    <div class="login-modal-form-group">
+                        <label for="loginModalEmail">Email Address</label>
+                        <input type="email" id="loginModalEmail" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="login-modal-form-group">
+                        <label for="loginModalPassword">Password</label>
+                        <div class="login-modal-input-wrapper">
+                            <input type="password" id="loginModalPassword" name="password" placeholder="Enter your password" required>
+                            <button type="button" class="login-modal-password-toggle" id="loginModalPasswordToggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="login-modal-forgot-password">
+                        <a href="#" id="loginModalForgotPassword">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="login-modal-btn" id="loginModalBtn">
+                        <span id="loginModalBtnText">Sign In</span>
+                        <div class="login-modal-spinner" id="loginModalSpinner" style="display: none;"></div>
+                    </button>
+                </form>
+                <div class="login-modal-register-link">
+                    Don't have an account? <a href="#" id="loginModalRegisterLink">Sign up here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="register-modal" id="registerModal">
+        <div class="register-modal-container">
+            <div class="register-modal-header">
+                <button class="register-modal-close" id="registerModalClose">&times;</button>
+                <div class="register-modal-logo-container">
+                    <img src="https://comparehub-smartphone-images.s3.af-south-1.amazonaws.com/IMG_20250625_174144.jpg"
+                         alt="CompareHub Logo">
+                </div>
+            </div>
+            
+            <div class="register-modal-form-container">
+                <div class="register-modal-form-header">
+                    <h2>Create Account</h2>
+                    <p>Join thousands saving money with smart comparisons</p>
+                </div>
+                
+                <div id="registerAlertContainer"></div>
+                
+                <form id="registerModalForm" autocomplete="off">
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="text" class="register-modal-input" id="registerFirstname" placeholder="First Name" required>
+                            <i class="fas fa-user register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="text" class="register-modal-input" id="registerLastname" placeholder="Last Name" required>
+                            <i class="fas fa-user register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="email" class="register-modal-input" id="registerEmail" placeholder="Email Address" required>
+                            <i class="fas fa-envelope register-modal-input-icon"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="password" class="register-modal-input" id="registerPassword" placeholder="Password" required>
+                            <button type="button" class="register-modal-password-toggle" onclick="toggleRegisterPassword('registerPassword')">
+                                <i class="fas fa-eye" id="registerPassword-eye"></i>
+                            </button>
+                        </div>
+                        <div class="register-modal-password-strength">
+                            <div class="register-modal-strength-title">Password Requirements</div>
+                            <div class="register-modal-strength-indicators">
+                                <div class="register-modal-strength-item" id="register-length-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>8+ characters</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-upper-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Uppercase letter</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-number-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Number</span>
+                                </div>
+                                <div class="register-modal-strength-item" id="register-special-check">
+                                    <i class="fas fa-times"></i>
+                                    <span>Special character</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-form-group">
+                        <div class="register-modal-input-group">
+                            <input type="password" class="register-modal-input" id="registerConfirmPassword" placeholder="Confirm Password" required>
+                            <button type="button" class="register-modal-password-toggle" onclick="toggleRegisterPassword('registerConfirmPassword')">
+                                <i class="fas fa-eye" id="registerConfirmPassword-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="register-modal-checkbox-group">
+                        <div class="register-modal-checkbox">
+                            <input type="checkbox" id="registerTerms" required style="position: absolute; opacity: 0; cursor: pointer; height: 100%; width: 100%; margin: 0; z-index: 1;">
+                            <div class="register-modal-checkmark"></div>
+                        </div>
+                        <label for="registerTerms" class="register-modal-checkbox-label" style="cursor: pointer;">
+                            I agree to the <a href="Terms-of-Service.html" target="_blank" style="pointer-events: auto;">Terms of Service</a> and <a href="privacy-policy.html" target="_blank" style="pointer-events: auto;">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="register-modal-btn" id="registerModalBtn">
+                        <i class="fas fa-user-plus"></i>
+                        <span id="registerModalBtnText">Create Account</span>
+                        <div class="register-modal-spinner" id="registerModalSpinner" style="display: none;"></div>
+                    </button>
+                </form>
+                
+                <div class="register-modal-divider">
+                    <span>Already have an account?</span>
+                </div>
+                
+                <div class="register-modal-login-link">
+                    <a href="#" id="registerModalLoginLink">
+                        <i class="fas fa-arrow-left"></i> Sign in instead
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="forgot-password-modal">
+        <div class="forgot-password-modal-container">
+            <div class="forgot-password-modal-header">
+                <button class="forgot-password-modal-close" onclick="closeForgotPasswordModal()">&times;</button>
+                <div class="forgot-password-modal-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+            </div>
+            <div class="forgot-password-modal-form-container">
+                <div class="forgot-password-modal-form-header">
+                    <h2>Reset Password</h2>
+                    <p>Enter your email address and we'll send you a code to reset your password.</p>
+                </div>
+                
+                <div id="forgotPasswordAlert" class="forgot-password-modal-alert" style="display: none;"></div>
+                
+                <form id="forgotPasswordForm">
+                    <div class="forgot-password-modal-form-group">
+                        <label for="forgotPasswordEmail">Email Address</label>
+                        <input
+                            type="email"
+                            id="forgotPasswordEmail"
+                            name="email"
+                            placeholder="Enter your email address"
+                            required
+                        >
+                    </div>
+                    
+                    <button type="submit" class="forgot-password-modal-btn" id="forgotPasswordBtn">
+                        <span id="forgotPasswordBtnText">Send Reset Code</span>
+                        <div id="forgotPasswordSpinner" class="forgot-password-modal-spinner" style="display: none;"></div>
+                    </button>
+                </form>
+                
+                <div class="forgot-password-modal-back-link">
+                    <a href="#" onclick="closeForgotPasswordModal(); showLoginModal();">Back to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Price Alert Modal -->
+    <div class="price-alert-modal" id="priceAlertModal">
+        <div class="price-alert-container">
+            <div class="price-alert-header">
+                <h2 class="price-alert-title">Set Price Alert</h2>
+                <button class="price-alert-close" id="priceAlertModalClose">&times;</button>
+            </div>
+            <div class="price-alert-content">
+                <div class="price-alert-product">
+                    <div class="price-alert-product-image">
+                        <img id="priceAlertProductImage" src="" alt="Product Image">
+                    </div>
+                    <div class="price-alert-product-info">
+                        <h3 class="price-alert-product-title" id="priceAlertProductTitle"></h3>
+                        <div class="price-alert-product-price" id="priceAlertProductPrice"></div>
+                    </div>
+                </div>
+                
+                <form id="priceAlertForm">
+                    <div class="price-alert-form-group">
+                        <label for="alertPrice">Alert me when price drops below:</label>
+                        <div class="price-alert-input-container">
+                            <span class="price-alert-currency">R</span>
+                            <input type="number" id="alertPrice" class="price-alert-input" min="1">
+                        </div>
+                    </div>
+                    
+                    <div class="price-alert-form-group">
+                        <label for="alertEmail">Email for notifications (optional):</label>
+                        <input type="email" id="alertEmail" class="price-alert-input" placeholder="Enter your email address">
+                    </div>
+                    
+                    <div class="price-alert-actions">
+                        <button type="button" class="price-alert-btn secondary" id="cancelPriceAlert">Cancel</button>
+                        <button type="button" id="savePriceAlert" class="price-alert-btn primary">Set Alert</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Price Alert Modal Styles -->
+    <style>
+        /* Price Alert Modal Styles */
+        .price-alert-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            overflow-y: auto;
+        }
+        
+        .price-alert-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+        }
+        
+        .price-alert-container {
+            position: relative;
+            background-color: #fff;
+            margin: 30px auto;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .price-alert-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 25px;
+            background: linear-gradient(135deg, #ff3a3a 0%, #ff5252 100%);
+            color: white;
+            position: relative;
+        }
+        
+        .price-alert-title {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .price-alert-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .price-alert-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+        
+        .price-alert-content {
+            padding: 25px;
+        }
+        
+        .price-alert-product {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .price-alert-product-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f9f9f9;
+            padding: 5px;
+        }
+        
+        .price-alert-product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .price-alert-product-info {
+            flex: 1;
+        }
+        
+        .price-alert-product-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin: 0 0 5px 0;
+        }
+        
+        .price-alert-product-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ff3a3a;
+        }
+        
+        .price-alert-form-group {
+            margin-bottom: 20px;
+        }
+        
+        .price-alert-form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 15px;
+        }
+        
+        .price-alert-input-container {
+            position: relative;
+            margin: 20px 0;
+        }
+        
+        .price-alert-currency {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .price-alert-input {
+            width: 100%;
+            padding: 14px 14px 14px 30px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background-color: #f9f9f9;
+        }
+        
+        .price-alert-input:focus {
+            outline: none;
+            border-color: #ff3a3a;
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(255, 58, 58, 0.1);
+        }
+        
+        .price-alert-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .price-alert-btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .price-alert-btn.primary {
+            background: linear-gradient(135deg, #ff3a3a 0%, #ff5252 100%);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 15px rgba(255, 58, 58, 0.3);
+        }
+        
+        .price-alert-btn.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 58, 58, 0.4);
+        }
+        
+        .price-alert-btn.secondary {
+            background: white;
+            color: #666;
+            border: 2px solid #e1e5e9;
+        }
+        
+        .price-alert-btn.secondary:hover {
+            background: #f9f9f9;
+            border-color: #ccc;
+        }
+        
+        /* Product Card Price Alert Bell */
+        .product-card .price-alert-bell {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 100;
+            color: #ff3a3a;
+            background: rgba(255, 255, 255, 1);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            pointer-events: auto;
+            border: 2px solid #ff3a3a;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        
+        .product-card .price-alert-bell:hover {
+            transform: scale(1.15);
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .product-card .price-alert-bell.active {
+            color: #ff3a3a;
+            animation: bell-pulse 2s infinite;
+            background-color: #fff0f0;
+        }
+        
+        @keyframes bell-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+    </style>
+    
+    <!-- Price Alert JavaScript -->
+    <script>
+        // Price Alert Functions
+        function getPriceAlerts() {
+            const savedAlerts = localStorage.getItem('priceAlerts');
+            if (savedAlerts) {
+                try {
+                    return JSON.parse(savedAlerts);
+                } catch (e) {
+                    console.error('Error parsing price alerts:', e);
+                    return [];
+                }
+            }
+            return [];
+        }
+        
+        function savePriceAlerts(alerts) {
+            localStorage.setItem('priceAlerts', JSON.stringify(alerts));
+        }
+        
+        function togglePriceAlert(productId, currentPrice, productName, productImage) {
+            const alerts = getPriceAlerts();
+            const existingAlertIndex = alerts.findIndex(alert => alert.productId === productId);
+            
+            if (existingAlertIndex >= 0) {
+                // Remove existing alert
+                alerts.splice(existingAlertIndex, 1);
+                showNotification('Price Alert Removed', `Price alert for ${productName} has been removed.`, 'info');
+                
+                // Update UI
+                const bellIcon = document.querySelector(`.price-alert-bell[data-product-id="${productId}"]`);
+                if (bellIcon) {
+                    bellIcon.classList.remove('active');
+                }
+            } else {
+                // Show price alert modal
+                showPriceAlertModal(productId, currentPrice, productName, productImage);
+            }
+            
+            savePriceAlerts(alerts);
+        }
+        
+        function showPriceAlertModal(productId, currentPrice, productName, productImage) {
+            // Set modal content
+            document.getElementById('priceAlertProductTitle').textContent = productName;
+            document.getElementById('priceAlertProductPrice').textContent = `R${currentPrice.toLocaleString()}`;
+            document.getElementById('priceAlertProductImage').src = productImage;
+            document.getElementById('alertPrice').value = Math.floor(currentPrice * 0.9);
+            document.getElementById('alertPrice').max = currentPrice - 1;
+            
+            // Show modal
+            const modal = document.getElementById('priceAlertModal');
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+            
+            // Add event listeners
+            document.getElementById('priceAlertModalClose').addEventListener('click', closePriceAlertModal);
+            document.getElementById('cancelPriceAlert').addEventListener('click', closePriceAlertModal);
+            document.getElementById('savePriceAlert').addEventListener('click', function() {
+                savePriceAlertSettings(productId, currentPrice, productName, productImage);
+            });
+        }
+        
+        function closePriceAlertModal() {
+            const modal = document.getElementById('priceAlertModal');
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+        
+        function savePriceAlertSettings(productId, currentPrice, productName, productImage) {
+            const alertPrice = parseFloat(document.getElementById('alertPrice').value);
+            const alertEmail = document.getElementById('alertEmail').value;
+            
+            if (isNaN(alertPrice) || alertPrice >= currentPrice || alertPrice <= 0) {
+                showNotification('Invalid Price', 'Please enter a valid price below the current price.', 'error');
+                return;
+            }
+            
+            // Save the alert
+            const alerts = getPriceAlerts();
+            alerts.push({
+                productId,
+                productName,
+                currentPrice,
+                alertPrice,
+                email: alertEmail,
+                dateCreated: new Date().toISOString()
+            });
+            savePriceAlerts(alerts);
+            
+            // Update UI
+            const bellIcon = document.querySelector(`.price-alert-bell[data-product-id="${productId}"]`);
+            if (bellIcon) {
+                bellIcon.classList.add('active');
+            }
+            
+            // Show confirmation
+            showNotification('Price Alert Set', `We'll notify you when ${productName} drops below R${alertPrice.toLocaleString()}.`, 'success');
+            
+            // Close modal
+            closePriceAlertModal();
+        }
+        
+        // Helper function to show notifications
+        function showNotification(title, message, type = 'info') {
+            // Check if notification container exists
+            let container = document.getElementById('notificationContainer');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'notificationContainer';
+                container.className = 'notification-container';
+                document.body.appendChild(container);
+            }
+            
+            // Create notification
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            
+            // Set icon based on type
+            let icon;
+            switch(type) {
+                case 'success': icon = 'fas fa-check-circle'; break;
+                case 'error': icon = 'fas fa-exclamation-circle'; break;
+                case 'warning': icon = 'fas fa-exclamation-triangle'; break;
+                case 'info': icon = 'fas fa-info-circle'; break;
+                default: icon = 'fas fa-bell';
+            }
+            
+            notification.innerHTML = `
+                <div class="notification-header">
+                    <div class="notification-title">
+                        <i class="${icon}"></i>
+                        ${title}
+                    </div>
+                    <button class="notification-close" onclick="closeNotification(this)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="notification-body">
+                    <p class="notification-message">${message}</p>
+                </div>
+                <div class="notification-progress"></div>
+            `;
+            
+            // Add to container
+            container.appendChild(notification);
+            
+            // Trigger show animation
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            // Auto-hide after 5 seconds (except for errors)
+            if (type !== 'error') {
+                const duration = 5000;
+                const progressBar = notification.querySelector('.notification-progress');
+                let width = 100;
+                const interval = setInterval(() => {
+                    width -= 100 / (duration / 100);
+                    progressBar.style.width = width + '%';
+                    if (width <= 0) {
+                        clearInterval(interval);
+                        closeNotification(notification.querySelector('.notification-close'));
+                    }
+                }, 100);
+            }
+        }
+        
+        // Close notification function
+        function closeNotification(button) {
+            const notification = button.closest('.notification');
+            notification.classList.add('hiding');
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }
+        
+        // Initialize price alert bells when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add price alert bells to product cards
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach(card => {
+                // Check if card already has a price alert bell
+                if (!card.querySelector('.price-alert-bell')) {
+                    const productId = card.getAttribute('data-product-id');
+                    const productPrice = parseFloat(card.querySelector('.current-price').textContent.replace(/[^0-9.]/g, ''));
+                    
+                    // Create bell icon
+                    const bellIcon = document.createElement('div');
+                    bellIcon.className = 'price-alert-bell';
+                    bellIcon.setAttribute('data-product-id', productId);
+                    bellIcon.setAttribute('data-product-price', productPrice);
+                    bellIcon.innerHTML = '<i class="fas fa-bell"></i>';
+                    
+                    // Add click event
+                    bellIcon.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        const productName = card.querySelector('.product-name').textContent;
+                        const productImage = card.querySelector('.product-image img').src;
+                        
+                        togglePriceAlert(productId, productPrice, productName, productImage);
+                    });
+                    
+                    // Check if this product already has an alert set
+                    const alerts = getPriceAlerts();
+                    const hasAlert = alerts.some(alert => alert.productId === productId);
+                    
+                    // Update bell appearance based on alert status
+                    if (hasAlert) {
+                        bellIcon.classList.add('active');
+                    }
+                    
+                    // Add to card
+                    card.appendChild(bellIcon);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
