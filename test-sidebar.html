@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar User Display Test</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/sidebar.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .test-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .test-btn.primary {
+            background: #667eea;
+            color: white;
+        }
+        .test-btn.secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .test-info {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100vh;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            transition: left 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        .mobile-sidebar.active {
+            left: 0;
+        }
+        .sidebar-header {
+            padding: 20px;
+            background: #667eea;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .sidebar-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 999;
+        }
+        .overlay.active {
+            display: block;
+        }
+        .open-sidebar-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1001;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Sidebar User Display Test</h1>
+        
+        <div class="test-info">
+            <h3>Test Instructions:</h3>
+            <ol>
+                <li>Click "Open Sidebar" to see the mobile sidebar</li>
+                <li>Click "Simulate Login" to test logged-in state</li>
+                <li>Click "Simulate Logout" to test logged-out state</li>
+                <li>Test the "Sign Out" button in the sidebar</li>
+                <li>Check responsive design on different screen sizes</li>
+            </ol>
+        </div>
+
+        <div class="test-buttons">
+            <button class="test-btn primary" onclick="openSidebar()">📱 Open Sidebar</button>
+            <button class="test-btn primary" onclick="simulateLogin()">✅ Simulate Login</button>
+            <button class="test-btn secondary" onclick="simulateLogout()">❌ Simulate Logout</button>
+            <button class="test-btn secondary" onclick="clearStorage()">🗑️ Clear Storage</button>
+        </div>
+
+        <div class="test-info">
+            <h3>Current State:</h3>
+            <p><strong>User Email:</strong> <span id="currentEmail">Not logged in</span></p>
+            <p><strong>LocalStorage:</strong> <span id="storageStatus">Empty</span></p>
+        </div>
+
+        <h3>Expected Behavior:</h3>
+        <ul>
+            <li>✅ When logged out: Show "Login" button in sidebar</li>
+            <li>✅ When logged in: Show user avatar, email, and "Sign Out" button</li>
+            <li>✅ Sign out button should clear storage and update display</li>
+            <li>✅ Sidebar should close automatically after sign out</li>
+            <li>✅ Responsive design should work on mobile/tablet sizes</li>
+        </ul>
+    </div>
+
+    <!-- Mobile Sidebar -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="sidebar-login" id="sidebarLogin">
+            <a href="#" class="login-btn" onclick="alert('Login clicked!'); return false;">
+                <i class="fas fa-sign-in-alt"></i>Login
+            </a>
+        </div>
+        
+        <!-- Logged in user section (hidden by default) -->
+        <div class="sidebar-user" id="sidebarUser" style="display: none;">
+        <div class="user-info">
+            <div class="user-avatar">
+                <div class="initials" id="sidebarUserInitials">TE</div>
+            </div>
+            <div class="user-details">
+                <div class="user-email" id="sidebarUserEmail">user@example.com</div>
+                <div class="user-status">Logged In</div>
+            </div>
+        </div>
+            <div class="user-actions">
+                <button class="sign-out-btn" onclick="handleSignOut(); return false;">
+                    <i class="fas fa-sign-out-alt"></i>Sign Out
+                </button>
+            </div>
+        </div>
+        
+        <div class="sidebar-header">
+            <h3>Test Sidebar</h3>
+            <button class="sidebar-close" onclick="closeSidebar()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+    <!-- Open Sidebar Button -->
+    <button class="open-sidebar-btn" onclick="openSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <script>
+        // Test functions
+        function openSidebar() {
+            document.getElementById('mobileSidebar').classList.add('active');
+            document.getElementById('overlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSidebar() {
+            document.getElementById('mobileSidebar').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function simulateLogin() {
+            const testEmail = 'test@example.com';
+            localStorage.setItem('userEmail', testEmail);
+            updateSidebarUserDisplay();
+            updateTestStatus();
+            alert('✅ Simulated login with: ' + testEmail);
+        }
+
+        function simulateLogout() {
+            localStorage.removeItem('userEmail');
+            sessionStorage.removeItem('userEmail');
+            updateSidebarUserDisplay();
+            updateTestStatus();
+            alert('❌ Simulated logout');
+        }
+
+        function clearStorage() {
+            localStorage.clear();
+            sessionStorage.clear();
+            updateSidebarUserDisplay();
+            updateTestStatus();
+            alert('🗑️ Storage cleared');
+        }
+
+        // Generate initials from email
+        function generateInitials(email) {
+            if (!email) return 'U';
+            
+            const namePart = email.split('@')[0];
+            
+            if (namePart.includes('.')) {
+                const parts = namePart.split('.');
+                return (parts[0][0] + parts[1][0]).toUpperCase();
+            } else if (namePart.length >= 2) {
+                return namePart.substring(0, 2).toUpperCase();
+            } else {
+                return namePart[0].toUpperCase();
+            }
+        }
+
+        // Sidebar user display functions (copied from main file)
+        function updateSidebarUserDisplay() {
+            const sidebarLogin = document.getElementById('sidebarLogin');
+            const sidebarUser = document.getElementById('sidebarUser');
+            const sidebarUserEmail = document.getElementById('sidebarUserEmail');
+            const sidebarUserInitials = document.getElementById('sidebarUserInitials');
+            
+            if (sidebarLogin && sidebarUser && sidebarUserEmail && sidebarUserInitials) {
+                const isLoggedIn = localStorage.getItem('userEmail') || sessionStorage.getItem('userEmail');
+                
+                if (isLoggedIn) {
+                    sidebarLogin.style.display = 'none';
+                    sidebarUser.style.display = 'block';
+                    sidebarUserEmail.textContent = isLoggedIn;
+                    sidebarUserInitials.textContent = generateInitials(isLoggedIn);
+                } else {
+                    sidebarLogin.style.display = 'block';
+                    sidebarUser.style.display = 'none';
+                }
+            }
+        }
+
+        function handleSignOut() {
+            if (confirm('Are you sure you want to sign out?')) {
+                localStorage.removeItem('userEmail');
+                sessionStorage.removeItem('userEmail');
+                updateSidebarUserDisplay();
+                updateTestStatus();
+                closeSidebar();
+                alert('✅ Signed out successfully!');
+            }
+        }
+
+        function updateTestStatus() {
+            const email = localStorage.getItem('userEmail') || 'Not logged in';
+            const storage = localStorage.getItem('userEmail') ? 'Has userEmail' : 'Empty';
+            
+            document.getElementById('currentEmail').textContent = email;
+            document.getElementById('storageStatus').textContent = storage;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSidebarUserDisplay();
+            updateTestStatus();
+        });
+    </script>
+</body>
+</html>
