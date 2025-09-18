@@ -101,21 +101,43 @@ function updateProfileDisplay(userData) {
         // Update profile name
         const profileName = document.querySelector('.profile-name');
         if (profileName) {
+            let displayName = 'User'; // Default
+            
+            // First try userData
             if (userData && userData.firstName && userData.lastName) {
-                profileName.textContent = `${userData.firstName} ${userData.lastName}`;
+                displayName = `${userData.firstName} ${userData.lastName}`;
             } else if (userData && userData.name) {
-                profileName.textContent = userData.name;
-            } else if (userData && userData.email) {
-                // Extract name from email if no name is available
-                const emailName = userData.email.split('@')[0];
-                profileName.textContent = emailName.charAt(0).toUpperCase() + emailName.slice(1);
-            } else if (currentUser && currentUser.email) {
-                // Fallback to current user email
-                const emailName = currentUser.email.split('@')[0];
-                profileName.textContent = emailName.charAt(0).toUpperCase() + emailName.slice(1);
+                displayName = userData.name;
             } else {
-                profileName.textContent = 'User';
+                // Try to get from JWT token
+                const idToken = sessionStorage.getItem('idToken');
+                if (idToken) {
+                    try {
+                        const decoded = decodeJwt(idToken);
+                        console.log('JWT decoded for name:', decoded);
+                        
+                        if (decoded.given_name && decoded.family_name) {
+                            displayName = `${decoded.given_name} ${decoded.family_name}`;
+                        } else if (decoded.name) {
+                            displayName = decoded.name;
+                        }
+                    } catch (error) {
+                        console.error('Error decoding JWT for name:', error);
+                    }
+                }
+                
+                // Last resort: use email name
+                if (displayName === 'User') {
+                    const email = userData?.email || currentUser?.email;
+                    if (email) {
+                        const emailName = email.split('@')[0];
+                        displayName = emailName.charAt(0).toUpperCase() + emailName.slice(1);
+                    }
+                }
             }
+            
+            profileName.textContent = displayName;
+            console.log('Profile name set to:', displayName);
         }
         
         // Update profile email
@@ -174,26 +196,61 @@ function updateAvatarInitials(userData) {
     if (avatarInitials) {
         let initials = 'U'; // Default
         
-        if (userData && userData.firstName && userData.lastName) {
-            initials = (userData.firstName.charAt(0) + userData.lastName.charAt(0)).toUpperCase();
-        } else if (userData && userData.name) {
-            const nameParts = userData.name.split(' ');
-            if (nameParts.length >= 2) {
-                initials = (nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0)).toUpperCase();
-            } else {
-                initials = nameParts[0].charAt(0).toUpperCase();
+        console.log('updateAvatarInitials - userData:', userData);
+        
+        // First try to get from JWT token if userData doesn't have names
+        if (!userData || (!userData.firstName && !userData.lastName)) {
+            const idToken = sessionStorage.getItem('idToken');
+            if (idToken) {
+                try {
+                    const decoded = decodeJwt(idToken);
+                    console.log('JWT decoded data:', decoded);
+                    
+                    if (decoded.given_name && decoded.family_name) {
+                        initials = (decoded.given_name.charAt(0) + decoded.family_name.charAt(0)).toUpperCase();
+                        console.log('Using JWT names for initials:', initials);
+                    } else if (decoded.name) {
+                        const nameParts = decoded.name.split(' ');
+                        if (nameParts.length >= 2) {
+                            initials = (nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0)).toUpperCase();
+                        } else {
+                            initials = nameParts[0].charAt(0).toUpperCase();
+                        }
+                        console.log('Using JWT name for initials:', initials);
+                    }
+                } catch (error) {
+                    console.error('Error decoding JWT for initials:', error);
+                }
             }
-        } else if (userData && userData.email) {
-            const emailName = userData.email.split('@')[0];
-            initials = emailName.charAt(0).toUpperCase();
-        } else if (currentUser && currentUser.email) {
-            // Fallback to current user email
-            const emailName = currentUser.email.split('@')[0];
-            initials = emailName.charAt(0).toUpperCase();
+        }
+        
+        // If we still don't have proper initials, try userData
+        if (initials === 'U' && userData) {
+            if (userData.firstName && userData.lastName) {
+                initials = (userData.firstName.charAt(0) + userData.lastName.charAt(0)).toUpperCase();
+                console.log('Using userData names for initials:', initials);
+            } else if (userData.name) {
+                const nameParts = userData.name.split(' ');
+                if (nameParts.length >= 2) {
+                    initials = (nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0)).toUpperCase();
+                } else {
+                    initials = nameParts[0].charAt(0).toUpperCase();
+                }
+                console.log('Using userData name for initials:', initials);
+            }
+        }
+        
+        // Last resort: use email (but only first letter, not full email name)
+        if (initials === 'U') {
+            const email = userData?.email || currentUser?.email;
+            if (email) {
+                initials = email.charAt(0).toUpperCase();
+                console.log('Using email first letter for initials:', initials);
+            }
         }
         
         avatarInitials.textContent = initials;
-        console.log('Avatar initials updated to:', initials);
+        console.log('Final avatar initials:', initials);
     }
 }
 
@@ -364,7 +421,7 @@ async function testProfileLoading() {
 // API endpoints
 const API = {
     getUser: 'https://fo6c74qovg.execute-api.af-south-1.amazonaws.com/get-user-info',
-    updateUser: 'https://fo6c74qovg.execute-api.af-south-1.amazonaws.com/update-user-info',
+    updateUser: 'https://fo6c74qovg.execute-api.af-south-1.amazonaws.com/update-user',
     changePassword: 'https://fo6c74qovg.execute-api.af-south-1.amazonaws.com/change-password',
     logout: 'https://fo6c74qovg.execute-api.af-south-1.amazonaws.com/logout'
 };
@@ -603,3 +660,4 @@ window.myProfile = {
     loadUserDataIntoForm,
     updateUserInfoDisplay
 };
+
